@@ -59,7 +59,7 @@ The vessel (the site is about this one platform only):
 
 Naming and content rules (from the client):
 
-- The vessel is sold under the OmniHopper brand. Never mention ALMAR, LANCIA, M-08 or CETUS anywhere on the site, in code, metadata, alt text or file names.
+- The vessel itself is named OmniHopper (company and vessel share the name). Never mention ALMAR, LANCIA, M-08 or CETUS anywhere on the site, in code, metadata, alt text or file names.
 - Single-product site: only this vessel and its services. The carrier platform from the source deck is out of scope.
 - When sources disagree, the client's deck wins over the manufacturer's public website.
 - omnihopper.com is our own site: any of its copy may be reused as is.
@@ -68,7 +68,6 @@ Naming and content rules (from the client):
 
 Open decisions:
 
-- Public model name or designation for the vessel under the OmniHopper brand (not the manufacturer's).
 - What sea state the vessel survives (open question in the source deck); the services copy says testing to Sea State 4+.
 - Contact form backend and destination.
 
