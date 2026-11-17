@@ -164,15 +164,19 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
         </div>
         <div class="part-grid">
           <Lines />
-          <table class="spec">
-          <caption class="visually-hidden">Principal particulars</caption>
-          <thead><tr><th scope="col">Ref</th><th scope="col">Item</th><th scope="col">Value</th></tr></thead>
-          <tbody>
-            {particulars.map(([r, k, v]) => (
-              <tr data-ref={r || undefined}><td class="ref">{r}</td><th scope="row">{k}</th><td>{v}</td></tr>
+          <div class="specs">
+            {[particulars.slice(0, 8), particulars.slice(8)].map((rows, i) => (
+              <table class="spec">
+                <caption class="visually-hidden">{i === 0 ? 'Dimensions and weights' : 'Performance and propulsion'}</caption>
+                <thead><tr><th scope="col">Ref</th><th scope="col">{i === 0 ? 'Dimensions' : 'Performance'}</th><th scope="col">Value</th></tr></thead>
+                <tbody>
+                  {rows.map(([r, k, v]) => (
+                    <tr data-ref={r || undefined}><td class="ref">{r}</td><th scope="row">{k}</th><td>{v}</td></tr>
+                  ))}
+                </tbody>
+              </table>
             ))}
-          </tbody>
-          </table>
+          </div>
         </div>
         <p class="ops">Operates without constant human oversight. Integrates with UAVs and other networked systems. Reinforced hull with maritime-grade protection.</p>
       </div>
@@ -428,8 +432,10 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 
   /* particulars */
   .particulars { padding-block: var(--s9) var(--s8); }
-  .part-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--s7) var(--s7); align-items: start; }
-  .part-grid :global(.lines-plan) { grid-column: 1 / -1; }
+  .part-grid { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr); gap: var(--s7) var(--s7); align-items: start; }
+  .part-grid { align-items: end; }
+  .specs { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s7); align-items: start; }
+  @media (max-width: 860px) { .specs { grid-template-columns: 1fr; row-gap: var(--s5); } }
   .part-grid :global(figure) { margin: 0; }
   .spec { width: 100%; border-collapse: collapse; border-top: 2px solid var(--rule); font-variant-numeric: tabular-nums lining-nums; }
   .spec thead th { text-align: left; font-weight: 800; font-variation-settings: 'wdth' 80; padding: 6px var(--s3) 6px 0; border-bottom: 1px solid var(--rule); }

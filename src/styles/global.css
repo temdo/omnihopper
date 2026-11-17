@@ -88,3 +88,9 @@ p { margin: 0; }
   .drawing.profile .lab, .drawing.profile .scale text, .drawing.plan .lab { font-size: 30px; }
   .drawing.body .dim text, .drawing.body .lab { font-size: 11px; }
 }
+@media (max-width: 640px) {
+  .drawing.profile .dim text { font-size: 46px; stroke-width: 12px; }
+  .drawing.profile .lab, .drawing.profile .scale text { font-size: 38px; }
+  .drawing.profile .scale text { transform: translateY(26px); }
+  .drawing.profile [data-dim='C'] text { display: none; }
+}
