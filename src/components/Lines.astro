@@ -1,0 +1,98 @@
+---
+// Half-breadth plan and body plan, at the same scale (1 unit = 1 cm).
+import { L, BEAM, DRAFT, DEPTH, deckHalf, chine, halfAtZ, section, sheerZ, stations, pathAlong, polyline } from '../lib/hull';
+const f = (n: number) => n.toFixed(1);
+
+// Plan view: centreline at y=150, bow to the right
+const CY = 150;
+const deckUp = pathAlong(deckHalf, (x, y) => [x, CY - y]);
+const deckDn = pathAlong(deckHalf, (x, y) => [x, CY + y]);
+const chineUp = pathAlong((x) => chine(x).y, (x, y) => [x, CY - y], 0, L * 0.97);
+const chineDn = pathAlong((x) => chine(x).y, (x, y) => [x, CY + y], 0, L * 0.97);
+const waterlines = [10, 20, DRAFT].map((z) => pathAlong((x) => halfAtZ(x, z), (x, y) => [x, CY - y], 0, L, 120));
+const yA = CY + BEAM / 2 + 40;
+
+// Body plan: centreline x=0; aft stations left, forward right; base at y=BY
+const BY = 150;
+const aftSt = stations.slice(0, 6);
+const fwdSt = stations.slice(5, 10); // station 10 is the stem point
+const aft = aftSt.map((x) => polyline(section(x).map(([y, z]) => [-y, BY - z])));
+const fwd = fwdSt.map((x) => polyline(section(x).map(([y, z]) => [y, BY - z])));
+// deck line through the sheer points of each half, closed to the centreline
+const deckAft = polyline([...aftSt.map((x) => [-deckHalf(x), BY - sheerZ(x)] as [number, number]), [0, BY - sheerZ(L / 2)]]);
+const deckFwd = polyline([[0, BY - sheerZ(L / 2)], ...fwdSt.map((x) => [deckHalf(x), BY - sheerZ(x)] as [number, number]), [0, BY - sheerZ(L)]]);
+const chineAft = polyline(aftSt.map((x) => [-chine(x).y, BY - chine(x).z] as [number, number]));
+const chineFwd = polyline(fwdSt.map((x) => [chine(x).y, BY - chine(x).z] as [number, number]));
+const DX = BEAM / 2 + 26;
+const yDeck = BY - DEPTH;
+const yWl = BY - DRAFT;
+---
+<figure class="lines-plan">
+  <svg class="drawing plan" viewBox="-60 10 990 340" role="img" aria-labelledby="plan-t">
+    <title id="plan-t">Half-breadth plan: 2,250 mm beam, parallel aft body and a fine entry forward.</title>
+    <g class="station">
+      {stations.map((x, i) => (
+        <g>
+          <line x1={f(x)} x2={f(x)} y1="24" y2="276" />
+          <text x={f(x)} y="20" text-anchor="middle">{i}</text>
+        </g>
+      ))}
+    </g>
+    <line class="dwl" x1="-30" x2={L + 30} y1={CY} y2={CY} />
+    <text class="lab" x={L + 40} y={CY + 5}>CL</text>
+    <path class="ink hull" d={deckUp} pathLength="1" />
+    <path class="ink hull" d={deckDn} pathLength="1" />
+    <path class="ink" d={`M0,${f(CY - deckHalf(0))}L0,${f(CY + deckHalf(0))}`} pathLength="1" />
+    <path class="ink thin" d={chineUp} pathLength="1" />
+    <path class="ink thin" d={chineDn} pathLength="1" />
+    {waterlines.map((d) => <path class="ink thin wl" d={d} />)}
+    <g class="dim" data-dim="B">
+      <line x1="180" x2="180" y1={f(CY - BEAM / 2)} y2={f(CY + BEAM / 2)} />
+      <path d={`M180,${f(CY - BEAM / 2)}l-4,9h8zM180,${f(CY + BEAM / 2)}l-4,-9h8z`} />
+      <text x="190" y={CY + 40}><tspan class="ref">B</tspan> Beam 2,250</text>
+    </g>
+    <g class="dim" data-dim="A">
+      <line x1="0" x2={L} y1={yA} y2={yA} />
+      <line x1="0" x2="0" y1={f(CY + deckHalf(0) + 6)} y2={yA + 6} />
+      <line x1={L} x2={L} y1={CY + 6} y2={yA + 6} />
+      <path d={`M0,${yA}l9,-4v8zM${L},${yA}l-9,-4v8z`} />
+      <text x={L / 2} y={yA - 8} text-anchor="middle"><tspan class="ref">A</tspan> L.O.A. 8,323</text>
+    </g>
+  </svg>
+  <figcaption><span>Plate 2</span> Half-breadth plan. Waterlines at 100, 200 and 330 mm; stations at 832 mm.</figcaption>
+</figure>
+<figure class="lines-body">
+  <svg class="drawing body" viewBox="-178 40 356 136" role="img" aria-labelledby="body-t">
+    <title id="body-t">Body plan: hull sections, aft stations 0 to 5 on the left and forward stations 5 to 9 on the right, drawn at the scale of the half-breadth plan.</title>
+    <line class="station" x1="0" x2="0" y1="48" y2={BY + 8} />
+    <line class="dwl" x1="-150" x2="150" y1={yWl} y2={yWl} />
+    <line class="base" x1="-150" x2="150" y1={BY} y2={BY} />
+    {aft.map((d) => <path class="ink thin" d={d} pathLength="1" />)}
+    {fwd.map((d) => <path class="ink thin" d={d} pathLength="1" />)}
+    <path class="ink" d={deckAft} pathLength="1" />
+    <path class="ink" d={deckFwd} pathLength="1" />
+    <path class="ink thin wl" d={chineAft} />
+    <path class="ink thin wl" d={chineFwd} />
+    <g class="dim" data-dim="E">
+      <line x1={BEAM / 2 + 6} x2={DX + 8} y1={yDeck} y2={yDeck} />
+      <line x1={DX} x2={DX} y1={BY} y2={yDeck} />
+      <path d={`M${DX},${BY}l-3,-7h6zM${DX},${yDeck}l-3,7h6z`} />
+      <text x={DX + 8} y={f((BY + yDeck) / 2 + 4)}><tspan class="ref">E</tspan> 771</text>
+    </g>
+    <g class="dim" data-dim="D">
+      <line x1={-DX - 8} x2={-BEAM / 2 - 6} y1={yWl} y2={yWl} />
+      <line x1={-DX} x2={-DX} y1={BY} y2={yWl} />
+      <path d={`M${-DX},${BY}l-3,-7h6zM${-DX},${yWl}l-3,7h6z`} />
+      <text x={-DX - 8} y={f((BY + yWl) / 2 + 4)} text-anchor="end"><tspan class="ref">D</tspan> 330</text>
+    </g>
+    <g class="dim" data-dim="C">
+      <line x1={-DX} x2={-DX} y1={yWl} y2={yDeck} />
+      <line x1={-DX - 8} x2={-BEAM / 2 - 6} y1={yDeck} y2={yDeck} />
+      <path d={`M${-DX},${yWl}l-3,-7h6zM${-DX},${yDeck}l-3,7h6z`} />
+      <text x={-DX - 8} y={f((yWl + yDeck) / 2 + 4)} text-anchor="end"><tspan class="ref">C</tspan> 441</text>
+    </g>
+    <text class="lab" x="-150" y={BY + 22}>AFT</text>
+    <text class="lab" x="150" y={BY + 22} text-anchor="end">FWD</text>
+  </svg>
+  <figcaption><span>Plate 3</span> Body plan, same scale. Dashed line: chine.</figcaption>
+</figure>

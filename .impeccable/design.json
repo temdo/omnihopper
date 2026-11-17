@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T22:35:33+00:00",
+  "title": "Design System: OmniHopper",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Drawing Ink",
+        "canonical": "oklch(18.7% 0.012 167.0)",
+        "tonalRamp": [
+          "#070d0a",
+          "#202724",
+          "#3c4441",
+          "#5b6460",
+          "#7c8581",
+          "#9ea8a3",
+          "#c2ccc7",
+          "#e7f1ed"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Second Ink",
+        "canonical": "oklch(36.6% 0.025 163.2)",
+        "tonalRamp": [
+          "#090c0a",
+          "#202724",
+          "#3b4540",
+          "#57655e",
+          "#76877e",
+          "#9ba9a1",
+          "#c1ccc6",
+          "#e9f1ec"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Cool Paper",
+        "canonical": "oklch(96.7% 0.004 157.2)",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#232624",
+          "#404341",
+          "#5f6260",
+          "#808381",
+          "#a3a6a4",
+          "#c7cac8",
+          "#ecefed"
+        ]
+      },
+      "cloth": {
+        "role": "secondary",
+        "displayName": "Bookcloth Green",
+        "canonical": "oklch(38.1% 0.043 165.1)",
+        "tonalRamp": [
+          "#070d0a",
+          "#1d2823",
+          "#35473e",
+          "#4f685c",
+          "#6b8b7c",
+          "#92aca0",
+          "#bacfc5",
+          "#e4f2eb"
+        ]
+      },
+      "cloth-ink": {
+        "role": "neutral",
+        "displayName": "Cloth Ink",
+        "canonical": "oklch(95.1% 0.010 155.1)",
+        "tonalRamp": [
+          "#080c09",
+          "#212723",
+          "#3e4440",
+          "#5d635f",
+          "#7e8480",
+          "#a0a7a2",
+          "#c4cbc6",
+          "#eaf1ec"
+        ]
+      },
+      "cloth-ink-2": {
+        "role": "neutral",
+        "displayName": "Cloth Ink Faded",
+        "canonical": "oklch(83.9% 0.028 157.3)",
+        "tonalRamp": [
+          "#090c0a",
+          "#202723",
+          "#3b453e",
+          "#57655c",
+          "#75887c",
+          "#9aaaa0",
+          "#c1cdc5",
+          "#e8f1eb"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "oklch(65.8% 0.198 40.4)",
+        "tonalRamp": [
+          "#1b0300",
+          "#461000",
+          "#752100",
+          "#a83400",
+          "#dd4a00",
+          "#f67e52",
+          "#ffae8c",
+          "#ffddc5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The vessel name, once per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads, on a 2px rule beside a short paragraph."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Phases within a section."
+      },
+      "dek": {
+        "displayName": "Dek",
+        "purpose": "Standfirst beside the vessel name."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 52 to 70ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Terms, column heads, legends, run-in labels and plate numbers."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Measured values in particulars and tables."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Plate captions on a 1px rule."
+      },
+      "annotation": {
+        "displayName": "Annotation",
+        "purpose": "Stations, labels and dimensions inside drawings (viewBox units)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "invalid-bar",
+        "value": "inset 0 -4px 0 var(--signal)",
+        "purpose": "State mark under an invalid form field; the system has no elevation shadows."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions and the inking animation."
+      },
+      {
+        "name": "state-swap",
+        "value": "0.2s",
+        "purpose": "Colour swaps on buttons, links and picker options."
+      },
+      {
+        "name": "ink-draw",
+        "value": "1.8s",
+        "purpose": "Drawing strokes ink themselves once on load; annotations appear at 1.2s over 0.8s. Off under reduced motion."
+      },
+      {
+        "name": "lit",
+        "value": "0.6s",
+        "purpose": "Changed value fades to signal and holds."
+      },
+      {
+        "name": "payload",
+        "value": "0.4s",
+        "purpose": "Mission payload fades in on the drawing."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "520px"
+      },
+      {
+        "name": "drawing-small",
+        "value": "640px"
+      },
+      {
+        "name": "single-column",
+        "value": "860px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The only filled orange rectangle; every primary action.",
+      "html": "<button class=\"ds-btn\">Request technical documentation</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; gap:8px; min-height:48px; padding:0 24px; background:var(--signal,#f05a14); color:var(--signal-ink,#0e1512); font:700 1rem/1 'Archivo Variable', 'Archivo', system-ui, sans-serif; font-variation-settings:'wdth' 90; border:0; border-radius:0; cursor:pointer; transition:background-color .2s cubic-bezier(0.16,1,0.3,1), color .2s cubic-bezier(0.16,1,0.3,1); } .ds-btn:hover { background:var(--ink,#0e1512); color:var(--page,#f2f5f3); } .ds-btn:focus-visible { outline:2px solid var(--signal,#f05a14); outline-offset:3px; } .ds-btn:disabled { opacity:.55; cursor:progress; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "masthead",
+      "description": "Sticky bookcloth band with line-drawn wordmark, section links and the small primary button.",
+      "html": "<header class=\"ds-mast\"><a class=\"ds-mark\" href=\"#\"><svg viewBox=\"0 0 44 16\" aria-hidden=\"true\"><path d=\"M1 4h28c6 0 11 3 14 8H6z\"/><path d=\"M1 12h42\"/></svg>OmniHopper</a><nav class=\"ds-nav\"><a href=\"#\">Missions</a><a href=\"#\">Particulars</a><a href=\"#\">Lifecycle</a><a href=\"#\">Standards</a></nav><a class=\"ds-btn-sm\" href=\"#\">Request documentation</a></header>",
+      "css": ".ds-mast { display:flex; align-items:center; gap:32px; min-height:64px; padding:0 24px; background:var(--cloth,#2c4a3d); color:var(--cloth-ink,#eaf1ec); font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; } .ds-mark { display:inline-flex; align-items:center; gap:10px; font-weight:800; font-size:1.125rem; font-variation-settings:'wdth' 110; color:inherit; text-decoration:none; } .ds-mark svg { width:34px; fill:none; stroke:currentColor; stroke-width:1.6; } .ds-nav { display:flex; gap:24px; margin-left:auto; font-weight:600; font-variation-settings:'wdth' 90; } .ds-nav a { color:var(--cloth-ink-2,#bcd0c3); text-decoration:none; } .ds-nav a:hover { color:var(--cloth-ink,#eaf1ec); text-decoration:underline; } .ds-btn-sm { display:inline-flex; align-items:center; min-height:40px; padding:0 16px; background:var(--signal,#f05a14); color:var(--signal-ink,#0e1512); font-weight:700; font-size:.9375rem; font-variation-settings:'wdth' 90; text-decoration:none; transition:background-color .2s, color .2s; } .ds-btn-sm:hover { background:var(--ink,#0e1512); color:var(--page,#f2f5f3); } .ds-mast a:focus-visible { outline:2px solid var(--signal,#f05a14); outline-offset:3px; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Square page-coloured field on bookcloth with a label above.",
+      "html": "<div class=\"ds-field-wrap\"><label class=\"ds-label\"><span>Email</span><input class=\"ds-field\" type=\"email\" placeholder=\"name@organisation\"></label></div>",
+      "css": ".ds-field-wrap { background:var(--cloth,#2c4a3d); color:var(--cloth-ink,#eaf1ec); padding:24px; font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; } .ds-label { display:flex; flex-direction:column; gap:6px; } .ds-label span { font-weight:700; font-size:.9375rem; font-variation-settings:'wdth' 85; } .ds-field { font:500 1rem/1.4 'Archivo Variable', 'Archivo', system-ui, sans-serif; color:var(--ink,#0e1512); background:var(--page,#f2f5f3); border:0; border-bottom:2px solid var(--page,#f2f5f3); border-radius:0; padding:12px; min-height:48px; caret-color:var(--signal,#f05a14); } .ds-field::placeholder { color:var(--ink-2,#33433b); } .ds-field:focus-visible { outline:2px solid var(--signal,#f05a14); outline-offset:2px; } .ds-field[aria-invalid='true'] { border-bottom-color:var(--signal,#f05a14); box-shadow:inset 0 -4px 0 var(--signal,#f05a14); }"
+    },
+    {
+      "name": "Mission Picker",
+      "kind": "chip",
+      "refersTo": "mission-option",
+      "description": "Ruled radio rows on bookcloth with a square marker that fills signal when selected.",
+      "html": "<div class=\"ds-picker\" role=\"radiogroup\"><span class=\"ds-legend\">Defence</span><button class=\"ds-opt\" role=\"radio\" aria-checked=\"false\">Air &amp; sea defence</button><button class=\"ds-opt\" role=\"radio\" aria-checked=\"false\">Electronic warfare</button><button class=\"ds-opt\" role=\"radio\" aria-checked=\"true\">ISR &amp; shore delivery</button></div>",
+      "css": ".ds-picker { display:flex; flex-direction:column; background:var(--cloth,#2c4a3d); color:var(--cloth-ink,#eaf1ec); padding:24px; font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; } .ds-legend { padding-bottom:8px; font-weight:800; font-variation-settings:'wdth' 80; } .ds-opt { display:flex; justify-content:space-between; gap:12px; text-align:left; padding:10px 0; background:none; color:var(--cloth-ink-2,#bcd0c3); font:600 1rem/1.25 'Archivo Variable', 'Archivo', system-ui, sans-serif; font-variation-settings:'wdth' 95; border:0; border-top:1px solid var(--cloth-ink-2,#bcd0c3); cursor:pointer; transition:color .2s cubic-bezier(0.16,1,0.3,1), padding .3s cubic-bezier(0.16,1,0.3,1); } .ds-opt::after { content:''; width:10px; height:10px; border:1px solid currentColor; flex:none; margin-top:4px; } .ds-opt:hover { color:var(--cloth-ink,#eaf1ec); } .ds-opt:focus-visible { outline:2px solid var(--signal,#f05a14); outline-offset:3px; } .ds-opt[aria-checked='true'] { color:var(--cloth-ink,#eaf1ec); padding-left:12px; } .ds-opt[aria-checked='true']::after { background:var(--signal,#f05a14); border-color:var(--signal,#f05a14); }"
+    },
+    {
+      "name": "Particulars Block",
+      "kind": "card",
+      "description": "Ruled definition grid: term in second ink, figure bold and right-aligned, tabular.",
+      "html": "<dl class=\"ds-brief\"><div><dt>L.O.A.</dt><dd>8,323 mm</dd></div><div><dt>Beam</dt><dd>2,250 mm</dd></div><div><dt>Useful load</dt><dd>600 kg</dd></div><div><dt>Range</dt><dd>500 nm</dd></div></dl>",
+      "css": ".ds-brief { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:24px; margin:0; border-top:2px solid var(--ink,#0e1512); background:var(--page,#f2f5f3); color:var(--ink,#0e1512); font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; font-variant-numeric:tabular-nums lining-nums; } .ds-brief div { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:7px 0; border-bottom:1px solid var(--ink,#0e1512); } .ds-brief dt { color:var(--ink-2,#33433b); font-size:.9375rem; font-variation-settings:'wdth' 85; } .ds-brief dd { margin:0; font-weight:750; font-variation-settings:'wdth' 85; text-align:right; }"
+    },
+    {
+      "name": "Lit Value",
+      "kind": "custom",
+      "refersTo": "lit-value",
+      "description": "A value that just changed takes a signal background and holds it.",
+      "html": "<p class=\"ds-lit-row\"><span class=\"ds-lit-k\">Package</span><span class=\"ds-lit\">EO/IR mast, open cargo deck</span></p>",
+      "css": ".ds-lit-row { display:grid; grid-template-columns:9rem 1fr; gap:12px; padding:12px 24px; margin:0; background:var(--cloth,#2c4a3d); color:var(--cloth-ink,#eaf1ec); font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; border-top:1px solid var(--cloth-ink-2,#bcd0c3); } .ds-lit-k { font-weight:800; font-variation-settings:'wdth' 80; } .ds-lit { justify-self:start; background:var(--signal,#f05a14); color:var(--signal-ink,#0e1512); padding:1px 4px; margin-left:-4px; -webkit-box-decoration-break:clone; box-decoration-break:clone; animation:ds-lit .6s cubic-bezier(0.16,1,0.3,1); } @keyframes ds-lit { from { background-color:transparent; color:inherit; } } @media (prefers-reduced-motion: reduce) { .ds-lit { animation:none; } }"
+    },
+    {
+      "name": "Drawing Plate",
+      "kind": "custom",
+      "description": "A lines-plan figure in ink with a dimension callout, scale bar and a plate caption on a rule.",
+      "html": "<figure class=\"ds-plate\"><svg viewBox=\"0 0 400 120\" class=\"ds-drawing\"><path class=\"ds-ink ds-hull\" d=\"M20 40 H330 C360 40 380 60 390 90 L40 90 Z\"/><line class=\"ds-wl\" x1=\"10\" y1=\"78\" x2=\"395\" y2=\"78\"/><line class=\"ds-st\" x1=\"120\" y1=\"30\" x2=\"120\" y2=\"100\"/><line class=\"ds-st\" x1=\"220\" y1=\"30\" x2=\"220\" y2=\"100\"/><g class=\"ds-dim\"><line x1=\"20\" y1=\"108\" x2=\"390\" y2=\"108\"/><text x=\"190\" y=\"104\">A L.O.A. 8,323</text></g></svg><figcaption><span>Plate 1</span> Profile and sheer.</figcaption></figure>",
+      "css": ".ds-plate { margin:0; padding:16px; background:var(--page,#f2f5f3); color:var(--ink,#0e1512); font-family:'Archivo Variable', 'Archivo', system-ui, sans-serif; } .ds-drawing { display:block; width:100%; height:auto; } .ds-ink { fill:none; stroke:var(--ink,#0e1512); stroke-width:1.4; vector-effect:non-scaling-stroke; stroke-linejoin:round; } .ds-hull { stroke-width:2.2; } .ds-wl { stroke:var(--ink,#0e1512); stroke-width:1; stroke-dasharray:14 4 2 4; vector-effect:non-scaling-stroke; } .ds-st { stroke:var(--ink,#0e1512); stroke-width:.6; stroke-dasharray:2 4; vector-effect:non-scaling-stroke; } .ds-dim line { stroke:var(--ink,#0e1512); stroke-width:.8; vector-effect:non-scaling-stroke; } .ds-dim text { font:600 11px 'Archivo Variable', 'Archivo', system-ui, sans-serif; fill:var(--ink,#0e1512); font-variation-settings:'wdth' 85; paint-order:stroke; stroke:var(--page,#f2f5f3); stroke-width:5px; } .ds-plate figcaption { font-size:.875rem; color:var(--ink-2,#33433b); margin-top:8px; padding-top:8px; border-top:1px solid var(--ink,#0e1512); } .ds-plate figcaption span { font-weight:800; color:var(--ink,#0e1512); margin-right:.4em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Reference Annual Entry",
+    "overview": "Every surface reads as one entry in a naval reference annual: a vessel set down in black ink on cool white paper, measured, lettered and cross-referenced, with deep grey-green bookcloth binding whole fields of the page. The vessel is never photographed or rendered; it is drawn as a naval architect's lines plan (profile, half-breadth, body plan) with stations, waterlines, dimension callouts and a scale bar. The drawings are the imagery and the component language at once.\n\nThe system is two inks and one signal. Ink and page carry the content; bookcloth owns entire bands (masthead, the mission field, the enquiry field) rather than tinting small surfaces; signal orange appears only where something is actionable or has just changed. Density is that of a reference work: hairline rules between every row, tabular lining figures everywhere, labels set narrow and heavy, values set right-aligned and bold. Nothing floats, nothing is rounded, nothing glows.\n\nMotion is short and declarative: a drawing inks itself once on load, a changed value lights orange and holds its light until the next change. Everything else is a colour swap.",
+    "keyCharacteristics": [
+      "Two inks (ink on page, cloth-ink on cloth) plus one signal orange",
+      "Lines-plan drawings as the only imagery, built in SVG with non-scaling strokes",
+      "Hairline (1px) and heavy (2px) ink rules as the structural device; no cards, no shadows",
+      "One variable family (Archivo) doing all work through width and weight axes",
+      "Square corners throughout (0px)",
+      "Lettered references (A to E) that tie table rows to dimensions on the drawings"
+    ],
+    "rules": [
+      {
+        "name": "The Change-State Rule",
+        "body": "Signal orange marks only two things: the action to take and the value that just changed. It never decorates, never fills a section, never colours a heading.",
+        "section": "colors"
+      },
+      {
+        "name": "The Whole-Field Rule",
+        "body": "Bookcloth is applied to full-bleed bands, never to cards or chips. A surface on cloth uses cloth-ink and cloth-ink-2; a drawing inside a cloth field sits on its own page-coloured plate.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Ink Rule",
+        "body": "No greys outside the defined inks, no gradients, no photography. Secondary text uses ink-2 or cloth-ink-2, never opacity.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number is a tabular lining figure, set with thousands separators and units (8,323 mm, 1,300 kg).",
+        "section": "typography"
+      },
+      {
+        "name": "The Width-Axis Rule",
+        "body": "Hierarchy is made with `wdth` and weight, not with additional families. Narrower and heavier means more structural.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled-Not-Lifted Rule",
+        "body": "Separation is a ruled line or a change of field, never a shadow or a card.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** draw the vessel; show it as a lines plan with stations, waterlines, lettered dimensions and a scale bar.",
+      "**Do** reserve signal orange (signal) for the primary action, the selected marker and changed values.",
+      "**Do** give bookcloth whole bands; place drawings inside a cloth field on a page-coloured plate.",
+      "**Do** separate with ink rules: 2px to open a group, 1px between rows.",
+      "**Do** set every figure tabular and lining, with thousands separators and units.",
+      "**Do** build hierarchy with Archivo's width axis and weight: condensed heavy heads, narrow heavy labels.",
+      "**Do** caption every drawing with a bold plate number on a 1px rule; label illustrative payloads as schematic."
+    ],
+    "donts": [
+      "**Don't** use photography, renders, gradients or decorative imagery; the client brief retired photorealistic imagery.",
+      "**Don't** add shadows, cards or rounded corners.",
+      "**Don't** introduce greys or colours beyond the seven tokens, or fade text with opacity.",
+      "**Don't** use signal orange for headings, section fills or decoration.",
+      "**Don't** place small uppercase labels above headings; section heads are a headline plus a paragraph on a rule.",
+      "**Don't** name the hull's manufacturer anywhere, in copy, drawings, alt text or file names; the vessel is OmniHopper."
+    ]
+  }
+}
