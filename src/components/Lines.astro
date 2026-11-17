@@ -1,0 +1,65 @@
+---
+// Half-breadth plan and body plan.
+import { L, BEAM, DRAFT, DEPTH, deckHalf, chine, halfAtZ, section, stations, pathAlong, polyline } from '../lib/hull';
+const f = (n: number) => n.toFixed(1);
+
+// Plan view: centreline at y=150, bow to the right
+const CY = 150;
+const deckUp = pathAlong(deckHalf, (x, y) => [x, CY - y]);
+const deckDn = pathAlong(deckHalf, (x, y) => [x, CY + y]);
+const chineUp = pathAlong((x) => chine(x).y, (x, y) => [x, CY - y], 0, L * 0.97);
+const chineDn = pathAlong((x) => chine(x).y, (x, y) => [x, CY + y], 0, L * 0.97);
+const waterlines = [10, 20, DRAFT].map((z) => pathAlong((x) => halfAtZ(x, z), (x, y) => [x, CY - y], 0, L, 120));
+
+// Body plan: centreline at x=0, aft stations left, forward right; z up from base at y=260
+const BY = 230;
+const S = 1.2;
+const aft = stations.slice(0, 6).map((x) => polyline(section(x).map(([y, z]) => [-y * S, BY - z * S])));
+const fwd = stations.slice(5).map((x) => polyline(section(x).map(([y, z]) => [y * S, BY - z * S])));
+---
+<div class="lines">
+  <figure class="lines-plan">
+    <svg class="drawing" viewBox="-40 10 920 290" role="img" aria-labelledby="plan-t">
+      <title id="plan-t">Half-breadth plan: 2,250 mm beam, parallel aft body and a fine entry forward.</title>
+      <g class="station">
+        {stations.map((x, i) => (
+          <g>
+            <line x1={f(x)} x2={f(x)} y1="20" y2="280" />
+            <text x={f(x)} y="296" text-anchor="middle">{i}</text>
+          </g>
+        ))}
+      </g>
+      <line class="dwl" x1="-30" x2={L + 30} y1={CY} y2={CY} />
+      <text class="lab" x={L + 34} y={CY + 4}>CL</text>
+      <path class="ink hull" d={deckUp} pathLength="1" />
+      <path class="ink hull" d={deckDn} pathLength="1" />
+      <path class="ink" d={`M0,${f(CY - deckHalf(0))}L0,${f(CY + deckHalf(0))}`} pathLength="1" />
+      <path class="ink thin" d={chineUp} pathLength="1" />
+      <path class="ink thin" d={chineDn} pathLength="1" />
+      {waterlines.map((d) => <path class="ink thin wl" d={d} pathLength="1" />)}
+      <g class="dim">
+        <line x1="180" x2="180" y1={f(CY - BEAM / 2)} y2={f(CY + BEAM / 2)} />
+        <path d={`M180,${f(CY - BEAM / 2)}l-4,8h8zM180,${f(CY + BEAM / 2)}l-4,-8h8z`} />
+        <text x="188" y={CY + 34}><tspan class="ref">B</tspan> Beam 2,250</text>
+      </g>
+    </svg>
+    <figcaption>Half-breadth plan. Waterlines at 100, 200 and 330 mm.</figcaption>
+  </figure>
+  <figure class="lines-body">
+    <svg class="drawing" viewBox="-170 60 340 200" role="img" aria-labelledby="body-t">
+      <title id="body-t">Body plan: hull sections, aft stations on the left and forward stations on the right.</title>
+      <line class="dwl" x1="-160" x2="160" y1={BY - DRAFT * S} y2={BY - DRAFT * S} />
+      <line class="base" x1="-160" x2="160" y1={BY} y2={BY} />
+      <line class="station" x1="0" x2="0" y1="70" y2={BY + 10} />
+      {aft.map((d) => <path class="ink thin" d={d} pathLength="1" />)}
+      {fwd.map((d) => <path class="ink thin" d={d} pathLength="1" />)}
+      <g class="dim">
+        <line x1="150" x2="150" y1={BY} y2={f(BY - DEPTH * S)} />
+        <text x="146" y={f(BY - DEPTH * S - 8)} text-anchor="end"><tspan class="ref">E</tspan> Depth 771</text>
+      </g>
+      <text class="lab" x="-160" y="252">AFT</text>
+      <text class="lab" x="160" y="252" text-anchor="end">FWD</text>
+    </svg>
+    <figcaption>Body plan.</figcaption>
+  </figure>
+</div>
