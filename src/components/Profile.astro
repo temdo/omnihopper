@@ -1,6 +1,12 @@
 ---
-// Profile view (sheer plan) of the vessel with mission payloads.
-import { L, DRAFT, DEPTH, sheerZ, keelZ, chine, stations, pathAlong } from '../lib/hull';
+// Profile view (sheer plan) of the vessel. Superstructure sits aft with the
+// EO/IR camera on its mast. `fit` draws one mission package permanently;
+// without it every package is drawn and shown by the page's mission picker.
+// `compact` drops stations and dimensions for small plates.
+import { L, DRAFT, sheerZ, keelZ, chine, stations, pathAlong } from '../lib/hull';
+
+interface Props { id?: string; fit?: string; compact?: boolean; label?: string }
+const { id = 'profile', fit, compact = false, label } = Astro.props;
 
 const BASE = 270; // svg y of the keel baseline
 const P = (x: number, z: number): [number, number] => [x, BASE - z];
@@ -12,120 +18,164 @@ const hull = `M0,${BASE}L0,${f(BASE - sheerZ(0))}` + sheer.replace(/^M/, 'L') + 
 const chineLine = pathAlong((x) => chine(x).z, (x, z) => P(x, z), 0, L * 0.985);
 const rub = pathAlong((x) => sheerZ(x) - 7, (x, z) => P(x, z), 0, L * 0.97);
 
-// deck structures
 const deck = (x: number) => BASE - sheerZ(x);
-const cx0 = 360, cx1 = 470; // console
-const consoleTop = deck(cx0) - 46;
-const mastX = 452;
-const mastTop = BASE - 222;
+// aft superstructure
+const cx0 = 110, cx1 = 262;
+const cTop = deck(cx0) - 58;
+const mastX = 196;
+const mastTop = cTop - 70;
+const cam = { x: mastX, y: mastTop - 16 };
 
 const wl = BASE - DRAFT;
 const yDim = BASE + 52;
-const id = Astro.props.id ?? 'profile';
+const show = (m: string) => !fit || fit === m;
+const box = compact ? '-110 22 1000 288' : '-215 0 1225 415';
+const title = label ?? 'Profile drawing of the OmniHopper vessel: 8,323 mm length overall, 441 mm freeboard, 0.33 m draft, outboard propulsion, superstructure aft with an EO/IR camera on its mast.';
+
+// AIM-9X: about 3 m long, on a rail launcher, nose forward and up
+const ang = -14; // degrees
+const lx = 470, ly = deck(470) - 40;
 ---
-<svg
-  class="drawing profile"
-  id={id}
-  viewBox="-215 0 1225 415"
-  role="img"
-  aria-labelledby={`${id}-t`}
->
-  <title id={`${id}-t`}>Profile drawing of the OmniHopper vessel: 8,323 mm length overall, 441 mm freeboard, 0.33 m draft, outboard propulsion, sensor mast amidships.</title>
+<svg class:list={['drawing', 'profile', { compact, fixed: !!fit }]} id={id} viewBox={box} role="img" aria-labelledby={`${id}-t`}>
+  <title id={`${id}-t`}>{title}</title>
 
-  <!-- stations -->
-  <g class="station">
-    {stations.map((x, i) => (
-      <g>
-        <line x1={f(x)} x2={f(x)} y1={BASE + 14} y2={f(deck(x) - 8)} />
-        <text x={f(x)} y={BASE + 30} text-anchor="middle">{i}</text>
-      </g>
-    ))}
-  </g>
+  {!compact && (
+    <g class="station">
+      {stations.map((x, i) => (
+        <g>
+          <line x1={f(x)} x2={f(x)} y1={BASE + 14} y2={f(deck(x) - 8)} />
+          <text x={f(x)} y={BASE + 30} text-anchor="middle">{i}</text>
+        </g>
+      ))}
+    </g>
+  )}
 
-  <!-- baseline and design waterline -->
   <line class="base" x1="-30" x2={L + 30} y1={BASE} y2={BASE} />
-  <line class="dwl" x1="-100" x2={L + 60} y1={wl} y2={wl} />
-  <text class="lab" x={L + 64} y={wl + 4}>DWL</text>
-  <text class="lab" x={L + 64} y={BASE + 4}>BL</text>
+  <line class="dwl" x1="-100" x2={L + 40} y1={wl} y2={wl} />
+  {!compact && <text class="lab" x={L + 64} y={wl + 4}>DWL</text>}
+  {!compact && <text class="lab" x={L + 64} y={BASE + 4}>BL</text>}
 
-  <!-- hull -->
   <path class="ink hull" d={hull} pathLength="1" />
   <path class="ink thin" d={chineLine} pathLength="1" />
   <path class="ink thin" d={rub} pathLength="1" />
 
-  <!-- console and mast -->
-  <path class="ink" pathLength="1" d={`M${cx0},${f(deck(cx0))}L${cx0 + 12},${f(consoleTop)}L${cx1 - 6},${f(consoleTop)}L${cx1},${f(deck(cx1))}`} />
-  <path class="ink" pathLength="1" d={`M${mastX},${f(consoleTop)}L${mastX},${mastTop}M${mastX - 26},${mastTop + 14}L${mastX + 26},${mastTop + 14}`} />
+  <!-- aft superstructure, mast and EO/IR camera -->
+  <path class="ink" pathLength="1" d={`M${cx0},${f(deck(cx0))}L${cx0 + 8},${f(cTop)}L${cx1 - 34},${f(cTop)}L${cx1},${f(deck(cx1) - 22)}L${cx1},${f(deck(cx1))}`} />
+  <path class="ink thin" pathLength="1" d={`M${cx0 + 20},${f(cTop + 12)}L${cx1 - 40},${f(cTop + 12)}L${cx1 - 14},${f(deck(cx1) - 26)}`} />
+  <path class="ink" pathLength="1" d={`M${mastX},${f(cTop)}L${mastX},${f(mastTop)}M${mastX - 22},${f(mastTop + 10)}L${mastX + 22},${f(mastTop + 10)}`} />
+  <g class="camera">
+    <path class="ink" d={`M${mastX - 8},${f(mastTop)}L${mastX + 8},${f(mastTop)}L${mastX + 6},${f(mastTop - 6)}L${mastX - 6},${f(mastTop - 6)}Z`} />
+    <circle class="ink" cx={cam.x} cy={f(cam.y)} r="11" />
+    <circle class="ink thin" cx={cam.x + 4} cy={f(cam.y)} r="4.5" />
+  </g>
 
   <!-- outboard -->
   <path class="ink" pathLength="1" d={`M0,${f(deck(0) + 14)}L-14,${f(deck(0) + 14)}L-14,${f(deck(0) + 4)}L-64,${f(deck(0) - 4)}L-72,${f(deck(0) + 30)}L-58,${f(deck(0) + 58)}L-34,${f(deck(0) + 62)}L-30,${BASE + 26}L-46,${BASE + 26}L-46,${f(deck(0) + 62)}`} />
   <path class="ink thin" pathLength="1" d={`M-58,${BASE + 12}L-58,${BASE + 40}M-58,${BASE + 26}l-14,0`} />
 
-  <!-- payloads by mission -->
-  <g class="payload" data-m="air">
-    <path class="ink" d={`M560,${f(deck(560))}L580,${f(deck(580) - 34)}L690,${f(deck(690) - 56)}L700,${f(deck(700) - 40)}L620,${f(deck(620))}`} />
-    <circle class="ink" cx={mastX} cy={mastTop - 10} r="11" />
-  </g>
-  <g class="payload" data-m="ew">
-    <path class="ink" d={`M${mastX - 22},${mastTop + 14}L${mastX - 30},${mastTop - 70}M${mastX},${mastTop}L${mastX},${mastTop - 86}M${mastX + 22},${mastTop + 14}L${mastX + 34},${mastTop - 64}`} />
-    <rect class="ink" x={mastX + 30} y={mastTop + 22} width="34" height="18" />
-  </g>
-  <g class="payload" data-m="mine">
-    <path class="ink" d={`M90,${f(deck(90))}L90,${f(deck(90) - 12)}L250,${f(deck(250) - 12)}L250,${f(deck(250))}`} />
-    <path class="ink" d={`M104,${f(deck(104) - 30)}C104,${f(deck(104) - 44)} 230,${f(deck(230) - 44)} 236,${f(deck(236) - 30)}C230,${f(deck(230) - 16)} 104,${f(deck(104) - 16)} 104,${f(deck(104) - 30)}Z`} />
-    <path class="ink thin" d={`M300,${BASE}l0,26m-12,0l24,0`} />
-  </g>
-  <g class="payload" data-m="isr patrol">
-    <circle class="ink" cx={mastX} cy={mastTop - 10} r="11" />
-    <path class="ink" d={`M${mastX - 30},${mastTop - 30}L${mastX + 30},${mastTop - 30}L${mastX + 22},${mastTop - 24}L${mastX - 22},${mastTop - 24}Z`} />
-  </g>
-  <g class="payload" data-m="sar">
-    <rect class="ink" x="120" y={f(deck(120) - 26)} width="54" height="26" rx="13" />
-    <rect class="ink" x="190" y={f(deck(190) - 26)} width="54" height="26" rx="13" />
-    <path class="ink" d={`M700,${f(deck(700))}L700,${f(deck(700) - 26)}L736,${f(deck(736) - 40)}`} />
-  </g>
-  <g class="payload" data-m="env">
-    <path class="ink" d={`M280,${f(deck(280))}L280,${f(deck(280) - 40)}L330,${f(deck(330) - 40)}L330,${wl + 30}`} />
-    <rect class="ink" x="320" y={wl + 30} width="20" height="22" />
-  </g>
-  <g class="payload" data-m="survey">
-    <rect class="ink" x="300" y={BASE - 4} width="40" height="8" />
-    <path class="ink thin fan" d={`M320,${BASE + 4}L200,${BASE + 80}M320,${BASE + 4}L260,${BASE + 86}M320,${BASE + 4}L320,${BASE + 88}M320,${BASE + 4}L380,${BASE + 86}M320,${BASE + 4}L440,${BASE + 80}`} />
-  </g>
-  <g class="payload" data-m="cargo">
-    <rect class="ink" x="96" y={f(deck(96) - 54)} width="230" height="54" />
-    <path class="ink thin" d={`M96,${f(deck(96) - 54)}L326,${f(deck(326))}M96,${f(deck(96))}L326,${f(deck(326) - 54)}`} />
-    <text class="lab" x="211" y={f(deck(211) - 62)} text-anchor="middle">600 kg</text>
-  </g>
-  <g class="payload" data-m="ferry">
-    {[110, 170, 230, 290].map((x) => (
-      <path class="ink" d={`M${x},${f(deck(x))}L${x},${f(deck(x) - 18)}L${x + 34},${f(deck(x) - 18)}M${x},${f(deck(x) - 18)}L${x - 6},${f(deck(x) - 42)}`} />
-    ))}
-  </g>
+  <!-- mission packages -->
+  {show('air') && (
+    <g class="payload" data-m="air">
+      <path class="ink" d={`M${lx - 30},${f(deck(lx - 30))}L${lx - 14},${f(ly + 12)}L${lx + 14},${f(ly + 12)}L${lx + 30},${f(deck(lx + 30))}`} />
+      <g transform={`rotate(${ang} ${lx} ${ly})`}>
+        <rect class="ink thin" x={lx - 120} y={ly + 8} width="250" height="5" />
+        <path class="ink" d={`M${lx - 130},${ly - 6}L${lx + 140},${ly - 6}L${lx + 172},${ly}L${lx + 140},${ly + 6}L${lx - 130},${ly + 6}Z`} />
+        <path class="ink thin" d={`M${lx - 130},${ly - 6}l-6,-14l22,0l10,14M${lx - 130},${ly + 6}l-6,10l22,0l10,-10M${lx + 96},${ly - 6}l6,-10l12,0l2,10M${lx + 96},${ly + 6}l6,8l12,0l2,-8`} />
+      </g>
+      <text class="lab callout" x={lx + 60} y={ly - 64}>AIM-9X</text>
+    </g>
+  )}
+  {show('ew') && (
+    <g class="payload" data-m="ew">
+      <path class="ink" d={`M${mastX - 20},${f(mastTop + 10)}L${mastX - 30},${f(mastTop - 70)}M${mastX + 20},${f(mastTop + 10)}L${mastX + 32},${f(mastTop - 64)}`} />
+      <rect class="ink" x="330" y={f(deck(330) - 30)} width="90" height="30" />
+      <path class="ink thin" d={`M345,${f(deck(345) - 30)}l0,-40M375,${f(deck(375) - 30)}l0,-56M405,${f(deck(405) - 30)}l0,-40`} />
+    </g>
+  )}
+  {show('mine') && (
+    <g class="payload" data-m="mine">
+      <path class="ink" d={`M320,${f(deck(320))}L320,${f(deck(320) - 12)}L520,${f(deck(520) - 12)}L520,${f(deck(520))}`} />
+      <path class="ink" d={`M336,${f(deck(336) - 30)}C336,${f(deck(336) - 46)} 500,${f(deck(500) - 46)} 506,${f(deck(506) - 30)}C500,${f(deck(500) - 14)} 336,${f(deck(336) - 14)} 336,${f(deck(336) - 30)}Z`} />
+      <path class="ink thin" d={`M420,${BASE}l0,26m-12,0l24,0`} />
+    </g>
+  )}
+  {show('isr') && (
+    <g class="payload" data-m="isr patrol">
+      <path class="ink" d={`M${mastX - 34},${f(mastTop + 26)}L${mastX + 34},${f(mastTop + 26)}L${mastX + 26},${f(mastTop + 32)}L${mastX - 26},${f(mastTop + 32)}Z`} />
+      <rect class="ink" x="330" y={f(deck(330) - 40)} width="220" height="40" />
+      <path class="ink thin" d={`M330,${f(deck(330) - 20)}L550,${f(deck(550) - 20)}`} />
+    </g>
+  )}
+  {show('sar') && (
+    <g class="payload" data-m="sar">
+      <path class="ink thin" d={`M300,${f(deck(300))}l0,-8l150,0l0,8`} />
+      <rect class="ink" x="306" y={f(deck(306) - 38)} width="66" height="30" rx="15" />
+      <rect class="ink" x="380" y={f(deck(380) - 38)} width="66" height="30" rx="15" />
+      <path class="ink thin" d={`M339,${f(deck(339) - 38)}l0,30M413,${f(deck(413) - 38)}l0,30`} />
+      <path class="ink" d={`M720,${f(deck(720))}L720,${f(deck(720) - 34)}M712,${f(deck(712) - 34)}L728,${f(deck(728) - 34)}M720,${f(deck(720) - 34)}L766,${f(deck(766) - 56)}`} />
+      <path class="ink thin spray" d={`M770,${f(deck(770) - 60)}Q820,${f(deck(800) - 100)} 860,${f(deck(840) - 40)}`} />
+      <text class="lab callout" x="300" y={f(deck(300) - 52)}>Liferafts</text>
+      <text class="lab callout" x="700" y={f(deck(700) - 70)} text-anchor="end">Fire monitor</text>
+    </g>
+  )}
+  {show('env') && (
+    <g class="payload" data-m="env">
+      <path class="ink" d={`M520,${f(deck(520))}L520,${f(deck(520) - 40)}L570,${f(deck(570) - 40)}L570,${wl + 30}`} />
+      <rect class="ink" x="560" y={wl + 30} width="20" height="22" />
+    </g>
+  )}
+  {show('survey') && (
+    <g class="payload" data-m="survey">
+      <rect class="ink" x="400" y={BASE - 4} width="40" height="8" />
+      <path class="ink thin fan" d={`M420,${BASE + 4}L300,${BASE + 80}M420,${BASE + 4}L360,${BASE + 86}M420,${BASE + 4}L420,${BASE + 88}M420,${BASE + 4}L480,${BASE + 86}M420,${BASE + 4}L540,${BASE + 80}`} />
+    </g>
+  )}
+  {show('cargo') && (
+    <g class="payload" data-m="cargo">
+      {[300, 474].map((x) => (
+        <g>
+          <rect class="ink" x={x} y={f(deck(x + 80) - 56)} width="164" height="56" />
+          {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+            <line class="ink thin" x1={x + i * 20.5} x2={x + i * 20.5} y1={f(deck(x + 80) - 50)} y2={f(deck(x + 80) - 6)} />
+          ))}
+          <path class="ink thin" d={`M${x + 4},${f(deck(x + 80) - 52)}l10,0M${x + 150},${f(deck(x + 80) - 52)}l10,0`} />
+        </g>
+      ))}
+      <text class="lab callout" x="472" y={f(deck(472) - 66)} text-anchor="middle">Containers · 600 kg</text>
+    </g>
+  )}
+  {show('ferry') && (
+    <g class="payload" data-m="ferry">
+      {[310, 370, 430, 490, 550].map((x) => (
+        <path class="ink" d={`M${x},${f(deck(x))}L${x},${f(deck(x) - 18)}L${x + 34},${f(deck(x) - 18)}M${x},${f(deck(x) - 18)}L${x - 6},${f(deck(x) - 42)}`} />
+      ))}
+    </g>
+  )}
 
-  <!-- dimensions -->
-  <g class="dim" data-dim="A">
-    <line x1="0" x2={L} y1={yDim} y2={yDim} />
-    <line x1="0" x2="0" y1={BASE + 36} y2={yDim + 6} />
-    <line x1={L} x2={L} y1={f(deck(L) + 4)} y2={yDim + 6} />
-    <path d={`M0,${yDim}l9,-4v8zM${L},${yDim}l-9,-4v8z`} />
-    <text x={L / 2} y={yDim - 7} text-anchor="middle"><tspan class="ref">A</tspan> L.O.A. 8,323</text>
-  </g>
-  <g class="dim" data-dim="C">
-    <line x1="560" x2="560" y1={wl} y2={f(deck(560))} />
-    <path d={`M560,${wl}l-4,-8h8zM560,${f(deck(560))}l-4,8h8z`} />
-    <text x="552" y={wl - 12} text-anchor="end"><tspan class="ref">C</tspan> Freeboard 441</text>
-  </g>
-  <g class="dim" data-dim="D">
-    <line x1="-90" x2="-90" y1={BASE} y2={wl} />
-    <path d={`M-90,${BASE}l-4,-8h8zM-90,${wl}l-4,8h8z`} />
-    <text x="-98" y={BASE - 10} text-anchor="end"><tspan class="ref">D</tspan> 330</text>
-  </g>
-
-  <!-- scale -->
-  <g class="scale" transform={`translate(-100 ${BASE + 82})`}>
-    <rect x="0" y="0" width="100" height="5" />
-    <rect x="100" y="0" width="100" height="5" class="o" />
-    <text x="0" y="20">0</text><text x="100" y="20" text-anchor="middle">1</text><text x="200" y="20" text-anchor="middle">2 m</text>
-  </g>
+  {!compact && (
+    <g>
+      <g class="dim" data-dim="A">
+        <line x1="0" x2={L} y1={yDim} y2={yDim} />
+        <line x1="0" x2="0" y1={BASE + 36} y2={yDim + 6} />
+        <line x1={L} x2={L} y1={f(deck(L) + 4)} y2={yDim + 6} />
+        <path d={`M0,${yDim}l9,-4v8zM${L},${yDim}l-9,-4v8z`} />
+        <text x={L / 2} y={yDim - 7} text-anchor="middle"><tspan class="ref">A</tspan> L.O.A. 8,323</text>
+      </g>
+      <g class="dim" data-dim="C">
+        <line x1="640" x2="640" y1={wl} y2={f(deck(640))} />
+        <path d={`M640,${wl}l-4,-8h8zM640,${f(deck(640))}l-4,8h8z`} />
+        <text x="632" y={wl - 12} text-anchor="end"><tspan class="ref">C</tspan> Freeboard 441</text>
+      </g>
+      <g class="dim" data-dim="D">
+        <line x1="-90" x2="-90" y1={BASE} y2={wl} />
+        <path d={`M-90,${BASE}l-4,-8h8zM-90,${wl}l-4,8h8z`} />
+        <text x="-98" y={BASE - 10} text-anchor="end"><tspan class="ref">D</tspan> 330</text>
+      </g>
+      <g class="scale" transform={`translate(-100 ${BASE + 82})`}>
+        <rect x="0" y="0" width="100" height="5" />
+        <rect x="100" y="0" width="100" height="5" class="o" />
+        <text x="0" y="20">0</text><text x="100" y="20" text-anchor="middle">1</text><text x="200" y="20" text-anchor="middle">2 m</text>
+      </g>
+    </g>
+  )}
 </svg>

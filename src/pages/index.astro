@@ -69,7 +69,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OmniHopper — High-endurance autonomous surface vessel</title>
   <meta name="description" content="OmniHopper is a high-endurance autonomous surface vessel for defence, security and offshore missions: 500 nm range, 600 kg useful load, 60 kn, with adaptation, sea trials and sustainment from one supplier." />
-  <meta name="theme-color" content="#2c4a3d" />
+  <meta name="theme-color" content="#0a2a4d" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
 <body>
@@ -92,18 +92,46 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   </header>
 
   <main>
-    <section class="entry" id="vessel" aria-labelledby="title">
-      <div class="wrap">
-        <div class="entry-head">
-          <div>
-            <h1 id="title">OmniHopper</h1>
-            <p class="class-line">Autonomous surface vessel · patrol, security and logistics · dual-use</p>
-          </div>
+    <section class="hero" id="vessel" aria-labelledby="title">
+      <div class="wrap hero-in">
+        <div class="hero-copy">
+          <h1 id="title">OmniHopper</h1>
+          <p class="class-line">Autonomous surface vessel · patrol, security and logistics · dual-use</p>
           <p class="dek">High-endurance maritime platform for mission-critical operations. Five hundred nautical miles on one load of fuel, six hundred kilograms of mission payload, and no crew required.</p>
+          <div class="hero-act">
+            <a class="btn" href="#enquiries">Request technical documentation</a>
+            <a class="link" href="#missions">See all ten mission fits</a>
+          </div>
         </div>
-        <figure class="plate inking">
-          <Profile id="hero-profile" />
-          <figcaption><span>Plate 1</span> Profile and sheer. Stations 0 to 10 at 832 mm; lettered dimensions in millimetres.</figcaption>
+        <div class="fits inking">
+          <figure class="fit">
+            <Profile id="fit-air" fit="air" compact label="OmniHopper fitted for air defence: AIM-9X missile on a rail launcher amidships, superstructure aft with EO/IR camera." />
+            <figcaption><span>Fit A</span> Air &amp; sea defence. AIM-9X on a deck rail launcher.</figcaption>
+          </figure>
+          <figure class="fit">
+            <Profile id="fit-sar" fit="sar" compact label="OmniHopper fitted for search and rescue: two liferaft canisters amidships and a remote fire monitor on the bow." />
+            <figcaption><span>Fit B</span> Rescue &amp; firefighting. Liferafts and a remote fire monitor.</figcaption>
+          </figure>
+          <figure class="fit">
+            <Profile id="fit-cargo" fit="cargo" compact label="OmniHopper fitted for logistics: two cargo containers on deck, 600 kg useful load." />
+            <figcaption><span>Fit C</span> Offshore logistics. Containerised cargo up to 600 kg.</figcaption>
+          </figure>
+        </div>
+        <dl class="titleblock" aria-label="Drawing title block">
+          <div><dt>Drawing</dt><dd>OmniHopper USV · general arrangement</dd></div>
+          <div><dt>Sheet</dt><dd>1 of 4</dd></div>
+          <div><dt>Scale</dt><dd>NTS</dd></div>
+          <div><dt>Rev</dt><dd>A</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="entry" id="profile" aria-labelledby="profile-h">
+      <div class="wrap">
+        <h2 id="profile-h" class="visually-hidden">Profile and principal particulars</h2>
+        <figure class="plate">
+          <Profile id="hero-profile" fit="none" />
+          <figcaption><span>Plate 1</span> Profile and sheer. Superstructure aft, EO/IR camera at the masthead. Stations 0 to 10 at 832 mm; lettered dimensions in millimetres.</figcaption>
         </figure>
         <dl class="brief">
           <div><dt>L.O.A.</dt><dd>8,323 mm</dd></div>
@@ -349,7 +377,26 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   @media (max-width: 520px) { .mast .long { display: none; } .mast .short { display: inline; } }
 
   /* the entry */
-  .entry { padding-block: var(--s6) var(--s7); border-bottom: 2px solid var(--rule); }
+  .hero { padding-block: var(--s7) var(--s6); border-bottom: 2px solid var(--rule); }
+  .hero-in { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr); grid-template-areas: 'copy fits' 'tb fits'; gap: var(--s5) var(--s7); align-items: start; }
+  .hero-copy { grid-area: copy; padding-top: var(--s5); }
+  .hero .dek { margin-top: var(--s5); justify-self: start; }
+  .hero-act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s6); }
+  .link { font-weight: 700; font-variation-settings: 'wdth' 90; }
+  .fits { grid-area: fits; display: grid; gap: var(--s3); }
+  .fit { margin: 0; }
+  .fit :global(figcaption) { margin-top: 0; }
+  .titleblock { grid-area: tb; align-self: end; margin: 0; display: grid; grid-template-columns: 1fr auto auto; border: 1px solid var(--rule); font-size: .8125rem; font-variation-settings: 'wdth' 85; font-variant-numeric: tabular-nums lining-nums; }
+  .titleblock div { padding: 6px 10px; border-left: 1px solid var(--rule); }
+  .titleblock div:first-child { border-left: 0; grid-column: 1 / -1; border-bottom: 1px solid var(--rule); }
+  .titleblock div:nth-child(2) { border-left: 0; }
+  .titleblock dt { color: var(--ink-2); font-size: .6875rem; text-transform: uppercase; letter-spacing: .06em; }
+  .titleblock dd { margin: 0; font-weight: 700; }
+  @media (max-width: 960px) {
+    .hero-in { grid-template-columns: 1fr; grid-template-areas: 'copy' 'fits' 'tb'; }
+    .hero-copy { padding-top: 0; }
+  }
+  .entry { padding-block: var(--s7); border-bottom: 2px solid var(--rule); }
   .entry-head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: var(--s4) var(--s7); padding-bottom: var(--s4); border-bottom: 2px solid var(--rule); }
   h1 { font-size: clamp(3.25rem, 9vw, 6rem); line-height: .86; font-weight: 850; font-variation-settings: 'wdth' 68; letter-spacing: -0.02em; }
   .class-line { margin-top: var(--s3); font-weight: 600; font-variation-settings: 'wdth' 85; color: var(--ink-2); }
@@ -398,7 +445,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   .picker button:hover { color: var(--cloth-ink); }
   .picker button[aria-checked='true'] { color: var(--cloth-ink); padding-left: var(--s3); }
   .picker button[aria-checked='true']::after { background: var(--signal); border-color: var(--signal); }
-  .mission-plate { background: var(--page); color: var(--ink); padding: var(--s6) var(--s5) var(--s4); }
+  .mission-plate { background-color: var(--page); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 24px 24px; border: 1px solid var(--rule); color: var(--ink); padding: var(--s6) var(--s5) var(--s4); }
   .mission-entry { margin: var(--s6) 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
   .mission-entry div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--s3); padding: var(--s3) 0; border-top: 1px solid var(--cloth-ink-2); }
   .mission-entry .wide { grid-column: 1 / -1; }
@@ -428,7 +475,6 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   .mission-plate[data-active='survey'] :global(.payload[data-m~='survey']),
   .mission-plate[data-active='cargo'] :global(.payload[data-m~='cargo']),
   .mission-plate[data-active='ferry'] :global(.payload[data-m~='ferry']) { opacity: 1; }
-  .mission-plate[data-active='isr'] :global(.payload[data-m~='cargo']) { opacity: 1; }
 
   /* particulars */
   .particulars { padding-block: var(--s9) var(--s8); }
@@ -493,8 +539,8 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   .form label span { font-weight: 700; font-variation-settings: 'wdth' 85; font-size: .9375rem; }
   .form .full { grid-column: 1 / -1; }
   .form input, .form select, .form textarea {
-    font: 500 1rem/1.4 var(--font); color: var(--ink); background: var(--page);
-    border: 0; border-bottom: 2px solid var(--page); border-radius: 0; padding: 12px; min-height: 48px; width: 100%;
+    font: 500 1rem/1.4 var(--font); color: var(--ink); background: #071f3a;
+    border: 1px solid var(--cloth-ink-2); border-radius: 0; padding: 12px; min-height: 48px; width: 100%;
     caret-color: var(--signal); accent-color: var(--signal);
   }
   .form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(-45deg, transparent 50%, var(--ink) 50%); background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 36px; }
@@ -512,7 +558,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
     .actions .btn { width: 100%; justify-content: center; }
   }
 
-  .foot { background: var(--ink); color: var(--cloth-ink-2); }
+  .foot { background: var(--cloth); color: var(--cloth-ink-2); border-top: 1px solid var(--rule); }
   .foot-in { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); justify-content: space-between; padding-block: var(--s5); font-variation-settings: 'wdth' 85; }
-  .foot-in span:first-child { color: var(--page); font-weight: 800; }
+  .foot-in span:first-child { color: var(--ink); font-weight: 800; }
 </style>
