@@ -99,16 +99,23 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
             <h1 id="title">OmniHopper</h1>
             <p class="class-line">Autonomous surface vessel · patrol, security and logistics · dual-use</p>
           </div>
-          <p class="dek">High-endurance maritime platform for mission-critical operations. Five hundred nautical miles on one load of fuel, six hundred kilograms of mission payload, and no one aboard.</p>
+          <p class="dek">High-endurance maritime platform for mission-critical operations. Five hundred nautical miles on one load of fuel, six hundred kilograms of mission payload, and no crew required.</p>
         </div>
-        <div class="plate inking">
+        <figure class="plate inking">
           <Profile id="hero-profile" />
-        </div>
+          <figcaption><span>Plate 1</span> Profile and sheer. Stations 0 to 10 at 832 mm; lettered dimensions in millimetres.</figcaption>
+        </figure>
         <dl class="brief">
-          <div><dt>Length overall</dt><dd>8,323 mm</dd></div>
-          <div><dt>Cruise / max</dt><dd>35 / 60 kn</dd></div>
-          <div><dt>Range</dt><dd>500 nm</dd></div>
+          <div><dt>L.O.A.</dt><dd>8,323 mm</dd></div>
+          <div><dt>Beam</dt><dd>2,250 mm</dd></div>
+          <div><dt>Draft</dt><dd>0.33 m</dd></div>
+          <div><dt>Freeboard</dt><dd>441 mm</dd></div>
+          <div><dt>Weight, empty / max</dt><dd>700 / 1,300 kg</dd></div>
           <div><dt>Useful load</dt><dd>600 kg</dd></div>
+          <div><dt>Speed, cruise / max</dt><dd>35 / 60 kn</dd></div>
+          <div><dt>Range</dt><dd>500 nm</dd></div>
+          <div class="wide"><dt>Propulsion</dt><dd>Outboard V6, 200 bhp / 149 kW</dd></div>
+          <div class="wide"><dt>Control</dt><dd>Autonomous, UAV-integrated</dd></div>
         </dl>
         <div class="enquiries-line">
           <span>Enquiries</span>
@@ -136,7 +143,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
         </div>
         <div class="mission-plate" data-active={first.id}>
           <Profile id="mission-profile" />
-          <p class="schematic">Schematic. Mission packages are shown for arrangement, not to scale.</p>
+          <p class="schematic"><span>Plate 4</span> Mission arrangement. Schematic: packages are shown for position, not to scale.</p>
         </div>
         <dl class="mission-entry" aria-live="polite">
           <div><dt>Mission</dt><dd data-f="name"><span>{first.name}</span></dd></div>
@@ -155,16 +162,18 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
           <h2 id="part-h">Particulars</h2>
           <p>Lines and principal figures. Lettered rows match the dimensions on the drawings.</p>
         </div>
-        <Lines />
-        <table class="spec">
+        <div class="part-grid">
+          <Lines />
+          <table class="spec">
           <caption class="visually-hidden">Principal particulars</caption>
           <thead><tr><th scope="col">Ref</th><th scope="col">Item</th><th scope="col">Value</th></tr></thead>
           <tbody>
             {particulars.map(([r, k, v]) => (
-              <tr><td class="ref">{r}</td><th scope="row">{k}</th><td>{v}</td></tr>
+              <tr data-ref={r || undefined}><td class="ref">{r}</td><th scope="row">{k}</th><td>{v}</td></tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
         <p class="ops">Operates without constant human oversight. Integrates with UAVs and other networked systems. Reinforced hull with maritime-grade protection.</p>
       </div>
     </section>
@@ -338,24 +347,26 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   /* the entry */
   .entry { padding-block: var(--s6) var(--s7); border-bottom: 2px solid var(--rule); }
   .entry-head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: var(--s4) var(--s7); padding-bottom: var(--s4); border-bottom: 2px solid var(--rule); }
-  h1 { font-size: clamp(3.25rem, 9vw, 7.5rem); line-height: .86; font-weight: 850; font-variation-settings: 'wdth' 68; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(3.25rem, 9vw, 6rem); line-height: .86; font-weight: 850; font-variation-settings: 'wdth' 68; letter-spacing: -0.02em; }
   .class-line { margin-top: var(--s3); font-weight: 600; font-variation-settings: 'wdth' 85; color: var(--ink-2); }
   .dek { font-size: clamp(1.125rem, 1.7vw, 1.4rem); line-height: 1.32; font-weight: 500; max-width: 40ch; justify-self: end; }
   .plate { padding-block: var(--s5) var(--s2); }
-  .brief { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--rule); }
-  .brief div { display: flex; flex-direction: column; gap: 2px; padding: var(--s3) var(--s4); border-left: 1px solid var(--rule); }
-  .brief div:first-child { border-left: 0; padding-left: 0; }
+  .plate { margin: 0; padding-block: var(--s5) 0; }
+  :global(figcaption), .schematic { font-size: .875rem; color: var(--ink-2); margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--rule); }
+  :global(figcaption span), .schematic span { font-weight: 800; color: var(--ink); margin-right: .4em; }
+  .brief { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: var(--s4) 0 0; border-top: 2px solid var(--rule); column-gap: var(--s5); font-variant-numeric: tabular-nums lining-nums; }
+  .brief div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); padding: 7px 0; border-bottom: 1px solid var(--rule); }
+  .brief .wide { grid-column: span 2; }
   .brief dt { font-variation-settings: 'wdth' 85; color: var(--ink-2); font-size: .9375rem; }
-  .brief dd { margin: 0; font-weight: 800; font-size: clamp(1.25rem, 2vw, 1.75rem); font-variation-settings: 'wdth' 80; }
+  .brief dd { margin: 0; font-weight: 750; font-variation-settings: 'wdth' 85; text-align: right; }
   .enquiries-line { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--rule); }
   .enquiries-line span { font-weight: 800; font-variation-settings: 'wdth' 80; }
   .enquiries-line p { color: var(--ink-2); max-width: 60ch; }
   @media (max-width: 860px) {
     .entry-head { grid-template-columns: 1fr; }
     .dek { justify-self: start; }
-    .brief { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .brief div:nth-child(3) { border-left: 0; padding-left: 0; }
-    .brief div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+    .brief { grid-template-columns: 1fr; }
+    .brief .wide { grid-column: auto; }
     .enquiries-line { grid-template-columns: 1fr; gap: var(--s3); }
     .enquiries-line .btn { justify-content: center; }
   }
@@ -384,12 +395,11 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   .picker button[aria-checked='true'] { color: var(--cloth-ink); padding-left: var(--s3); }
   .picker button[aria-checked='true']::after { background: var(--signal); border-color: var(--signal); }
   .mission-plate { background: var(--page); color: var(--ink); padding: var(--s6) var(--s5) var(--s4); }
-  .mission-plate .schematic { font-size: .875rem; color: var(--ink-2); margin-top: var(--s3); }
   .mission-entry { margin: var(--s6) 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
   .mission-entry div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--s3); padding: var(--s3) 0; border-top: 1px solid var(--cloth-ink-2); }
   .mission-entry .wide { grid-column: 1 / -1; }
   .mission-entry dt { font-weight: 800; font-variation-settings: 'wdth' 80; }
-  .mission-entry dd { margin: 0; }
+  .mission-entry dd { margin: 0; font-variant-numeric: tabular-nums lining-nums; }
   .mission-entry dd.lit :global(span) { background: var(--signal); color: var(--signal-ink); padding: 1px 4px; margin-left: -4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   @media (prefers-reduced-motion: no-preference) {
     .mission-entry dd.lit :global(span) { animation: lit .6s var(--ease); }
@@ -398,7 +408,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   @media (max-width: 860px) {
     .missions { padding-block: var(--s8) var(--s7); }
     .picker { grid-template-columns: 1fr; gap: var(--s4); }
-    .mission-plate { padding: var(--s4) var(--s3) var(--s3); margin-inline: calc(var(--gutter) * -1 + 8px); }
+    .mission-plate { padding: var(--s4) var(--s3) var(--s3); }
     .mission-entry { grid-template-columns: 1fr; }
     .mission-entry div { grid-template-columns: 1fr; gap: 2px; }
   }
@@ -418,16 +428,23 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 
   /* particulars */
   .particulars { padding-block: var(--s9) var(--s8); }
-  :global(.lines) { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); gap: var(--s6); align-items: end; margin-bottom: var(--s6); }
-  :global(.lines figure) { margin: 0; }
-  :global(.lines figcaption) { font-size: .875rem; color: var(--ink-2); margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--rule); }
-  @media (max-width: 860px) { :global(.lines) { grid-template-columns: 1fr; } }
-  .spec { width: 100%; border-collapse: collapse; border-top: 2px solid var(--rule); }
-  .spec thead th { text-align: left; font-weight: 800; font-variation-settings: 'wdth' 80; padding: var(--s2) var(--s3) var(--s2) 0; border-bottom: 1px solid var(--rule); }
-  .spec td, .spec tbody th { padding: 10px var(--s3) 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
-  .spec tbody th { font-weight: 500; color: var(--ink-2); width: 38%; }
+  .part-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--s7) var(--s7); align-items: start; }
+  .part-grid :global(.lines-plan) { grid-column: 1 / -1; }
+  .part-grid :global(figure) { margin: 0; }
+  .spec { width: 100%; border-collapse: collapse; border-top: 2px solid var(--rule); font-variant-numeric: tabular-nums lining-nums; }
+  .spec thead th { text-align: left; font-weight: 800; font-variation-settings: 'wdth' 80; padding: 6px var(--s3) 6px 0; border-bottom: 1px solid var(--rule); }
+  .spec td, .spec tbody th { padding: 7px var(--s3) 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
+  .spec tbody th { font-weight: 500; color: var(--ink-2); width: 11rem; white-space: nowrap; }
   .spec td:last-child { font-weight: 700; }
-  .spec .ref { width: 3.5rem; font-weight: 800; }
+  .spec .ref { width: 2.25rem; font-weight: 800; }
+  @media (max-width: 860px) { .part-grid { grid-template-columns: 1fr; gap: var(--s6); } .spec tbody th { white-space: normal; width: 40%; } }
+  /* a lettered row lights its dimension on the plates */
+  .particulars:has(tr[data-ref]:hover) :global(.dim) { opacity: .25; }
+  .particulars:has(tr[data-ref='A']:hover) :global([data-dim='A']),
+  .particulars:has(tr[data-ref='B']:hover) :global([data-dim='B']),
+  .particulars:has(tr[data-ref='C']:hover) :global([data-dim='C']),
+  .particulars:has(tr[data-ref='D']:hover) :global([data-dim='D']),
+  .particulars:has(tr[data-ref='E']:hover) :global([data-dim='E']) { opacity: 1; }
   .spec tbody tr:hover { background: color-mix(in oklab, var(--cloth) 9%, var(--page)); }
   .ops { margin-top: var(--s5); max-width: 70ch; color: var(--ink-2); }
 

@@ -26,7 +26,7 @@ const id = Astro.props.id ?? 'profile';
 <svg
   class="drawing profile"
   id={id}
-  viewBox="-120 0 1050 390"
+  viewBox="-215 0 1170 390"
   role="img"
   aria-labelledby={`${id}-t`}
 >
@@ -104,19 +104,22 @@ const id = Astro.props.id ?? 'profile';
   </g>
 
   <!-- dimensions -->
-  <g class="dim">
+  <g class="dim" data-dim="A">
     <line x1="0" x2={L} y1={yDim} y2={yDim} />
     <line x1="0" x2="0" y1={BASE + 36} y2={yDim + 6} />
     <line x1={L} x2={L} y1={f(deck(L) + 4)} y2={yDim + 6} />
     <path d={`M0,${yDim}l9,-4v8zM${L},${yDim}l-9,-4v8z`} />
     <text x={L / 2} y={yDim - 7} text-anchor="middle"><tspan class="ref">A</tspan> L.O.A. 8,323</text>
-
-    <line x1="600" x2="600" y1={wl} y2={f(deck(600))} />
-    <path d={`M600,${wl}l-4,-8h8zM600,${f(deck(600))}l-4,8h8z`} />
-    <text x="608" y={f((wl + deck(600)) / 2 + 4)}><tspan class="ref">C</tspan> Freeboard 441</text>
-
+  </g>
+  <g class="dim" data-dim="C">
+    <line x1="560" x2="560" y1={wl} y2={f(deck(560))} />
+    <path d={`M560,${wl}l-4,-8h8zM560,${f(deck(560))}l-4,8h8z`} />
+    <text x="552" y={wl - 12} text-anchor="end"><tspan class="ref">C</tspan> Freeboard 441</text>
+  </g>
+  <g class="dim" data-dim="D">
     <line x1="-90" x2="-90" y1={BASE} y2={wl} />
-    <text x="-96" y={BASE - 10} text-anchor="end"><tspan class="ref">D</tspan> 330</text>
+    <path d={`M-90,${BASE}l-4,-8h8zM-90,${wl}l-4,8h8z`} />
+    <text x="-98" y={BASE - 10} text-anchor="end"><tspan class="ref">D</tspan> 330</text>
   </g>
 
   <!-- scale -->

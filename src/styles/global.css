@@ -49,7 +49,7 @@ p { margin: 0; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Drawing language ---------- */
-.drawing { display: block; width: 100%; height: auto; overflow: visible; }
+.drawing { display: block; width: 100%; height: auto; font-variant-numeric: tabular-nums lining-nums; }
 .drawing .ink { fill: none; stroke: var(--ink); stroke-width: 1.4; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
 .drawing .ink.hull { stroke-width: 2.2; }
 .drawing .ink.thin { stroke-width: 0.9; }
@@ -61,7 +61,9 @@ p { margin: 0; }
 .drawing .dwl { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 14 4 2 4; vector-effect: non-scaling-stroke; }
 .drawing .dim line { stroke: var(--ink); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
 .drawing .dim path { fill: var(--ink); }
-.drawing .dim text { font: 600 15px var(--font); fill: var(--ink); font-variation-settings: 'wdth' 85; }
+.drawing .dim text { font: 600 15px var(--font); fill: var(--ink); font-variation-settings: 'wdth' 85; paint-order: stroke; stroke: var(--page); stroke-width: 6px; stroke-linejoin: round; }
+.drawing.body .dim text, .drawing.body .lab { font-size: 10.5px; stroke-width: 3px; }
+.drawing .dim { transition: opacity .2s var(--ease); }
 .drawing .dim .ref { font-weight: 800; fill: var(--ink); }
 .drawing .scale rect { fill: var(--ink); stroke: var(--ink); }
 .drawing .scale rect.o { fill: var(--page); }
@@ -79,10 +81,10 @@ p { margin: 0; }
 @keyframes ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
 
-/* small screens: drawings keep legible labels */
+/* small screens: drawings keep legible labels (sizes are in each viewBox's units) */
 @media (max-width: 640px) {
-  .drawing .station text { display: none; }
-  .drawing .dim text { font-size: 34px; }
-  .drawing .lab, .drawing .scale text { font-size: 28px; }
-  .drawing .dim text tspan:not(.ref) { display: inline; }
+  .drawing.profile .station text, .drawing.plan .station text { display: none; }
+  .drawing.profile .dim text, .drawing.plan .dim text { font-size: 36px; stroke-width: 10px; }
+  .drawing.profile .lab, .drawing.profile .scale text, .drawing.plan .lab { font-size: 30px; }
+  .drawing.body .dim text, .drawing.body .lab { font-size: 11px; }
 }
