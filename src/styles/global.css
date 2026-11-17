@@ -62,7 +62,9 @@ p { margin: 0; }
 .drawing .dim line { stroke: var(--ink); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
 .drawing .dim path { fill: var(--ink); }
 .drawing .dim text { font: 600 15px var(--font); fill: var(--ink); font-variation-settings: 'wdth' 85; paint-order: stroke; stroke: var(--page); stroke-width: 6px; stroke-linejoin: round; }
-.drawing.body .dim text, .drawing.body .lab { font-size: 10.5px; stroke-width: 3px; }
+.drawing.body .dim text, .drawing.body .lab { font-size: 14px; stroke-width: 3px; }
+.drawing.plan .station text, .drawing.plan .lab { font-size: 17px; }
+.drawing.plan .dim text { font-size: 18px; }
 .drawing .dim { transition: opacity .2s var(--ease); }
 .drawing .dim .ref { font-weight: 800; fill: var(--ink); }
 .drawing .scale rect { fill: var(--ink); stroke: var(--ink); }
@@ -86,11 +88,11 @@ p { margin: 0; }
   .drawing.profile .station text, .drawing.plan .station text { display: none; }
   .drawing.profile .dim text, .drawing.plan .dim text { font-size: 36px; stroke-width: 10px; }
   .drawing.profile .lab, .drawing.profile .scale text, .drawing.plan .lab { font-size: 30px; }
-  .drawing.body .dim text, .drawing.body .lab { font-size: 11px; }
+  .drawing.body .dim text, .drawing.body .lab { font-size: 12.5px; }
 }
 @media (max-width: 640px) {
   .drawing.profile .dim text { font-size: 46px; stroke-width: 12px; }
   .drawing.profile .lab, .drawing.profile .scale text { font-size: 38px; }
   .drawing.profile .scale text { transform: translateY(26px); }
-  .drawing.profile [data-dim='C'] text { display: none; }
+  .drawing.profile [data-dim='C'] { display: none; }
 }
