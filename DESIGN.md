@@ -212,6 +212,7 @@ The page is flat and shadowless. Depth comes from three things only: the 3D mode
 ## Components
 
 - **Logo:** the H mark, a rounded block cut into an H (`public/brand/logo-lime.svg` on dark, `logo-black.svg` on light), in Signal Lime, followed by the wordmark "OMNIHOPPER" in Geist 500, uppercase, +0.08em tracking, in Text. The mark is symmetric: equal side bars and equal top and bottom notches. Minimum mark size 24px. Clear space equals half the mark's diameter.
+- **Buttons:** pills, label set in Geist 500 uppercase, 0.8125rem, +0.08em tracking. Primary is lime, ghost has a Line Strong border.
 - **Header:** transparent over the hero, logo left, nav as Label-style pills right, lime pill CTA "Request briefing". It becomes Void at 85% with a Line bottom rule after scroll.
 - **Wireframe model:** a three.js (or pre-rendered SVG fallback) mesh of the OmniHopper hull: edges only, no faces, Wire colour. Mission payloads are separate meshes toggled per use case and drawn in lime. Idle rotation of 0.05 rad/s; pauses on hover and under prefers-reduced-motion, where a static front-three-quarter view is shown.
 - **Hotspot:** numbered circle on the model with a thin leader line to a Label caption (Stalker-style "Sensor mast", "EO/IR gimbal", "Outboard 200 hp").

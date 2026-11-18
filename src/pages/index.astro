@@ -346,7 +346,7 @@ const figures: [string, string, string][] = [
     display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
     min-height: 48px; padding: 0 28px;
     background: var(--signal); color: var(--signal-ink);
-    font: 500 .9375rem/1 var(--font); letter-spacing: -0.005em;
+    font: 500 .8125rem/1 var(--font); letter-spacing: .08em; text-transform: uppercase;
     text-decoration: none; border: 1px solid var(--signal); border-radius: 999px; cursor: pointer;
     transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
   }
@@ -354,7 +354,7 @@ const figures: [string, string, string][] = [
   .btn:disabled { opacity: .55; cursor: progress; }
   .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-2); }
   .btn-ghost:hover { background: transparent; border-color: var(--text); }
-  .btn-sm { min-height: 38px; padding: 0 18px; font-size: .875rem; }
+  .btn-sm { min-height: 38px; padding: 0 18px; font-size: .75rem; }
 
   /* header */
   .mast { position: fixed; inset: 0 0 auto; z-index: 5; transition: background-color .3s var(--ease), border-color .3s var(--ease); border-bottom: 1px solid transparent; }
