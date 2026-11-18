@@ -416,16 +416,18 @@ const figures: [string, string, string][] = [
   .picker fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
   .stage > * { min-width: 0; }
   .picker legend { padding: 0 0 var(--s3); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
   .chip {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 7px;
     font: 400 .8125rem/1.2 var(--font); color: var(--text-2); background: var(--deck);
-    border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer; text-align: left;
+    border: 0; border-radius: 999px; padding: 8px 13px 8px 11px; cursor: pointer; text-align: left;
     transition: background-color .2s var(--ease), color .2s var(--ease);
   }
   .chip:hover { color: var(--text); }
   .chip[aria-checked='true'] { background: var(--text); color: var(--void); }
-  .chip[aria-checked='true']::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 1px var(--void); }
+  /* every chip carries its dot, so selecting one never changes its width or the row wrap */
+  .chip::before { content: ''; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--line-2); transition: background-color .2s var(--ease); }
+  .chip[aria-checked='true']::before { background: var(--signal); box-shadow: 0 0 0 1px var(--void); }
   .stage-model { position: relative; padding-block: var(--s8); }
   .stage-word { position: absolute; left: 50%; top: 62%; transform: translate(-50%, -50%); margin: 0; font-size: clamp(6rem, 14vw, 14rem); opacity: .55; }
   .stage-model :global(svg) { position: relative; }
@@ -455,6 +457,7 @@ const figures: [string, string, string][] = [
 
   @media (max-width: 1100px) {
     .stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .chips { flex-direction: row; flex-wrap: wrap; }
     .stage-model { grid-column: 1 / -1; grid-row: 1; }
   }
   @media (max-width: 700px) {
