@@ -78,7 +78,7 @@ export const sectors: Sector[] = [
         package: 'Liferaft canisters amidships, water monitor forward',
         sensors: 'EO/IR with thermal search',
         effectors: 'Integrated liferafts; remotely operated fire monitor',
-        note: 'First on scene at 35 knots, with rafts already aboard.',
+        note: 'First on scene at 65 km/h, with rafts already aboard.',
       },
       {
         id: 'env',
