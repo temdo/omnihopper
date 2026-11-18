@@ -182,7 +182,7 @@ export function hull(): Hull {
     const tr = section(0);
     (nearHull ? near : far).push([...tr].reverse().map(([y, z]) => [-(z / DEPTH) * 6, c - s * y, z] as V3).concat(tr.map(([y, z]) => [-(z / DEPTH) * 6, c + s * y, z] as V3)));
     // rub rail on the outer sheer
-    (nearHull ? near : far).push(xs.map((x) => [x, c + out * (half(x) + 1.5), sheerZ(x) - 5] as V3));
+    (nearHull ? near : far).push(xs.filter((x) => x < L * 0.92).map((x) => [x, c + out * (half(x) + 1.5), sheerZ(x) - 5] as V3));
     // demihull decks forward of the bridge
     xs.filter((x) => x > bridgeEnd).forEach((x) => deckL.push([[x, c - half(x), sheerZ(x)], [x, c + half(x), sheerZ(x)]]));
     deckL.push(xs.filter((x) => x >= bridgeEnd).map((x) => [x, c, sheerZ(x)] as V3));
