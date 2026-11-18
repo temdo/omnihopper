@@ -1,12 +1,10 @@
 ---
-// OmniHopper mark: a rounded block cut into an H. Drawn on a 22 x 26 grid so
-// the legs and slot land on whole pixels at the default size; colour follows
-// currentColor.
+// OmniHopper mark: the letter H set symmetrically in a rounded rectangle,
+// drawn as one closed outline on a 22 x 26 grid (legs 8, slot 6, notches 8,
+// corner radius 8). Colour follows currentColor.
 interface Props { size?: number; class?: string }
 const { size = 26, class: cls } = Astro.props;
-const uid = `lg${Math.random().toString(36).slice(2, 7)}`;
 ---
 <svg class={cls} width={Math.round((size * 22) / 26)} height={size} viewBox="0 0 22 26" aria-hidden="true">
-  <clipPath id={uid}><rect width="22" height="26" rx="8.2" /></clipPath>
-  <path clip-path={`url(#${uid})`} fill="currentColor" d="M-4 -4H8V8H14V-4H26V30H14V18H8V30H-4Z" />
+  <path fill="currentColor" d="M0 8A8 8 0 0 1 8 0V8H14V0A8 8 0 0 1 22 8V18A8 8 0 0 1 14 26V18H8V26A8 8 0 0 1 0 18Z" />
 </svg>
