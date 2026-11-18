@@ -21,17 +21,17 @@ export function deckHalf(x: number): number {
   return (BEAM / 2) * Math.sqrt(clamp(1 - u ** 2.2));
 }
 
-/** Sheer height: flat aft, rising toward the bow. */
+/** Sheer height: level aft, then a modern descending deck toward a low bow. */
 export function sheerZ(x: number): number {
   const t = x / L;
-  return DEPTH + 20 * clamp((t - 0.45) / 0.55) ** 2;
+  return DEPTH - 22 * clamp((t - 0.5) / 0.5) ** 1.5;
 }
 
-/** Keel height: flat run aft, forefoot sweeping up to the stem head. */
+/** Keel height: long flat run, then a fine forefoot rising to a near-vertical stem. */
 export function keelZ(x: number): number {
   const t = x / L;
-  const u = clamp((t - 0.62) / 0.38);
-  return (DEPTH + 20) * u ** 2.4;
+  const u = clamp((t - 0.66) / 0.34);
+  return sheerZ(L) * u ** 2.6;
 }
 
 /** Chine: half-breadth and height. */
