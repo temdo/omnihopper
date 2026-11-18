@@ -1,10 +1,11 @@
 ---
-// OmniHopper mark: the letter H set symmetrically in a rounded rectangle,
-// drawn as one closed outline on a 22 x 26 grid (legs 8, slot 6, notches 8,
-// corner radius 8). Colour follows currentColor.
+// OmniHopper mark, taken unchanged from the client's master file
+// public/brand/logo-lime.svg (215 x 256). Colour follows currentColor.
 interface Props { size?: number; class?: string }
 const { size = 26, class: cls } = Astro.props;
+const uid = `lg${Math.random().toString(36).slice(2, 7)}`;
 ---
-<svg class={cls} width={Math.round((size * 22) / 26)} height={size} viewBox="0 0 22 26" aria-hidden="true">
-  <path fill="currentColor" d="M0 8A8 8 0 0 1 8 0V8H14V0A8 8 0 0 1 22 8V18A8 8 0 0 1 14 26V18H8V26A8 8 0 0 1 0 18Z" />
+<svg class={cls} width={(size * 215) / 256} height={size} viewBox="0 0 215 256" aria-hidden="true">
+  <clipPath id={uid}><rect width="215" height="256" rx="80" /></clipPath>
+  <path clip-path={`url(#${uid})`} fill="currentColor" d="M140.4 406V181.2H74.8V406H-34.8V-144.4H74.8V76.4H140.4V-144.4H250.8V406H140.4Z" />
 </svg>

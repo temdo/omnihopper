@@ -99,16 +99,15 @@ const figures: [string, string, string][] = [
   <main id="main">
     <section class="hero" id="top" aria-labelledby="title">
       <div class="hero-stage" aria-hidden="false">
-        <p class="backdrop hero-word" aria-hidden="true">Sea.</p>
         <div class="hero-model">
-          <Wire id="hero-wire" hotspots label="OmniHopper autonomous surface vessel drawn as a wireframe from off the starboard bow: electronics housing aft with an EO/IR gimbal on its roof, open mission deck forward, outboard engine on the transom." />
+          <Wire id="hero-wire" hotspots label="OmniHopper autonomous catamaran drawn as a wireframe from off the starboard bow: two hulls under one bridge deck, a compact electronics housing aft with an EO/IR gimbal on its roof, open mission deck forward, one outboard engine on the transom between the hulls." />
         </div>
       </div>
       <div class="wrap hero-in">
         <div class="hero-copy">
           <p class="kick">Autonomous surface vessel</p>
           <h1 id="title"><span class="nw">High-endurance</span> maritime platform for <span class="nw">mission-critical</span> operations</h1>
-          <p class="dek">One unmanned hull for patrol, defence, rescue and logistics. No crew aboard, and the whole service life supported by one team.</p>
+          <p class="dek">One unmanned platform for patrol, defence, rescue and logistics. No crew aboard, and the whole service life supported by one team.</p>
           <div class="hero-act">
             <a class="btn" href="#enquiries">Request technical documentation</a>
             <a class="btn btn-ghost" href="#missions">Ten mission fits</a>
@@ -126,7 +125,7 @@ const figures: [string, string, string][] = [
       <div class="wrap">
         <div class="sec-head">
           <p class="kick">01 Missions</p>
-          <h2 id="missions-h">One hull.<br /><span class="indent">Ten mission fits.</span></h2>
+          <h2 id="missions-h">One platform.<br /><span class="indent">Ten mission fits.</span></h2>
         </div>
         <div class="stage">
           <div class="picker" role="radiogroup" aria-label="Mission">
@@ -361,7 +360,7 @@ const figures: [string, string, string][] = [
   .mast.solid { background: color-mix(in oklab, var(--void) 88%, transparent); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
   .mast-in { display: flex; align-items: center; gap: var(--s5); min-height: 72px; }
   .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 500; font-size: .9375rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--text); }
-  .brand :global(svg) { color: var(--signal); }
+  .brand :global(svg) { color: #dcef5f; }
   .mast nav { display: flex; gap: 6px; margin-left: auto; }
   .mast nav a { font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: var(--text-2); background: var(--deck); padding: 9px 14px; border-radius: 999px; transition: color .2s, background-color .2s; }
   .mast nav a:hover { color: var(--void); background: var(--text); }
@@ -371,7 +370,6 @@ const figures: [string, string, string][] = [
   .hero { position: relative; min-height: max(760px, 100svh); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; padding-bottom: var(--s8);
     background: radial-gradient(60% 55% at 62% 46%, #17191c 0%, var(--void) 70%); }
   .hero-stage { position: absolute; inset: 0; }
-  .hero-word { position: absolute; left: 33%; top: 33%; margin: 0; opacity: .55; }
   .hero-model { position: absolute; left: 31%; right: 1%; top: 96px; }
   .hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6); align-items: end; width: 100%; }
   .hero-copy { grid-column: 1; }
@@ -395,7 +393,7 @@ const figures: [string, string, string][] = [
     .hero { min-height: 0; padding-top: 88px; padding-bottom: var(--s7); }
     .hero-stage { position: relative; inset: auto; height: 62vw; min-height: 240px; }
     .hero-model { left: 0; right: 0; top: 0; }
-    .hero-word { font-size: 38vw; top: 30%; left: 18%; }
+
     .hero-in { grid-template-columns: 1fr; gap: var(--s7); }
     .stats { grid-column: 1; grid-template-columns: repeat(3, auto); gap: var(--s5); justify-content: start; }
     .stats dd { font-size: 2.25rem; }
