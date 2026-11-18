@@ -21,6 +21,15 @@ export const sectors: Sector[] = [
     name: 'Defence',
     missions: [
       {
+        id: 'isr',
+        word: 'Watch.',
+        name: 'ISR & shore delivery',
+        package: 'EO/IR mast, open cargo deck',
+        sensors: 'EO/IR, radar, covert surveillance suite',
+        effectors: 'Tactical delivery of special units and supplies to the shoreline',
+        note: 'Watches quietly, then lands what the team ashore needs.',
+      },
+      {
         id: 'air',
         word: 'Strike.',
         name: 'Air & sea defence',
@@ -46,15 +55,6 @@ export const sectors: Sector[] = [
         sensors: 'Hull sonar, EO/IR',
         effectors: 'Cobra / SeaFox mine identification and disposal; loitering munitions for precision strike',
         note: 'Keeps people out of the minefield from detection to neutralisation.',
-      },
-      {
-        id: 'isr',
-        word: 'Watch.',
-        name: 'ISR & shore delivery',
-        package: 'EO/IR mast, open cargo deck',
-        sensors: 'EO/IR, radar, covert surveillance suite',
-        effectors: 'Tactical delivery of special units and supplies to the shoreline',
-        note: 'Watches quietly, then lands what the team ashore needs.',
       },
     ],
   },
