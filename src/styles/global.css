@@ -64,6 +64,7 @@ p { margin: 0; }
 /* the backdrop word behind the model */
 .backdrop {
   font-weight: 500; font-size: clamp(8rem, 24vw, 22rem); line-height: .8; letter-spacing: -0.055em;
+  padding: .1em .06em .26em; /* the mask stops at the box edge; room for descenders */
   color: var(--text); white-space: nowrap; pointer-events: none; user-select: none;
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.05) 0%, rgba(0,0,0,.5) 55%, rgba(0,0,0,.08) 100%);
           mask-image: linear-gradient(to bottom, rgba(0,0,0,.05) 0%, rgba(0,0,0,.5) 55%, rgba(0,0,0,.08) 100%);
