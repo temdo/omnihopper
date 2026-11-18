@@ -46,9 +46,9 @@ const f = (n: number) => n.toFixed(1);
   {ids.map((m) => <path class="w-pay" data-m={m} d={toPath(cam, packages[m])} />)}
   {hotspots && (
     <g class="spots">
-      {spots.map((s) => (
-        <g class="spot">
-          <path d={`M${f(s.u)},${f(s.v)}l${s.dx * 0.35},${s.dy * 0.35}L${f(s.u + s.dx)},${f(s.v + s.dy)}h18`} />
+      {spots.map((s, i) => (
+        <g class="spot" style={`--i:${i}`}>
+          <path pathLength="1" d={`M${f(s.u)},${f(s.v)}l${s.dx * 0.35},${s.dy * 0.35}L${f(s.u + s.dx)},${f(s.v + s.dy)}h18`} />
           <circle class="ring" cx={f(s.u)} cy={f(s.v)} r="13" />
           <circle class="dot" cx={f(s.u)} cy={f(s.v)} r="4.5" />
           <text x={f(s.u + s.dx + 24)} y={f(s.v + s.dy + 4)}><tspan class="n">{s.n}</tspan> {s.t}</text>
@@ -73,4 +73,15 @@ const f = (n: number) => n.toFixed(1);
   .spot .dot { fill: var(--signal); }
   .spot text { font: 400 13px var(--mono); letter-spacing: .06em; text-transform: uppercase; fill: var(--text); paint-order: stroke; stroke: var(--void); stroke-width: 5px; }
   .spot .n { fill: var(--signal); }
+
+  /* callouts slide out one after another, 01 first: dot, then leader, then label */
+  @media (prefers-reduced-motion: no-preference) {
+    .spot { --t: calc(.5s + var(--i) * .45s); }
+    .spot circle { transform-box: fill-box; transform-origin: center; animation: spot-pop .35s var(--ease) var(--t) both; }
+    .spot path { stroke-dasharray: 1; animation: spot-draw .45s var(--ease) calc(var(--t) + .15s) both; }
+    .spot text { animation: spot-label .4s var(--ease) calc(var(--t) + .45s) both; }
+  }
+  @keyframes spot-pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes spot-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes spot-label { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
 </style>
