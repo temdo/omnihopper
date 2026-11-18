@@ -363,7 +363,7 @@ const figures: [string, string, string][] = [
   @media (max-width: 900px) { .mast nav { display: none; } .mast .btn-sm { margin-left: auto; } }
 
   /* hero: the vessel in a black room */
-  .hero { position: relative; min-height: max(760px, 100svh); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; padding-top: 120px; padding-bottom: var(--s7);
+  .hero { position: relative; min-height: max(760px, 100svh); display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-top: calc(72px + var(--s7)); padding-bottom: var(--s7);
     background: radial-gradient(60% 55% at 62% 46%, #17191c 0%, var(--void) 70%); }
   .hero-stage { position: absolute; inset: 0; }
   .hero-model { position: absolute; left: 44%; right: 0; top: clamp(130px, 17svh, 200px); max-width: calc((100svh - 300px) * 2.05); margin-left: auto; }
