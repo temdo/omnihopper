@@ -273,21 +273,6 @@ function outboardAt(yc: number): Line3[] {
 
 const dz = deckZ;
 
-function truss(): Line3[] {
-  const x0 = 50, x1 = 130, w = 40, z0 = dz(90), z1 = z0 + 118;
-  const out = box(x0, x1, -w, w, z0, z1, 0, 2);
-  const lv = [z0, z0 + 39, z0 + 79, z1];
-  for (let i = 0; i < 3; i++) {
-    const a = lv[i], b = lv[i + 1];
-    out.push(seg([x0, -w, a], [x1, -w, b]), seg([x1, -w, a], [x0, -w, b]));
-    out.push(seg([x1, -w, a], [x1, w, b]), seg([x1, w, a], [x1, -w, b]));
-    out.push(seg([x0, w, a], [x1, w, b]), seg([x1, w, a], [x0, w, b]));
-  }
-  out.push(...box(x0 - 10, x1 + 10, -w - 10, w + 10, z1, z1 + 4));
-  out.push(seg([62, -30, z1 + 4], [56, -30, z1 + 90]));
-  return [...out, ...gimbal(90, z1 + 4)];
-}
-
 export const packages: Record<string, Line3[]> = {
   air: (() => {
     const z = dz(470);
@@ -350,7 +335,7 @@ export const packages: Record<string, Line3[]> = {
     return [...cylinder([420, -60, z], [420, -60, z + 40], 7, 2, 6), seg([420, -60, z + 40], [420, -190, z + 20]), seg([420, -60, z + 30], [420, -190, z + 20]), seg([420, -190, z + 20], [420, -190, DRAFT - 30]), ...cylinder([420, -190, DRAFT - 30], [420, -190, DRAFT - 60], 6, 2, 6), ...box(460, 520, -40, 40, dz(490), dz(490) + 30, 1)];
   })(),
   survey: [...cylinder([380, 0, -24], [540, 0, -24], 14, 4, 8), ...cylinder([540, 0, -24], [560, 0, -24], 7, 2, 6), seg([440, 0, -10], [440, 0, dz(440) - CAT.wet]), seg([480, 0, -10], [480, 0, dz(480) - CAT.wet]), ...box(400, 470, -30, 30, dz(430), dz(430) + 26)],
-  cargo: [...box(300, 460, -72, 72, dz(380), dz(380) + 82, 7, 0), ...box(476, 636, -66, 66, dz(556), dz(556) + 76, 7, 0), ...truss()],
+  cargo: [...box(300, 460, -72, 72, dz(380), dz(380) + 82, 7, 0), ...box(476, 636, -66, 66, dz(556), dz(556) + 76, 7, 0)],
   ferry: (() => {
     const out: Line3[] = [];
     [330, 410, 490].forEach((x) => [-46, 46].forEach((y) => {
@@ -361,8 +346,8 @@ export const packages: Record<string, Line3[]> = {
   })(),
 };
 
-/** Missions that replace the solid housing with the lattice tower. */
-export const noHousing = new Set(['cargo']);
+/** Missions that hide the housing (none at present). */
+export const noHousing = new Set<string>();
 
 /* ---------- labelled points for hotspots ---------- */
 
