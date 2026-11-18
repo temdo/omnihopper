@@ -107,7 +107,7 @@ const figures: [string, string, string][] = [
       <div class="wrap hero-in">
         <div class="hero-copy">
           <p class="kick">Autonomous surface vessel</p>
-          <h1 id="title">High-endurance maritime platform for mission-critical operations</h1>
+          <h1 id="title"><span class="nw">High-endurance</span> maritime platform for <span class="nw">mission-critical</span> operations</h1>
           <p class="dek">One unmanned hull for patrol, defence, rescue and logistics. No crew aboard, and the whole service life supported by one team.</p>
           <div class="hero-act">
             <a class="btn" href="#enquiries">Request technical documentation</a>
@@ -375,7 +375,8 @@ const figures: [string, string, string][] = [
   .hero-model { position: absolute; left: 31%; right: 1%; top: 96px; }
   .hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6); align-items: end; width: 100%; }
   .hero-copy { grid-column: 1; }
-  h1 { margin-top: var(--s4); font-size: clamp(2.25rem, 4.2vw, 4.25rem); line-height: .98; letter-spacing: -0.035em; max-width: 13ch; }
+  h1 { margin-top: var(--s4); font-size: clamp(2.25rem, 4.2vw, 4.25rem); line-height: .98; letter-spacing: -0.035em; max-width: 16ch; }
+  .nw { white-space: nowrap; }
   .dek { margin-top: var(--s5); color: var(--text-2); max-width: 42ch; font-size: 1.0625rem; }
   .hero-act { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s6); }
   .stats { grid-column: 2; margin: 0; display: grid; grid-template-columns: repeat(3, auto); justify-content: end; gap: var(--s8); }
