@@ -399,6 +399,8 @@ const figures: [string, string, string][] = [
     .hero-act .btn { flex: 1 1 auto; }
   }
   @media (max-width: 760px) { .hero :global(.spots) { display: none; } }
+  /* one vertical rhythm for every section: 128px desktop, 80px phone */
+  @media (max-width: 760px) { section:is(.missions, .band, .particulars, .lifecycle, .standards, .enquiries) { padding-block: var(--s8); } }
 
   /* section heads */
   .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4) var(--s6); align-items: end; margin-bottom: var(--s8); }
@@ -456,7 +458,6 @@ const figures: [string, string, string][] = [
     .stage-model { grid-column: 1 / -1; grid-row: 1; }
   }
   @media (max-width: 700px) {
-    .missions { padding-block: var(--s8); }
     .stage { grid-template-columns: 1fr; gap: var(--s5); }
     .stage-model { padding-block: var(--s5); }
     .picker { gap: var(--s4); }
@@ -465,7 +466,7 @@ const figures: [string, string, string][] = [
   }
 
   /* big-number band */
-  .band { padding-block: var(--s10); border-top: 1px solid var(--line); }
+  .band { padding-block: var(--s9); border-top: 1px solid var(--line); }
   .band-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s7) var(--s6); }
   .band h2 { font-size: clamp(2.5rem, 5.5vw, 5.25rem); line-height: .95; letter-spacing: -0.04em; }
   .band-copy { align-self: end; color: var(--text-2); max-width: 40ch; }
@@ -474,7 +475,6 @@ const figures: [string, string, string][] = [
   .figs dd { font-size: clamp(3rem, 6vw, 6rem); }
   .figs dt { max-width: 20ch; }
   @media (max-width: 860px) {
-    .band { padding-block: var(--s9); }
     .band-in { grid-template-columns: 1fr; }
     .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--s6); }
   }
