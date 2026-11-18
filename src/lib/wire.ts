@@ -275,25 +275,29 @@ const dz = deckZ;
 
 export const packages: Record<string, Line3[]> = {
   air: (() => {
+    // trainable twin-rail launcher: pedestal, trunnion beam, two AIM-9X side by side
     const z = dz(470);
-    const out = [...cylinder([470, 0, z], [470, 0, z + 34], 14, 3, 8), ...box(440, 500, -20, 20, z + 34, z + 44)];
+    const out = [...cylinder([470, 0, z], [470, 0, z + 34], 14, 3, 8), ...box(440, 500, -48, 48, z + 34, z + 44)];
     const a = (12 * Math.PI) / 180;
-    const p0: V3 = [380, 0, z + 52];
-    const len = 300;
-    const p1: V3 = [p0[0] + len * Math.cos(a), 0, p0[2] + len * Math.sin(a)];
-    out.push(...cylinder(p0, p1, 10, 5, 8));
-    // rail beneath the missile
-    out.push(seg([380, -8, z + 40], [p0[0] + 240 * Math.cos(a), -8, z + 40 + 240 * Math.sin(a)]), seg([380, 8, z + 40], [p0[0] + 240 * Math.cos(a), 8, z + 40 + 240 * Math.sin(a)]));
-    // nose cone
-    out.push(seg(p1, [p1[0] + 34 * Math.cos(a), 0, p1[2] + 34 * Math.sin(a)]));
-    const tip: V3 = [p1[0] + 34 * Math.cos(a), 0, p1[2] + 34 * Math.sin(a)];
-    out.push(...[[0, 10], [0, -10], [10, 0], [-10, 0]].map(([y, zz]) => seg([p1[0], y, p1[2] + zz], tip)));
-    // cruciform tail fins and canards
-    const fin = (s: number, r: number, h: number) => {
-      const c: V3 = [p0[0] + s * Math.cos(a), 0, p0[2] + s * Math.sin(a)];
-      return [[0, 1], [0, -1], [1, 0], [-1, 0]].map(([y, zz]) => [[c[0], y * r, c[2] + zz * r], [c[0] - 6, y * (r + h), c[2] + zz * (r + h)], [c[0] + 26, y * (r + h * 0.4), c[2] + zz * (r + h * 0.4)], [c[0] + 30, y * r, c[2] + zz * r]] as Line3);
-    };
-    out.push(...fin(4, 10, 24), ...fin(250, 10, 12));
+    const ca = Math.cos(a), sa = Math.sin(a);
+    const len = 300, r = 10;
+    const X = Math.SQRT1_2;
+    for (const yc of [-32, 32]) {
+      const p0: V3 = [380, yc, z + 52];
+      const p1: V3 = [p0[0] + len * ca, yc, p0[2] + len * sa];
+      const tip: V3 = [p1[0] + 34 * ca, yc, p1[2] + 34 * sa];
+      out.push(...cylinder(p0, p1, r, 5, 8));
+      // launch rail under each round
+      out.push(seg([380, yc, z + 44], [p0[0] + 240 * ca, yc, z + 44 + 240 * sa]), seg([380, yc - 6, z + 44], [380, yc - 6, z + 52 - r]), seg([380, yc + 6, z + 44], [380, yc + 6, z + 52 - r]));
+      // nose cone
+      out.push(...[[0, r], [0, -r], [r, 0], [-r, 0]].map(([y, zz]) => seg([p1[0], yc + y, p1[2] + zz], tip)));
+      // X-configured tail fins and canards, so the two rounds clear each other
+      const fin = (sd: number, h: number) => {
+        const c: V3 = [p0[0] + sd * ca, yc, p0[2] + sd * sa];
+        return [[X, X], [X, -X], [-X, X], [-X, -X]].map(([y, zz]) => [[c[0], yc + y * r, c[2] + zz * r], [c[0] - 6, yc + y * (r + h), c[2] + zz * (r + h)], [c[0] + 26, yc + y * (r + h * 0.4), c[2] + zz * (r + h * 0.4)], [c[0] + 30, yc + y * r, c[2] + zz * r]] as Line3);
+      };
+      out.push(...fin(4, 18), ...fin(250, 10));
+    }
     return out;
   })(),
   ew: (() => {
