@@ -21,6 +21,7 @@
   --font: 'Geist Variable', 'Geist', system-ui, sans-serif;
   --mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
   --gutter: clamp(16px, 4vw, 64px);
+  --gutter: round(clamp(16px, 4vw, 64px), 1px);
   --max: 1440px;
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 80px; --s9: 128px; --s10: 200px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
