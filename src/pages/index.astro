@@ -360,7 +360,8 @@ const figures: [string, string, string][] = [
   .mast { position: fixed; inset: 0 0 auto; z-index: 5; transition: background-color .3s var(--ease), border-color .3s var(--ease); border-bottom: 1px solid transparent; }
   .mast.solid { background: color-mix(in oklab, var(--void) 88%, transparent); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
   .mast-in { display: flex; align-items: center; gap: var(--s5); min-height: 72px; }
-  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 1.0625rem; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+  .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 500; font-size: .9375rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--text); }
+  .brand :global(svg) { color: var(--signal); }
   .mast nav { display: flex; gap: 6px; margin-left: auto; }
   .mast nav a { font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: var(--text-2); background: var(--deck); padding: 9px 14px; border-radius: 999px; transition: color .2s, background-color .2s; }
   .mast nav a:hover { color: var(--void); background: var(--text); }
@@ -562,5 +563,5 @@ const figures: [string, string, string][] = [
 
   .foot { border-top: 1px solid var(--line); color: var(--text-3); }
   .foot-in { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); justify-content: space-between; align-items: center; padding-block: var(--s6); font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
-  .foot .brand { font: 500 1rem/1 var(--font); text-transform: none; letter-spacing: -0.02em; }
+  .foot .brand { font: 500 .875rem/1 var(--font); }
 </style>
