@@ -124,7 +124,7 @@ const figures: [string, string, string][] = [
       <div class="wrap">
         <div class="sec-head">
           <p class="kick">01 Missions</p>
-          <h2 id="missions-h">One platform.<br /><span class="indent">Ten mission fits.</span></h2>
+          <h2 id="missions-h">One platform.<br />Ten mission fits.</h2>
         </div>
         <div class="stage">
           <div class="picker" role="radiogroup" aria-label="Mission">
@@ -159,7 +159,7 @@ const figures: [string, string, string][] = [
 
     <section class="band" aria-labelledby="band-h">
       <div class="wrap band-in">
-        <h2 id="band-h">A platform built<br /><span class="indent">to operate</span><br /><span class="indent-2">at sea</span></h2>
+        <h2 id="band-h">A platform built<br />to operate<br />at sea</h2>
         <p class="band-copy">Operates without constant human oversight. Integrates with UAVs and other networked systems. Reinforced hull with maritime-grade protection.</p>
         <dl class="figs">
           {figures.map(([n, u, c], i) => (
@@ -404,8 +404,6 @@ const figures: [string, string, string][] = [
   .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4) var(--s6); align-items: end; margin-bottom: var(--s8); }
   .sec-head .kick { grid-column: 1 / -1; }
   h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1; letter-spacing: -0.03em; }
-  .indent { display: inline-block; padding-left: 1.2em; }
-  .indent-2 { display: inline-block; padding-left: 2.4em; }
   .sec-copy { color: var(--text-2); max-width: 52ch; }
   @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; margin-bottom: var(--s7); } }
 
