@@ -9,6 +9,8 @@ export type Mission = {
   sensors: string;
   effectors: string;
   note: string;
+  /** backdrop word shown behind the vessel */
+  word: string;
 };
 
 export type Sector = { id: string; name: string; missions: Mission[] };
@@ -20,6 +22,7 @@ export const sectors: Sector[] = [
     missions: [
       {
         id: 'air',
+        word: 'Strike.',
         name: 'Air & sea defence',
         package: 'Deck launcher, forward',
         sensors: 'EO/IR turret, surface radar',
@@ -28,6 +31,7 @@ export const sectors: Sector[] = [
       },
       {
         id: 'ew',
+        word: 'Signal.',
         name: 'Electronic warfare',
         package: 'Mast-head antenna array',
         sensors: 'Wideband receivers, direction finding',
@@ -36,6 +40,7 @@ export const sectors: Sector[] = [
       },
       {
         id: 'mine',
+        word: 'Clear.',
         name: 'Mine countermeasures & strike',
         package: 'Aft mission bay with disposal vehicle',
         sensors: 'Hull sonar, EO/IR',
@@ -44,6 +49,7 @@ export const sectors: Sector[] = [
       },
       {
         id: 'isr',
+        word: 'Watch.',
         name: 'ISR & shore delivery',
         package: 'EO/IR mast, open cargo deck',
         sensors: 'EO/IR, radar, covert surveillance suite',
@@ -58,6 +64,7 @@ export const sectors: Sector[] = [
     missions: [
       {
         id: 'patrol',
+        word: 'Patrol.',
         name: 'Border & EEZ security',
         package: 'EO/IR mast, surface radar',
         sensors: 'EO/IR, radar, AIS',
@@ -66,14 +73,16 @@ export const sectors: Sector[] = [
       },
       {
         id: 'sar',
+        word: 'Rescue.',
         name: 'Search, rescue & firefighting',
-        package: 'Liferaft canisters aft, water monitor forward',
+        package: 'Liferaft canisters amidships, water monitor forward',
         sensors: 'EO/IR with thermal search',
         effectors: 'Integrated liferafts; remotely operated fire monitor',
         note: 'First on scene at 35 knots, with rafts already aboard.',
       },
       {
         id: 'env',
+        word: 'Sample.',
         name: 'Environmental monitoring',
         package: 'Sampling boom amidships',
         sensors: 'Water-quality probes, oil-spill detection',
@@ -88,6 +97,7 @@ export const sectors: Sector[] = [
     missions: [
       {
         id: 'survey',
+        word: 'Survey.',
         name: 'Survey & inspection',
         package: 'Hull-mounted multibeam',
         sensors: 'Multibeam echosounder, inspection sonar',
@@ -96,6 +106,7 @@ export const sectors: Sector[] = [
       },
       {
         id: 'cargo',
+        word: 'Cargo.',
         name: 'Offshore logistics',
         package: 'Open cargo deck, up to 600 kg',
         sensors: 'Navigation suite',
@@ -104,6 +115,7 @@ export const sectors: Sector[] = [
       },
       {
         id: 'ferry',
+        word: 'Ferry.',
         name: 'Autonomous ferry',
         package: 'Personnel seating',
         sensors: 'Navigation suite, collision avoidance',

@@ -1,74 +1,69 @@
 ---
 name: OmniHopper
-description: A naval reference annual entry for one autonomous surface vessel, drawn as a lines plan in two inks, bookcloth and one signal orange.
+description: One autonomous surface vessel shown as a lit wireframe on tactical black, with one acid signal colour, oversized grotesk words and big figures.
 colors:
-  ink: "#0e1512"
-  ink-2: "#33433b"
-  page: "#f2f5f3"
-  cloth: "#2c4a3d"
-  cloth-ink: "#eaf1ec"
-  cloth-ink-2: "#bcd0c3"
-  signal: "#f05a14"
+  void: "#0A0B0C"
+  hull: "#121416"
+  deck: "#1A1D20"
+  line: "#2A2E33"
+  line-2: "#474C53"
+  wire: "#C9CDD1"
+  text: "#F2F3EF"
+  text-2: "#8C9197"
+  text-3: "#787D84"
+  signal: "#D7F23A"
+  signal-ink: "#0A0B0C"
 typography:
-  display:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "clamp(3.25rem, 9vw, 6rem)"
-    fontWeight: 850
-    lineHeight: 0.86
-    letterSpacing: "-0.02em"
-    fontVariation: "'wdth' 68"
-  headline:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "clamp(2rem, 5vw, 3.75rem)"
-    fontWeight: 800
-    lineHeight: 0.95
-    letterSpacing: "-0.01em"
-    fontVariation: "'wdth' 72"
-  title:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "clamp(1.5rem, 3vw, 2.25rem)"
-    fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "-0.01em"
-    fontVariation: "'wdth' 75"
-  dek:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "clamp(1.125rem, 1.7vw, 1.4rem)"
+  backdrop:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "clamp(8rem, 24vw, 22rem)"
     fontWeight: 500
-    lineHeight: 1.32
-  body:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 400
-    lineHeight: 1.5
-    fontFeature: "'tnum' 1, 'lnum' 1"
-    fontVariation: "'wdth' 100"
-  label:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 800
-    lineHeight: 1.25
-    fontVariation: "'wdth' 80"
+    lineHeight: 0.8
+    letterSpacing: "-0.055em"
+  display:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 6vw, 5.5rem)"
+    fontWeight: 500
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
+  headline:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 3.6vw, 3.25rem)"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "-0.03em"
   figure:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)"
+    fontWeight: 500
+    lineHeight: 0.9
+    letterSpacing: "-0.04em"
+    fontFeature: "'tnum' 1"
+  title:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "1.375rem"
+    fontWeight: 500
+    lineHeight: 1.2
+    letterSpacing: "-0.015em"
+  body:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
     fontSize: "1rem"
-    fontWeight: 750
-    lineHeight: 1.5
-    fontFeature: "'tnum' 1, 'lnum' 1"
-    fontVariation: "'wdth' 85"
-  caption:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "0.875rem"
     fontWeight: 400
-    lineHeight: 1.5
-  annotation:
-    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "13px"
-    fontWeight: 600
-    fontFeature: "'tnum' 1, 'lnum' 1"
-    fontVariation: "'wdth' 80"
+    lineHeight: 1.55
+  label:
+    fontFamily: "Geist Mono Variable, Geist Mono, ui-monospace, monospace"
+    fontSize: "0.75rem"
+    fontWeight: 400
+    lineHeight: 1.3
+    letterSpacing: "0.06em"
+  caption:
+    fontFamily: "Geist Variable, Geist, system-ui, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 400
+    lineHeight: 1.35
 rounded:
   none: "0px"
+  pill: "999px"
 spacing:
   s1: "4px"
   s2: "8px"
@@ -77,189 +72,186 @@ spacing:
   s5: "24px"
   s6: "32px"
   s7: "48px"
-  s8: "72px"
-  s9: "112px"
-  gutter: "clamp(16px, 4vw, 48px)"
-  max: "1320px"
+  s8: "80px"
+  s9: "128px"
+  s10: "200px"
 components:
   button-primary:
     backgroundColor: "{colors.signal}"
-    textColor: "{colors.ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.none}"
-    padding: "0 24px"
-    height: "48px"
+    textColor: "{colors.signal-ink}"
+    rounded: "{rounded.pill}"
+    padding: "14px 28px"
   button-primary-hover:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.page}"
-  button-small:
-    backgroundColor: "{colors.signal}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.text}"
+    textColor: "{colors.signal-ink}"
+  button-ghost:
+    backgroundColor: "{colors.void}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.pill}"
+    padding: "13px 27px"
+  nav-chip:
+    backgroundColor: "{colors.deck}"
+    textColor: "{colors.text-2}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "6px 14px"
+  nav-chip-active:
+    backgroundColor: "{colors.text}"
+    textColor: "{colors.void}"
+  panel:
+    backgroundColor: "{colors.deck}"
+    textColor: "{colors.text-2}"
     rounded: "{rounded.none}"
-    padding: "0 16px"
-    height: "40px"
-  masthead:
-    backgroundColor: "{colors.cloth}"
-    textColor: "{colors.cloth-ink}"
-    height: "64px"
-  mission-option:
-    backgroundColor: "transparent"
-    textColor: "{colors.cloth-ink-2}"
-    padding: "10px 0"
-  mission-option-selected:
-    textColor: "{colors.cloth-ink}"
-    padding: "10px 0 10px 12px"
-  field:
-    backgroundColor: "{colors.page}"
-    textColor: "{colors.ink}"
+    padding: "32px"
+  stat-figure:
+    textColor: "{colors.text}"
+    typography: "{typography.figure}"
+  stat-figure-key:
+    textColor: "{colors.signal}"
+    typography: "{typography.figure}"
+  input:
+    backgroundColor: "{colors.hull}"
+    textColor: "{colors.text}"
     rounded: "{rounded.none}"
-    padding: "12px"
-    height: "48px"
-  lit-value:
-    backgroundColor: "{colors.signal}"
-    textColor: "{colors.ink}"
-    padding: "1px 4px"
+    padding: "14px 16px"
 ---
 
 # Design System: OmniHopper
 
 ## Overview
 
-**Creative North Star: "The Reference Annual Entry"**
+**Creative North Star: "The Lit Wireframe"**
 
-Every surface reads as one entry in a naval reference annual: a vessel set down in black ink on cool white paper, measured, lettered and cross-referenced, with deep grey-green bookcloth binding whole fields of the page. The vessel is never photographed or rendered; it is drawn as a naval architect's lines plan (profile, half-breadth, body plan) with stations, waterlines, dimension callouts and a scale bar. The drawings are the imagery and the component language at once.
+The vessel is the page. One OmniHopper hull, drawn as a white wireframe in 3D, floats in a black room under a soft spotlight. Everything else steps back: a huge word sits behind the hull like a watermark, a few large figures with tiny captions sit beside it, and one acid signal colour marks the single most important thing on screen. The visitor is a procurement officer or a commander. The page reads like a defence-industry product sheet, not like a gadget launch: calm, dark, precise, and confident enough to leave most of the screen empty.
 
-The system is two inks and one signal. Ink and page carry the content; bookcloth owns entire bands (masthead, the mission field, the enquiry field) rather than tinting small surfaces; signal orange appears only where something is actionable or has just changed. Density is that of a reference work: hairline rules between every row, tabular lining figures everywhere, labels set narrow and heavy, values set right-aligned and bold. Nothing floats, nothing is rounded, nothing glows.
+The system is built from three references that M chose. From Keileth it takes the wireframe model: structure shown as lines, no photo. From Stalker it takes a single 3D model owning the hero, with numbered hotspots on it. From VREX it takes the oversized word behind the object, the stack of big figures with small captions, the lime accent, and the idea of one object whose skin changes with each use case.
 
-Motion is short and declarative: a drawing inks itself once on load, a changed value lights orange and holds its light until the next change. Everything else is a colour swap.
+It replaces photoreal imagery with schematic imagery, as the client asked, without falling back to flat icons. The wireframe is abstract and still looks like real engineering.
 
-**Key Characteristics:**
-- Two inks (ink on page, cloth-ink on cloth) plus one signal orange
-- Lines-plan drawings as the only imagery, built in SVG with non-scaling strokes
-- Hairline (1px) and heavy (2px) ink rules as the structural device; no cards, no shadows
-- One variable family (Archivo) doing all work through width and weight axes
-- Square corners throughout (0px)
-- Lettered references (A to E) that tie table rows to dimensions on the drawings
+**Key characteristics**
+
+- Tactical black ground, graphite surfaces, no gradients except the spotlight behind the model.
+- One 3D wireframe hull is the hero and the main visual of the use-case switcher.
+- Giant backdrop word behind the model (Sea., Air., Strike., Rescue., Cargo.).
+- Big figures (60 kn, 500 nm, 600 kg) with small mono captions. The key figure is lime.
+- Mono bracket labels such as `[ 01 MISSIONS ]` for section kickers.
+- Pills for everything you can press, square corners for everything you read.
+- Most of each screen is empty on purpose.
 
 ## Colors
 
-A cold, nearly monochrome two-ink palette on a green-tinted white, with one hot orange held in reserve.
+Near-black with three graphite steps, cool white text, and one acid lime used sparingly.
 
 ### Primary
-- **Signal Orange** (signal): the primary action fill (every button), the selected-mission marker, the payload strokes on the mission drawing, the lit background of a changed value, the focus outline, text selection, caret and the invalid-field bar. Text on it is always Ink.
 
-### Secondary
-- **Bookcloth Green** (cloth): a deep grey-green that owns whole fields: the sticky masthead band, the mission section and the enquiry section. Also the `theme-color`. Used at 9% mixed into page for the table-row hover tint, its only partial use.
+- **Signal Lime** (#D7F23A): the one accent. It goes on the primary call to action, the key figure in each stat stack, the active use-case marker, the hotspot dots and the parts of the model that change with each mission. Never on large fills except the CTA.
 
 ### Neutral
-- **Drawing Ink** (ink): all text and all drawing strokes on page; every structural rule; the footer field; the hover fill of the primary button.
-- **Second Ink** (ink-2): a dark green-grey for secondary text on page: class line, row keys, captions, lead paragraphs, placeholders.
-- **Cool Paper** (page): the page ground, the inset ground of the mission drawing plate inside the cloth field, form field fill, and the knock-out halo behind dimension figures.
-- **Cloth Ink** (cloth-ink): primary text on bookcloth.
-- **Cloth Ink Faded** (cloth-ink-2): secondary text and hairline rules on bookcloth; unselected mission options; footer text.
 
-### Named Rules
-**The Change-State Rule.** Signal orange marks only two things: the action to take and the value that just changed. It never decorates, never fills a section, never colours a heading.
+- **Void** (#0A0B0C): page background, the "room" the model sits in.
+- **Hull** (#121416): sunken areas such as inputs and the spec table background.
+- **Deck** (#1A1D20): the one raised panel style and nav chips.
+- **Line** (#2A2E33): hairlines, table rules, grid guides, inactive wireframe edges.
+- **Line Strong** (#474C53): ghost-button borders, hotspot leaders, drawing guides.
+- **Wire** (#C9CDD1): the wireframe edges of the model.
+- **Text** (#F2F3EF): headings, figures, primary text, the logo on dark.
+- **Text 2** (#8C9197): body copy and captions.
+- **Text 3** (#787D84): meta information and the backdrop word's faded end.
 
-**The Whole-Field Rule.** Bookcloth is applied to full-bleed bands, never to cards or chips. A surface on cloth uses cloth-ink and cloth-ink-2; a drawing inside a cloth field sits on its own page-coloured plate.
+### Named rules
 
-**The Two-Ink Rule.** No greys outside the defined inks, no gradients, no photography. Secondary text uses ink-2 or cloth-ink-2, never opacity.
+**The One Lime Rule.** Lime covers no more than 5% of any screen. On each screen it marks one action and one fact.
+
+**The Spotlight Rule.** The only gradient allowed is a soft radial light behind the model (void to #16191C, centred on the hull). No other gradients, glows or glass effects.
 
 ## Typography
 
-**Display Font:** Archivo Variable (with Archivo, system-ui, sans-serif)
-**Body Font:** Archivo Variable
-**Label Font:** Archivo Variable, narrowed through the `wdth` axis
+**Display and text font:** Geist (variable, OFL, self-hosted through `@fontsource-variable/geist`). It stands in for Neue Montreal from the VREX reference, which is a paid font. If the client licenses Neue Montreal, it is a drop-in swap.
 
-**Character:** One grotesque family stretched across its width axis: headings condensed and very heavy like an annual's entry names, labels narrow and bold like plate lettering, body at normal width. Figures are tabular and lining everywhere, set globally on `body`.
+**Label font:** Geist Mono (`@fontsource-variable/geist-mono`), for kickers, captions under figures, coordinates and spec keys, as in the Keileth reference.
+
+**Character:** a neutral, slightly warm grotesk at medium weight with tight tracking. It gets its authority from size and space, not boldness. Nothing heavier than 500.
 
 ### Hierarchy
-- **Display** (850, clamp(3.25rem, 9vw, 6rem), 0.86, wdth 68): the vessel name only, once per page.
-- **Headline** (800, clamp(2rem, 5vw, 3.75rem), 0.95, wdth 72): section heads, always sitting on a 2px rule with a short explanatory paragraph beside them.
-- **Title** (800, clamp(1.5rem, 3vw, 2.25rem), 1, wdth 75): phases within a section (Adaptation, Sea trials, Sustainment).
-- **Dek** (500, clamp(1.125rem, 1.7vw, 1.4rem), 1.32): the standfirst beside the vessel name, max 40ch.
-- **Body** (400, 1.0625rem, 1.5): running text, max 52 to 70ch.
-- **Label** (800, wdth 80): definition terms, table column heads, fieldset legends, run-in labels such as "Enquiries" and "Plate 1".
-- **Figure** (700 to 750, wdth 85, right-aligned or last column): measured values in particulars blocks and tables.
-- **Caption** (400, 0.875rem, ink-2, on a 1px rule): plate captions, led by the bold plate number in ink.
-- **Annotation** (600, 13px in viewBox units, wdth 80): station numbers, labels and dimensions inside drawings; dimension figures carry a page-coloured stroke halo so they read over linework.
 
-### Named Rules
-**The Tabular Rule.** Every number is a tabular lining figure, set with thousands separators and units (8,323 mm, 1,300 kg).
+- **Backdrop** (500, clamp(8rem, 24vw, 22rem), line-height 0.8, -0.055em): one word with a full stop ("Sea.", "Strike.", "Rescue."). It sits behind the model, partly hidden by it. It is filled with Text and fades to transparent from its top (mask-image linear-gradient), with a light 2–6px blur on the lower part, as in VREX. It is decoration, so it gets `aria-hidden`; the real heading is the Display line.
+- **Display** (500, clamp(2.75rem, 6vw, 5.5rem), 0.95): the hero line and the closing line. Max 3 lines.
+- **Headline** (500, clamp(2rem, 3.6vw, 3.25rem), 1): section titles. Often offset into two indented lines ("A platform built / to operate / in the field").
+- **Figure** (500, clamp(2.5rem, 4.5vw, 4.5rem), 0.9, tabular): stat numbers. The unit is set in the same line at 45% size ("60 kn", "500 nm").
+- **Title** (500, 1.375rem): mission names, card titles.
+- **Body** (400, 1rem, 1.55): copy, max 52ch. In Text 2.
+- **Label** (Geist Mono 400, 0.75rem, +0.06em, uppercase): kickers in square brackets, captions under figures, table keys.
+- **Caption** (400, 0.75rem): footnotes and figure captions.
 
-**The Width-Axis Rule.** Hierarchy is made with `wdth` and weight, not with additional families. Narrower and heavier means more structural.
+### Named rules
+
+**The Big-Small Rule.** Never put middle sizes next to each other. Pair a very large element with a very small one (Figure with Label, Backdrop with Body). This contrast is what gives the references their tension.
+
+**The Bracket Rule.** Section kickers are mono, uppercase and bracketed: `[ 02 PARTICULARS ]`.
 
 ## Layout
 
-A single centred column (max 1320px) with a fluid gutter (clamp(16px, 4vw, 48px)). Spacing uses a nine-step scale from 4px to 112px; section padding is s9 top and s8 bottom on desktop, stepping down to s8/s7 under 860px.
-
-Sections open with a two-column head (headline left, paragraph right, both bottom-aligned) above a 2px rule. Content below is either a full-width drawing plate, a definition grid (four columns in the hero particulars, two in the mission entry), or a key/value grid with a fixed term column (9rem, 11rem or 13rem). Every row is separated by a 1px rule; groups are opened by a 2px rule.
-
-One breakpoint carries the system: at 860px every multi-column grid collapses to one column and the masthead nav hides. A second at 520px shortens the masthead button label; at 640px drawings drop station numbers and enlarge their annotations so labels remain legible in viewBox units.
-
-The masthead is sticky (64px) and scroll padding is 72px.
+- **Grid:** 12 columns, max 1440px, 24px gutters, side margins clamp(16px, 4vw, 64px). Faint grid guides (Line at 40% opacity) may be drawn in the hero and the identity-style sections only, as in the VREX logo sheet.
+- **Hero:** full viewport height. The model takes columns 4–12 and may bleed off the right edge. The Display line and a short dek sit on columns 1–4, bottom left. The stat stack sits on columns 10–12, right. The backdrop word runs behind the model, low in the frame.
+- **Use-case switcher (the VREX scene):** a sticky full-height stage. Left: mission chips (pills) grouped by sector. Centre: the same wireframe hull, whose payload and lime highlights change per mission. Behind it: the backdrop word changes ("Air." → "Rescue." → "Cargo."). Right: mission name, one line of text, and three figures, the last one in lime. Switching cross-fades the backdrop word and morphs the model in 600ms. On scroll, each mission can also advance the stage.
+- **Rhythm:** alternate between open "scenes" (one idea, lots of black, 200px vertical padding) and dense "sheets" (spec tables, standards, form; 80px padding, hairline rules). Never two dense sheets in a row.
+- **Space:** at least 40% of every scene is empty. Text blocks are short and pushed to corners; the model holds the centre.
+- **Mobile:** the model goes on top, full width, at about 60vh. Backdrop word at 34vw. Stat stack becomes a 3-up row. The switcher chips become a horizontal scroller.
 
 ## Elevation & Depth
 
-The system is flat. There are no drop shadows, no layering, no blur. Depth is conveyed only by field changes (page to bookcloth to an inset page plate) and by rule weight (2px opens a group, 1px separates rows). The single `box-shadow` in the build is an inset 4px signal bar under an invalid form field, a state mark rather than elevation.
-
-### Named Rules
-**The Ruled-Not-Lifted Rule.** Separation is a ruled line or a change of field, never a shadow or a card.
+The page is flat and shadowless. Depth comes from three things only: the 3D model itself (slow idle rotation, parallax on pointer), the Spotlight radial behind it, and tonal steps from Void to Hull to Deck. Panels never cast shadows; they sit one tone above the page.
 
 ## Shapes
 
-All corners are square (0px), including buttons and form fields. Form fields have no border except a 2px bottom edge. The only small geometric marks are the 10px square checkbox-style marker on mission options (outlined in current colour, filled signal when selected) and the CSS-drawn chevron on the select. The drawings themselves supply all curves: hull sheer, chine, waterlines, with dashed and dot-dash line types for waterlines, stations and the design waterline.
+- **Pill (999px):** everything interactive: buttons, nav chips, mission chips, the language toggle. The pill echoes the round logo.
+- **Square (0px):** everything you read: panels, tables, inputs, image frames.
+- **Circle:** the logo, hotspot markers on the model (12px lime dot in a 28px Line ring, with a number in Label), and the mission icons.
+- **Lines:** 1px hairlines only. Wireframe edges are 1px Wire at 70% opacity; edges that belong to the active mission's payload are Signal Lime at 100%.
 
 ## Components
 
-### Buttons
-Blunt, filled and unmistakable: the only orange rectangles on the page.
-- **Shape:** square corners (0px).
-- **Primary:** signal fill, ink text, label weight 700 at wdth 90, 48px min height, 24px side padding.
-- **Small:** 40px min height, 16px side padding, 0.9375rem; used in the masthead.
-- **Hover:** fill swaps to ink, text to page (0.2s, ease-out expo `cubic-bezier(0.16, 1, 0.3, 1)`).
-- **Focus:** 2px signal outline at 3px offset (global).
-- **Disabled:** 55% opacity, progress cursor.
-- On mobile the form and enquiry-line buttons go full width with centred labels.
-
-### Masthead
-A sticky bookcloth band (64px): the wordmark (a line-drawn hull glyph plus "OmniHopper", 800, wdth 110), section links in cloth-ink-2 (600, wdth 90; hover to cloth-ink with underline), and the small primary button pushed right.
-
-### Particulars Block
-A definition grid ruled like an almanac: 2px top rule, each pair on its own 1px-ruled row, term left in ink-2 at wdth 85, figure right in 750 at wdth 85. Four columns on desktop, one on mobile; long entries span two columns.
-
-### Spec Table
-Real `<table>` markup, 2px top rule, 1px row rules, column heads in label style. Columns: lettered reference (A to E, 800), key in ink-2, value in 700. Hovering a lettered row dims all other dimension callouts on the drawings to 25% so the matching dimension stands alone; row hover tints the row with 9% cloth.
-
-### Mission Picker (signature)
-A radiogroup of sector fieldsets on bookcloth. Each option is a full-width text row with a 1px cloth-ink-2 top rule and a 10px square marker at the right. Unselected: cloth-ink-2 text, outlined marker. Selected: cloth-ink text, 12px indent, signal-filled marker. Arrow keys move selection. Selecting redraws the payload in signal orange on the page-coloured mission plate and updates the mission entry below.
-
-### Lit Value
-When a mission changes, every value in the mission entry that changed takes a signal background with ink text (1px 4px padding, box-decoration-break clone) and keeps it until the next change. The light fades in over 0.6s when motion is allowed.
-
-### Drawing Plate (signature)
-An SVG lines plan in a figure: ink strokes with `vector-effect: non-scaling-stroke` (hull 2.2, standard 1.4, thin 0.9, stations 0.6 dotted, waterlines 6 4 dashed, design waterline 14 4 2 4 dot-dash), lettered dimension callouts with arrowheads, and a chequered scale bar. A caption on a 1px rule names the plate ("Plate 1") in bold ink. On load the drawing inks itself once (1.8s stroke draw, then annotations appear at 1.2s); under reduced motion it renders complete.
-
-### Inputs / Fields
-- **Style:** page-coloured fill on bookcloth, ink text, no border, 2px bottom edge in page colour, square corners, 48px min height, 12px padding. Labels sit above in 700 at wdth 85.
-- **Focus:** 2px signal outline at 2px offset; caret and accent in signal.
-- **Error:** bottom edge and a 4px inset bar in signal; a status line below states which fields are missing.
+- **Logo:** the round H mark (`public/brand/logo-white.svg` on dark, `logo-black.svg` on light) followed by the wordmark "OmniHopper" in Geist 500, -0.02em. Minimum mark size 24px. Clear space equals half the mark's diameter.
+- **Header:** transparent over the hero, logo left, nav as Label-style pills right, lime pill CTA "Request briefing". It becomes Void at 85% with a Line bottom rule after scroll.
+- **Wireframe model:** a three.js (or pre-rendered SVG fallback) mesh of the OmniHopper hull: edges only, no faces, Wire colour. Mission payloads are separate meshes toggled per use case and drawn in lime. Idle rotation of 0.05 rad/s; pauses on hover and under prefers-reduced-motion, where a static front-three-quarter view is shown.
+- **Hotspot:** numbered circle on the model with a thin leader line to a Label caption (Stalker-style "Sensor mast", "EO/IR gimbal", "Outboard 200 hp").
+- **Stat stack:** a vertical list of 2–4 figures. Each: Figure, then Label caption 8px below in Text 2. The key figure is lime. 32px between items.
+- **Mission chip:** pill, Deck background, Text 2, Label type. Active: Text background, Void text, with a lime 6px dot.
+- **Panel:** square Deck block with a bracket kicker at top left and a small mono index at bottom left (Keileth-style). Used at most once per screen.
+- **Spec table:** two columns, Label keys in Text 3, values in Title type, Line hairlines between rows, no zebra striping.
+- **Big-number band:** a sheet of 3–4 huge figures (40+, 10, 600 kg) each with a two-line Label caption, laid on a 4-column grid, as in the VREX closing slide.
+- **Form:** square inputs on Hull, Line border, lime focus ring 2px; labels in Label type above; lime pill submit.
 
 ## Do's and Don'ts
 
-### Do:
-- **Do** draw the vessel; show it as a lines plan with stations, waterlines, lettered dimensions and a scale bar.
-- **Do** reserve signal orange (signal) for the primary action, the selected marker and changed values.
-- **Do** give bookcloth whole bands; place drawings inside a cloth field on a page-coloured plate.
-- **Do** separate with ink rules: 2px to open a group, 1px between rows.
-- **Do** set every figure tabular and lining, with thousands separators and units.
-- **Do** build hierarchy with Archivo's width axis and weight: condensed heavy heads, narrow heavy labels.
-- **Do** caption every drawing with a bold plate number on a 1px rule; label illustrative payloads as schematic.
+**Do**
 
-### Don't:
-- **Don't** use photography, renders, gradients or decorative imagery; the client brief retired photorealistic imagery.
-- **Don't** add shadows, cards or rounded corners.
-- **Don't** introduce greys or colours beyond the seven tokens, or fade text with opacity.
-- **Don't** use signal orange for headings, section fills or decoration.
-- **Don't** place small uppercase labels above headings; section heads are a headline plus a paragraph on a rule.
-- **Don't** name the hull's manufacturer anywhere, in copy, drawings, alt text or file names; the vessel is OmniHopper.
+- Let one wireframe hull carry the page and change it per mission instead of adding more pictures.
+- Put the backdrop word behind the model so the model overlaps it.
+- Pair huge figures with tiny mono captions.
+- Keep lime for one action and one fact per screen.
+- Keep at least 40% of each scene empty.
+- Respect prefers-reduced-motion: no rotation, no morph, instant swaps.
+
+**Don't**
+
+- Don't use photos or photoreal renders. The client asked for schematic visuals.
+- Don't add a second accent colour, gradients (other than the Spotlight), glows, glassmorphism or drop shadows.
+- Don't use bold weights. Size and space do the work.
+- Don't round panels, tables or inputs. Only pressable things are pills.
+- Don't name ALMAR, LANCIA, M-08 or CETUS anywhere, including file names, alt text and model metadata. The vessel is OmniHopper.
+- Don't copy VREX's pixel logo grid or its exact layouts. Take the principles, not the artwork.
+
+## References
+
+What the three references share, and what this system takes from each.
+
+| | Keileth (DroneOS) | Stalker 5.0 | VREX |
+|---|---|---|---|
+| Palette | Near-black, white wire, lime-yellow accent | Charcoal, grey 3D render, white | Black, white, Electric Lime |
+| Type | Light grotesk headline in accent, mono bracket labels | Medium grotesk, centred statements | Neue Montreal, giant backdrop words, big figures |
+| Image | Wireframe drone, bleeds off the right edge | 3D boat on hero with hotspots | Matte 3D vehicles, skin changes per domain (Land., Sea.) |
+| Space | Object fills 2/3, copy in a corner | Hero, then a dark spec sheet | Object centred, lots of black, stats to the right |
+| Shapes | Square grey panel, X mark | Pill nav chips | Pill buttons, grid guides |
+
+**Common ground:** a dark room, one hero object as the visual, neutral grotesk at medium weight, one acid accent used rarely, mono or small-caps labels, specs as big figures or quiet tables, and a lot of empty space. None of them uses photography of people or busy backgrounds.

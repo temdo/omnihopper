@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import Profile from '../components/Profile.astro';
+import Wire from '../components/Wire.astro';
+import Logo from '../components/Logo.astro';
 import Lines from '../components/Lines.astro';
 import { sectors, allMissions } from '../lib/missions';
 
@@ -61,6 +62,13 @@ const standards: [string, string][] = [
 ];
 
 const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Fleet sustainment & MRO', 'Technical consultation', 'Other'];
+
+const figures: [string, string, string][] = [
+  ['8.3', 'm', 'Length overall'],
+  ['0.33', 'm', 'Draft, for shallow coastal water'],
+  ['1,200', 'l', 'Fuel aboard'],
+  ['10', '', 'Mission fits on one hull'],
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -69,117 +77,96 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OmniHopper — High-endurance autonomous surface vessel</title>
   <meta name="description" content="OmniHopper is a high-endurance autonomous surface vessel for defence, security and offshore missions: 500 nm range, 600 kg useful load, 60 kn, with adaptation, sea trials and sustainment from one supplier." />
-  <meta name="theme-color" content="#0a2a4d" />
+  <meta name="theme-color" content="#0a0b0c" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
 <body>
-  <a class="skip" href="#vessel">Skip to content</a>
+  <a class="skip" href="#main">Skip to content</a>
 
   <header class="mast">
     <div class="wrap mast-in">
-      <a class="mark" href="#vessel" aria-label="OmniHopper, top of page">
-        <svg viewBox="0 0 44 16" aria-hidden="true"><path d="M1 4h28c6 0 11 3 14 8H6z" /><path d="M1 12h42" /></svg>
-        OmniHopper
-      </a>
+      <a class="brand" href="#top" aria-label="OmniHopper, top of page"><Logo size={26} /> <span>OmniHopper</span></a>
       <nav aria-label="Sections">
         <a href="#missions">Missions</a>
         <a href="#particulars">Particulars</a>
-        <a href="#record">Lifecycle</a>
+        <a href="#lifecycle">Lifecycle</a>
         <a href="#standards">Standards</a>
       </nav>
-      <a class="btn btn-sm" href="#enquiries">Request <span class="long">documentation</span><span class="short">docs</span></a>
+      <a class="btn btn-sm" href="#enquiries">Request briefing</a>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="vessel" aria-labelledby="title">
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="title">
+      <div class="hero-stage" aria-hidden="false">
+        <p class="backdrop hero-word" aria-hidden="true">Sea.</p>
+        <div class="hero-model">
+          <Wire id="hero-wire" hotspots label="OmniHopper autonomous surface vessel drawn as a wireframe from off the starboard bow: electronics housing aft with an EO/IR gimbal on its roof, open mission deck forward, outboard engine on the transom." />
+        </div>
+      </div>
       <div class="wrap hero-in">
         <div class="hero-copy">
-          <h1 id="title">OmniHopper</h1>
-          <p class="class-line">Autonomous surface vessel · patrol, security and logistics · dual-use</p>
-          <p class="dek">High-endurance maritime platform for mission-critical operations. Five hundred nautical miles on one load of fuel, six hundred kilograms of mission payload, and no crew required.</p>
+          <p class="kick">Autonomous surface vessel</p>
+          <h1 id="title">High-endurance maritime platform for mission-critical operations</h1>
+          <p class="dek">One unmanned hull for patrol, defence, rescue and logistics. No crew aboard, and the whole service life supported by one team.</p>
           <div class="hero-act">
             <a class="btn" href="#enquiries">Request technical documentation</a>
-            <a class="link" href="#missions">See all ten mission fits</a>
+            <a class="btn btn-ghost" href="#missions">Ten mission fits</a>
           </div>
         </div>
-        <div class="fits inking">
-          <figure class="fit">
-            <Profile id="fit-air" fit="air" compact label="OmniHopper fitted for air defence: AIM-9X missile on a rail launcher amidships, superstructure aft with EO/IR camera." />
-            <figcaption><span>Fit A</span> Air &amp; sea defence. AIM-9X on a deck rail launcher.</figcaption>
-          </figure>
-          <figure class="fit">
-            <Profile id="fit-sar" fit="sar" compact label="OmniHopper fitted for search and rescue: two liferaft canisters amidships and a remote fire monitor on the bow." />
-            <figcaption><span>Fit B</span> Rescue &amp; firefighting. Liferafts and a remote fire monitor.</figcaption>
-          </figure>
-          <figure class="fit">
-            <Profile id="fit-cargo" fit="cargo" compact label="OmniHopper fitted for logistics: two cargo containers on deck, 600 kg useful load." />
-            <figcaption><span>Fit C</span> Offshore logistics. Containerised cargo up to 600 kg.</figcaption>
-          </figure>
-        </div>
-        <dl class="titleblock" aria-label="Drawing title block">
-          <div><dt>Drawing</dt><dd>OmniHopper USV · general arrangement</dd></div>
-          <div><dt>Sheet</dt><dd>1 of 4</dd></div>
-          <div><dt>Scale</dt><dd>NTS</dd></div>
-          <div><dt>Rev</dt><dd>A</dd></div>
+        <dl class="stats" aria-label="Key figures">
+          <div><dt>Maximum speed</dt><dd>60<small> kn</small></dd></div>
+          <div><dt>Range</dt><dd>500<small> nm</small></dd></div>
+          <div class="key"><dt>Useful load</dt><dd>600<small> kg</small></dd></div>
         </dl>
-      </div>
-    </section>
-
-    <section class="entry" id="profile" aria-labelledby="profile-h">
-      <div class="wrap">
-        <h2 id="profile-h" class="visually-hidden">Profile and principal particulars</h2>
-        <figure class="plate">
-          <Profile id="hero-profile" fit="none" />
-          <figcaption><span>Plate 1</span> Profile and sheer. Superstructure aft, EO/IR camera at the masthead. Stations 0 to 10 at 832 mm; lettered dimensions in millimetres.</figcaption>
-        </figure>
-        <dl class="brief">
-          <div><dt>L.O.A.</dt><dd>8,323 mm</dd></div>
-          <div><dt>Beam</dt><dd>2,250 mm</dd></div>
-          <div><dt>Draft</dt><dd>0.33 m</dd></div>
-          <div><dt>Freeboard</dt><dd>441 mm</dd></div>
-          <div><dt>Weight, empty / max</dt><dd>700 / 1,300 kg</dd></div>
-          <div><dt>Useful load</dt><dd>600 kg</dd></div>
-          <div><dt>Speed, cruise / max</dt><dd>35 / 60 kn</dd></div>
-          <div><dt>Range</dt><dd>500 nm</dd></div>
-          <div class="wide"><dt>Propulsion</dt><dd>Outboard V6, 200 bhp / 149 kW</dd></div>
-          <div class="wide"><dt>Control</dt><dd>Autonomous, UAV-integrated</dd></div>
-        </dl>
-        <div class="enquiries-line">
-          <span>Enquiries</span>
-          <p>Specifications, sea-trial availability and mission configurations are released on request.</p>
-          <a class="btn" href="#enquiries">Request technical documentation</a>
-        </div>
       </div>
     </section>
 
     <section class="missions" id="missions" aria-labelledby="missions-h">
       <div class="wrap">
         <div class="sec-head">
-          <h2 id="missions-h">One hull. Ten mission fits.</h2>
-          <p>Choose a mission. The drawing shows where its package sits, and the entry below updates.</p>
+          <p class="kick">01 Missions</p>
+          <h2 id="missions-h">One hull.<br /><span class="indent">Ten mission fits.</span></h2>
         </div>
-        <div class="picker" role="radiogroup" aria-label="Mission">
-          {sectors.map((s) => (
-            <fieldset>
-              <legend>{s.name}</legend>
-              {s.missions.map((m) => (
-                <button type="button" role="radio" aria-checked={m.id === first.id ? 'true' : 'false'} data-mission={m.id}>{m.name}</button>
-              ))}
-            </fieldset>
+        <div class="stage">
+          <div class="picker" role="radiogroup" aria-label="Mission">
+            {sectors.map((s) => (
+              <fieldset>
+                <legend class="kick">{s.name}</legend>
+                <div class="chips">
+                  {s.missions.map((m) => (
+                    <button type="button" role="radio" class="chip" aria-checked={m.id === first.id ? 'true' : 'false'} data-mission={m.id}>{m.name}</button>
+                  ))}
+                </div>
+              </fieldset>
+            ))}
+          </div>
+          <div class="stage-model">
+            <p class="backdrop stage-word" aria-hidden="true">{first.word}</p>
+            <Wire id="mission-wire" fit="all" label="OmniHopper wireframe with the selected mission package highlighted." />
+          </div>
+          <div class="mission-entry" aria-live="polite">
+            <p class="kick" data-f="sector">{first.sector}</p>
+            <h3 data-f="name">{first.name}</h3>
+            <p class="note" data-f="note">{first.note}</p>
+            <dl>
+              <div><dt>Package</dt><dd data-f="package">{first.package}</dd></div>
+              <div><dt>Sensors</dt><dd data-f="sensors">{first.sensors}</dd></div>
+              <div><dt>Effect</dt><dd data-f="effectors">{first.effectors}</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="band-h">
+      <div class="wrap band-in">
+        <h2 id="band-h">A platform built<br /><span class="indent">to operate</span><br /><span class="indent-2">at sea</span></h2>
+        <p class="band-copy">Operates without constant human oversight. Integrates with UAVs and other networked systems. Reinforced hull with maritime-grade protection.</p>
+        <dl class="figs">
+          {figures.map(([n, u, c], i) => (
+            <div class:list={{ key: i === 3 }}><dd>{n}{u && <small> {u}</small>}</dd><dt>{c}</dt></div>
           ))}
-        </div>
-        <div class="mission-plate" data-active={first.id}>
-          <Profile id="mission-profile" />
-          <p class="schematic"><span>Plate 4</span> Mission arrangement. Schematic: packages are shown for position, not to scale.</p>
-        </div>
-        <dl class="mission-entry" aria-live="polite">
-          <div><dt>Mission</dt><dd data-f="name"><span>{first.name}</span></dd></div>
-          <div><dt>Sector</dt><dd data-f="sector"><span>{first.sector}</span></dd></div>
-          <div><dt>Package</dt><dd data-f="package"><span>{first.package}</span></dd></div>
-          <div><dt>Sensors</dt><dd data-f="sensors"><span>{first.sensors}</span></dd></div>
-          <div><dt>Effect</dt><dd data-f="effectors"><span>{first.effectors}</span></dd></div>
-          <div class="wide"><dt>Why unmanned</dt><dd data-f="note"><span>{first.note}</span></dd></div>
         </dl>
       </div>
     </section>
@@ -187,38 +174,38 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
     <section class="particulars" id="particulars" aria-labelledby="part-h">
       <div class="wrap">
         <div class="sec-head">
-          <h2 id="part-h">Particulars</h2>
-          <p>Lines and principal figures. Lettered rows match the dimensions on the drawings.</p>
+          <p class="kick">02 Particulars</p>
+          <h2 id="part-h">Lines and principal figures</h2>
         </div>
         <div class="part-grid">
           <Lines />
-          <div class="specs">
-            {[particulars.slice(0, 8), particulars.slice(8)].map((rows, i) => (
-              <table class="spec">
-                <caption class="visually-hidden">{i === 0 ? 'Dimensions and weights' : 'Performance and propulsion'}</caption>
-                <thead><tr><th scope="col">Ref</th><th scope="col">{i === 0 ? 'Dimensions' : 'Performance'}</th><th scope="col">Value</th></tr></thead>
-                <tbody>
-                  {rows.map(([r, k, v]) => (
-                    <tr data-ref={r || undefined}><td class="ref">{r}</td><th scope="row">{k}</th><td>{v}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            ))}
-          </div>
         </div>
-        <p class="ops">Operates without constant human oversight. Integrates with UAVs and other networked systems. Reinforced hull with maritime-grade protection.</p>
+        <div class="specs">
+          {[particulars.slice(0, 8), particulars.slice(8)].map((rows, i) => (
+            <table class="spec">
+              <caption class="kick">{i === 0 ? 'Dimensions and weights' : 'Performance and propulsion'}</caption>
+              <tbody>
+                {rows.map(([r, k, v]) => (
+                  <tr data-ref={r || undefined}><th scope="row"><span class="ref">{r}</span>{k}</th><td>{v}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          ))}
+        </div>
       </div>
     </section>
 
-    <section class="record" id="record" aria-labelledby="rec-h">
+    <section class="lifecycle" id="lifecycle" aria-labelledby="life-h">
       <div class="wrap">
         <div class="sec-head">
-          <h2 id="rec-h">Forged at sea. Built for resilience.</h2>
-          <p>Modern maritime security needs platforms that survive high-attrition, infrastructure-denied environments. We carry the vessel through its whole service life, so you do not assemble hull, integration, trials and support from separate vendors.</p>
+          <p class="kick">03 Lifecycle</p>
+          <h2 id="life-h">Forged at sea.<br /><span class="indent">Built for resilience.</span></h2>
+          <p class="sec-copy">Modern maritime security needs platforms that survive high-attrition, infrastructure-denied environments. We carry the vessel through its whole service life, so you do not assemble hull, integration, trials and support from separate vendors.</p>
         </div>
-        <ol class="log">
-          {record.map((r) => (
+        <ol class="phases">
+          {record.map((r, i) => (
             <li>
+              <p class="idx">0{i + 1}</p>
               <h3>{r.phase}</h3>
               <p class="lead">{r.lead}</p>
               <dl>
@@ -232,21 +219,23 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 
     <section class="standards" id="standards" aria-labelledby="std-h">
       <div class="wrap std-in">
-        <h2 id="std-h">Standards and interoperability</h2>
-        <div>
+        <div class="panel">
+          <p class="kick">04 Standards</p>
+          <h2 id="std-h">Standards and interoperability</h2>
           <p>Our engineering processes follow international and maritime standards, so the vessel fits into existing defence and industrial architectures.</p>
-          <dl>
-            {standards.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
-          </dl>
         </div>
+        <dl class="std-list">
+          {standards.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
       </div>
     </section>
 
     <section class="enquiries" id="enquiries" aria-labelledby="enq-h">
       <div class="wrap enq-in">
         <div>
+          <p class="kick">05 Enquiries</p>
           <h2 id="enq-h">Request technical documentation</h2>
-          <p>Secure your maritime perimeter with field-validated engineering. Tell us the mission and we will send the relevant specifications, configurations and sea-trial availability.</p>
+          <p class="sec-copy">Secure your maritime perimeter with field-validated engineering. Tell us the mission and we will send the relevant specifications, configurations and sea-trial availability.</p>
         </div>
         <form class="form" method="post" action="/api/enquiry" novalidate>
           <label><span>Name</span><input name="name" autocomplete="name" required /></label>
@@ -271,7 +260,7 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 
   <footer class="foot">
     <div class="wrap foot-in">
-      <span>OmniHopper</span>
+      <span class="brand"><Logo size={22} /> OmniHopper</span>
       <span>High-endurance maritime platforms</span>
       <span>© 2026</span>
     </div>
@@ -279,27 +268,25 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 
   <script>
     const data = JSON.parse(document.getElementById('missions-data')!.textContent!);
-    const plate = document.querySelector<HTMLElement>('.mission-plate')!;
+    const wire = document.getElementById('mission-wire')!;
+    const word = document.querySelector<HTMLElement>('.stage-word')!;
     const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-mission]')];
     const fields = [...document.querySelectorAll<HTMLElement>('.mission-entry [data-f]')];
 
     function select(id: string, focus = false) {
       const m = data[id];
-      plate.dataset.active = id;
+      wire.dataset.active = id;
+      word.textContent = m.word;
+      word.classList.remove('swap');
+      void word.offsetWidth;
+      word.classList.add('swap');
       buttons.forEach((b) => {
         const on = b.dataset.mission === id;
         b.setAttribute('aria-checked', String(on));
         b.tabIndex = on ? 0 : -1;
         if (on && focus) b.focus();
       });
-      fields.forEach((el) => {
-        const v = m[el.dataset.f!];
-        const changed = el.textContent !== v;
-        const span = document.createElement('span');
-        span.textContent = v;
-        el.replaceChildren(span);
-        el.classList.toggle('lit', changed);
-      });
+      fields.forEach((el) => { el.textContent = m[el.dataset.f!]; });
     }
     buttons.forEach((b, i) => {
       b.tabIndex = b.getAttribute('aria-checked') === 'true' ? 0 : -1;
@@ -312,6 +299,10 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
       });
     });
 
+    const mast = document.querySelector('.mast')!;
+    const onScroll = () => mast.classList.toggle('solid', scrollY > 40);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     const form = document.querySelector<HTMLFormElement>('.form')!;
     const status = form.querySelector<HTMLElement>('.status')!;
     form.addEventListener('submit', async (e) => {
@@ -348,217 +339,228 @@ const inquiryTypes = ['Platform specifications', 'Sea trial availability', 'Flee
 </html>
 
 <style>
-  .skip { position: absolute; left: -999px; top: 8px; background: var(--signal); color: var(--signal-ink); padding: 8px 12px; z-index: 10; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--signal); color: var(--signal-ink); padding: 8px 12px; z-index: 10; border-radius: 999px; }
   .skip:focus { left: 8px; }
 
   .btn {
-    display: inline-flex; align-items: center; gap: var(--s2);
-    min-height: 48px; padding: 0 var(--s5);
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+    min-height: 48px; padding: 0 28px;
     background: var(--signal); color: var(--signal-ink);
-    font: 700 1rem/1 var(--font); font-variation-settings: 'wdth' 90;
-    text-decoration: none; border: 0; border-radius: 0; cursor: pointer;
-    transition: background-color .2s var(--ease), color .2s var(--ease);
+    font: 500 .9375rem/1 var(--font); letter-spacing: -0.005em;
+    text-decoration: none; border: 1px solid var(--signal); border-radius: 999px; cursor: pointer;
+    transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
   }
-  .btn:hover { background: var(--ink); color: var(--page); }
+  .btn:hover { background: var(--text); border-color: var(--text); }
   .btn:disabled { opacity: .55; cursor: progress; }
-  .btn-sm { min-height: 40px; padding: 0 var(--s4); font-size: .9375rem; }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-2); }
+  .btn-ghost:hover { background: transparent; border-color: var(--text); }
+  .btn-sm { min-height: 38px; padding: 0 18px; font-size: .875rem; }
 
-  /* masthead: a bookcloth band */
-  .mast { position: sticky; top: 0; z-index: 5; background: var(--cloth); color: var(--cloth-ink); }
-  .mast-in { display: flex; align-items: center; gap: var(--s6); min-height: 64px; }
-  .mark { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.125rem; font-variation-settings: 'wdth' 110; text-decoration: none; letter-spacing: .01em; }
-  .mark svg { width: 34px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-  .mast nav { display: flex; gap: var(--s5); margin-left: auto; font-weight: 600; font-variation-settings: 'wdth' 90; }
-  .mast nav a { text-decoration: none; color: var(--cloth-ink-2); }
-  .mast nav a:hover { color: var(--cloth-ink); text-decoration: underline; }
-  @media (max-width: 860px) { .mast nav { display: none; } .mast .btn-sm { margin-left: auto; } }
-  .btn-sm { gap: .3em; }
-  .mast .short { display: none; }
-  @media (max-width: 520px) { .mast .long { display: none; } .mast .short { display: inline; } }
+  /* header */
+  .mast { position: fixed; inset: 0 0 auto; z-index: 5; transition: background-color .3s var(--ease), border-color .3s var(--ease); border-bottom: 1px solid transparent; }
+  .mast.solid { background: color-mix(in oklab, var(--void) 88%, transparent); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .mast-in { display: flex; align-items: center; gap: var(--s5); min-height: 72px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 1.0625rem; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+  .mast nav { display: flex; gap: 6px; margin-left: auto; }
+  .mast nav a { font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: var(--text-2); background: var(--deck); padding: 9px 14px; border-radius: 999px; transition: color .2s, background-color .2s; }
+  .mast nav a:hover { color: var(--void); background: var(--text); }
+  @media (max-width: 900px) { .mast nav { display: none; } .mast .btn-sm { margin-left: auto; } }
 
-  /* the entry */
-  .hero { padding-block: var(--s7) var(--s6); border-bottom: 2px solid var(--rule); }
-  .hero-in { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr); grid-template-areas: 'copy fits' 'tb fits'; gap: var(--s5) var(--s7); align-items: start; }
-  .hero-copy { grid-area: copy; padding-top: var(--s5); }
-  .hero .dek { margin-top: var(--s5); justify-self: start; }
-  .hero-act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s6); }
-  .link { font-weight: 700; font-variation-settings: 'wdth' 90; }
-  .fits { grid-area: fits; display: grid; gap: var(--s3); }
-  .fit { margin: 0; }
-  .fit :global(figcaption) { margin-top: 0; }
-  .titleblock { grid-area: tb; align-self: end; margin: 0; display: grid; grid-template-columns: 1fr auto auto; border: 1px solid var(--rule); font-size: .8125rem; font-variation-settings: 'wdth' 85; font-variant-numeric: tabular-nums lining-nums; }
-  .titleblock div { padding: 6px 10px; border-left: 1px solid var(--rule); }
-  .titleblock div:first-child { border-left: 0; grid-column: 1 / -1; border-bottom: 1px solid var(--rule); }
-  .titleblock div:nth-child(2) { border-left: 0; }
-  .titleblock dt { color: var(--ink-2); font-size: .6875rem; text-transform: uppercase; letter-spacing: .06em; }
-  .titleblock dd { margin: 0; font-weight: 700; }
-  @media (max-width: 960px) {
-    .hero-in { grid-template-columns: 1fr; grid-template-areas: 'copy' 'fits' 'tb'; }
-    .hero-copy { padding-top: 0; }
+  /* hero: the vessel in a black room */
+  .hero { position: relative; min-height: max(760px, 100svh); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; padding-bottom: var(--s8);
+    background: radial-gradient(60% 55% at 62% 46%, #17191c 0%, var(--void) 70%); }
+  .hero-stage { position: absolute; inset: 0; }
+  .hero-word { position: absolute; left: 33%; top: 33%; margin: 0; opacity: .55; }
+  .hero-model { position: absolute; left: 31%; right: 1%; top: 96px; }
+  .hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6); align-items: end; width: 100%; }
+  .hero-copy { grid-column: 1; }
+  h1 { margin-top: var(--s4); font-size: clamp(2.25rem, 4.2vw, 4.25rem); line-height: .98; letter-spacing: -0.035em; max-width: 13ch; }
+  .dek { margin-top: var(--s5); color: var(--text-2); max-width: 42ch; font-size: 1.0625rem; }
+  .hero-act { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s6); }
+  .stats { grid-column: 2; margin: 0; display: grid; grid-template-columns: repeat(3, auto); justify-content: end; gap: var(--s8); }
+  .stats div { display: flex; flex-direction: column-reverse; gap: var(--s2); }
+  .stats dt, .figs dt { font: 400 .75rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+  .stats dd, .figs dd { margin: 0; font-size: clamp(2.5rem, 4.5vw, 4.5rem); line-height: .9; letter-spacing: -0.04em; font-weight: 500; }
+  .stats small, .figs small { font-size: .42em; letter-spacing: -0.01em; color: var(--text-2); }
+  .stats .key dd, .figs .key dd { color: var(--signal); }
+  .stats .key small, .figs .key small { color: var(--signal); }
+  @media (max-width: 1100px) {
+    .hero-model { left: 12%; }
+    .hero-in { grid-template-columns: 1fr; }
+    .stats { grid-column: 1; justify-content: start; gap: var(--s7); }
   }
-  .entry { padding-block: var(--s7); border-bottom: 2px solid var(--rule); }
-  .entry-head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: var(--s4) var(--s7); padding-bottom: var(--s4); border-bottom: 2px solid var(--rule); }
-  h1 { font-size: clamp(3.25rem, 9vw, 6rem); line-height: .86; font-weight: 850; font-variation-settings: 'wdth' 68; letter-spacing: -0.02em; }
-  .class-line { margin-top: var(--s3); font-weight: 600; font-variation-settings: 'wdth' 85; color: var(--ink-2); }
-  .dek { font-size: clamp(1.125rem, 1.7vw, 1.4rem); line-height: 1.32; font-weight: 500; max-width: 40ch; justify-self: end; }
-  .plate { padding-block: var(--s5) var(--s2); }
-  .plate { margin: 0; padding-block: var(--s5) 0; }
-  :global(figcaption), .schematic { font-size: .875rem; color: var(--ink-2); margin-top: var(--s2); padding-top: var(--s2); border-top: 1px solid var(--rule); }
-  :global(figcaption span), .schematic span { font-weight: 800; color: var(--ink); margin-right: .4em; }
-  .brief { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: var(--s4) 0 0; border-top: 2px solid var(--rule); column-gap: var(--s5); font-variant-numeric: tabular-nums lining-nums; }
-  .brief div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); padding: 7px 0; border-bottom: 1px solid var(--rule); }
-  .brief .wide { grid-column: span 2; }
-  .brief dt { font-variation-settings: 'wdth' 85; color: var(--ink-2); font-size: .9375rem; }
-  .brief dd { margin: 0; font-weight: 750; font-variation-settings: 'wdth' 85; text-align: right; }
-  .enquiries-line { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--rule); }
-  .enquiries-line span { font-weight: 800; font-variation-settings: 'wdth' 80; }
-  .enquiries-line p { color: var(--ink-2); max-width: 60ch; }
-  @media (max-width: 860px) {
-    .entry-head { grid-template-columns: 1fr; }
-    .dek { justify-self: start; }
-    .brief { grid-template-columns: 1fr; }
-    .brief .wide { grid-column: auto; }
-    .enquiries-line { grid-template-columns: 1fr; gap: var(--s3); }
-    .enquiries-line .btn { justify-content: center; }
+  @media (max-width: 760px) {
+    .hero { min-height: 0; padding-top: 88px; padding-bottom: var(--s7); }
+    .hero-stage { position: relative; inset: auto; height: 62vw; min-height: 240px; }
+    .hero-model { left: 0; right: 0; top: 0; }
+    .hero-word { font-size: 38vw; top: 30%; left: 18%; }
+    .hero-in { grid-template-columns: 1fr; gap: var(--s7); }
+    .stats { grid-column: 1; grid-template-columns: repeat(3, auto); gap: var(--s5); justify-content: start; }
+    .stats dd { font-size: 2.25rem; }
+    .hero-act .btn { flex: 1 1 auto; }
   }
+  @media (max-width: 760px) { .hero :global(.spots) { display: none; } }
 
   /* section heads */
-  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s6); align-items: end; padding-bottom: var(--s5); margin-bottom: var(--s6); border-bottom: 2px solid currentColor; }
-  h2 { font-size: clamp(2rem, 5vw, 3.75rem); line-height: .95; font-variation-settings: 'wdth' 72; }
-  .sec-head p { max-width: 52ch; }
-  @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; gap: var(--s3); } }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4) var(--s6); align-items: end; margin-bottom: var(--s8); }
+  .sec-head .kick { grid-column: 1 / -1; }
+  h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1; letter-spacing: -0.03em; }
+  .indent { display: inline-block; padding-left: 1.2em; }
+  .indent-2 { display: inline-block; padding-left: 2.4em; }
+  .sec-copy { color: var(--text-2); max-width: 52ch; }
+  @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; margin-bottom: var(--s7); } }
 
-  /* missions: a bookcloth field */
-  .missions { background: var(--cloth); color: var(--cloth-ink); padding-block: var(--s9) var(--s8); }
-  .missions .sec-head p { color: var(--cloth-ink-2); }
-  .picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); margin-bottom: var(--s6); }
-  .picker fieldset { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; }
-  .picker legend { padding: 0 0 var(--s2); font-weight: 800; font-variation-settings: 'wdth' 80; }
-  .picker button {
-    text-align: left; padding: 10px 0; background: none; color: var(--cloth-ink-2);
-    font: 600 1rem/1.25 var(--font); font-variation-settings: 'wdth' 95;
-    border: 0; border-top: 1px solid var(--cloth-ink-2); cursor: pointer;
-    display: flex; justify-content: space-between; gap: var(--s3);
-    transition: color .2s var(--ease), padding .3s var(--ease);
+  /* missions: one hull, the package changes */
+  .missions { padding-block: var(--s9); border-top: 1px solid var(--line); }
+  .stage { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr) minmax(0, 3fr); gap: var(--s6); align-items: center; }
+  .picker { display: grid; gap: var(--s5); align-self: start; }
+  .picker fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .stage > * { min-width: 0; }
+  .picker legend { padding: 0 0 var(--s3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: 400 .8125rem/1.2 var(--font); color: var(--text-2); background: var(--deck);
+    border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer; text-align: left;
+    transition: background-color .2s var(--ease), color .2s var(--ease);
   }
-  .picker button::after { content: ''; width: 10px; height: 10px; border: 1px solid currentColor; flex: none; margin-top: 4px; }
-  .picker button:hover { color: var(--cloth-ink); }
-  .picker button[aria-checked='true'] { color: var(--cloth-ink); padding-left: var(--s3); }
-  .picker button[aria-checked='true']::after { background: var(--signal); border-color: var(--signal); }
-  .mission-plate { background-color: var(--page); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 24px 24px; border: 1px solid var(--rule); color: var(--ink); padding: var(--s6) var(--s5) var(--s4); }
-  .mission-entry { margin: var(--s6) 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
-  .mission-entry div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--s3); padding: var(--s3) 0; border-top: 1px solid var(--cloth-ink-2); }
-  .mission-entry .wide { grid-column: 1 / -1; }
-  .mission-entry dt { font-weight: 800; font-variation-settings: 'wdth' 80; }
-  .mission-entry dd { margin: 0; font-variant-numeric: tabular-nums lining-nums; }
-  .mission-entry dd.lit :global(span) { background: var(--signal); color: var(--signal-ink); padding: 1px 4px; margin-left: -4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .chip:hover { color: var(--text); }
+  .chip[aria-checked='true'] { background: var(--text); color: var(--void); }
+  .chip[aria-checked='true']::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 1px var(--void); }
+  .stage-model { position: relative; padding-block: var(--s8); }
+  .stage-word { position: absolute; left: 50%; top: 62%; transform: translate(-50%, -50%); margin: 0; font-size: clamp(6rem, 14vw, 14rem); opacity: .55; }
+  .stage-model :global(svg) { position: relative; }
   @media (prefers-reduced-motion: no-preference) {
-    .mission-entry dd.lit :global(span) { animation: lit .6s var(--ease); }
+    .stage-word:global(.swap) { animation: swap .6s var(--ease); }
   }
-  @keyframes lit { from { background-color: transparent; color: inherit; } }
-  @media (max-width: 860px) {
-    .missions { padding-block: var(--s8) var(--s7); }
-    .picker { grid-template-columns: 1fr; gap: var(--s4); }
-    .mission-plate { padding: var(--s4) var(--s3) var(--s3); }
-    .mission-entry { grid-template-columns: 1fr; }
-    .mission-entry div { grid-template-columns: 1fr; gap: 2px; }
+  @keyframes swap { from { opacity: 0; filter: blur(8px); transform: translate(-50%, -44%); } }
+  .mission-entry { align-self: center; }
+  .mission-entry h3 { margin-top: var(--s3); font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.05; letter-spacing: -0.025em; }
+  .mission-entry .note { margin-top: var(--s4); color: var(--text-2); }
+  .mission-entry dl { margin: var(--s5) 0 0; }
+  .mission-entry dl div { padding: var(--s3) 0; border-top: 1px solid var(--line); }
+  .mission-entry dt { font: 400 .6875rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+  .mission-entry dd { margin: 4px 0 0; font-size: .9375rem; }
+
+  #mission-wire[data-active] :global(.w-pay) { opacity: 0; }
+  .stage :global(#mission-wire[data-active='air'] .w-pay[data-m='air']),
+  .stage :global(#mission-wire[data-active='ew'] .w-pay[data-m='ew']),
+  .stage :global(#mission-wire[data-active='mine'] .w-pay[data-m='mine']),
+  .stage :global(#mission-wire[data-active='isr'] .w-pay[data-m='isr']),
+  .stage :global(#mission-wire[data-active='patrol'] .w-pay[data-m='patrol']),
+  .stage :global(#mission-wire[data-active='sar'] .w-pay[data-m='sar']),
+  .stage :global(#mission-wire[data-active='env'] .w-pay[data-m='env']),
+  .stage :global(#mission-wire[data-active='survey'] .w-pay[data-m='survey']),
+  .stage :global(#mission-wire[data-active='cargo'] .w-pay[data-m='cargo']),
+  .stage :global(#mission-wire[data-active='ferry'] .w-pay[data-m='ferry']) { opacity: 1; }
+  .stage :global(#mission-wire[data-active='cargo'] .house) { opacity: 0; }
+
+  @media (max-width: 1100px) {
+    .stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .stage-model { grid-column: 1 / -1; grid-row: 1; }
+  }
+  @media (max-width: 700px) {
+    .missions { padding-block: var(--s8); }
+    .stage { grid-template-columns: 1fr; gap: var(--s5); }
+    .stage-model { padding-block: var(--s5); }
+    .picker { gap: var(--s4); }
+    .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+    .chip { flex: none; }
   }
 
-  .mission-plate :global(.payload) { opacity: 0; }
-  .mission-plate[data-active='air'] :global(.payload[data-m~='air']),
-  .mission-plate[data-active='ew'] :global(.payload[data-m~='ew']),
-  .mission-plate[data-active='mine'] :global(.payload[data-m~='mine']),
-  .mission-plate[data-active='isr'] :global(.payload[data-m~='isr']),
-  .mission-plate[data-active='patrol'] :global(.payload[data-m~='patrol']),
-  .mission-plate[data-active='sar'] :global(.payload[data-m~='sar']),
-  .mission-plate[data-active='env'] :global(.payload[data-m~='env']),
-  .mission-plate[data-active='survey'] :global(.payload[data-m~='survey']),
-  .mission-plate[data-active='cargo'] :global(.payload[data-m~='cargo']),
-  .mission-plate[data-active='ferry'] :global(.payload[data-m~='ferry']) { opacity: 1; }
+  /* big-number band */
+  .band { padding-block: var(--s10); border-top: 1px solid var(--line); }
+  .band-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s7) var(--s6); }
+  .band h2 { font-size: clamp(2.5rem, 5.5vw, 5.25rem); line-height: .95; letter-spacing: -0.04em; }
+  .band-copy { align-self: end; color: var(--text-2); max-width: 40ch; }
+  .figs { grid-column: 1 / -1; margin: var(--s8) 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s6); }
+  .figs div { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s4); border-top: 1px solid var(--line); }
+  .figs dd { font-size: clamp(3rem, 6vw, 6rem); }
+  .figs dt { max-width: 20ch; }
+  @media (max-width: 860px) {
+    .band { padding-block: var(--s9); }
+    .band-in { grid-template-columns: 1fr; }
+    .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--s6); }
+  }
 
   /* particulars */
-  .particulars { padding-block: var(--s9) var(--s8); }
-  .part-grid { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr); gap: var(--s7) var(--s7); align-items: start; }
-  .part-grid { align-items: end; }
-  .specs { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s7); align-items: start; }
-  @media (max-width: 860px) { .specs { grid-template-columns: 1fr; row-gap: var(--s5); } }
+  .particulars { padding-block: var(--s9); border-top: 1px solid var(--line); background: var(--hull); }
+  .part-grid { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); gap: var(--s7); align-items: end; }
   .part-grid :global(figure) { margin: 0; }
-  .spec { width: 100%; border-collapse: collapse; border-top: 2px solid var(--rule); font-variant-numeric: tabular-nums lining-nums; }
-  .spec thead th { text-align: left; font-weight: 800; font-variation-settings: 'wdth' 80; padding: 6px var(--s3) 6px 0; border-bottom: 1px solid var(--rule); }
-  .spec td, .spec tbody th { padding: 7px var(--s3) 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
-  .spec tbody th { font-weight: 500; color: var(--ink-2); width: 11rem; white-space: nowrap; }
-  .spec td:last-child { font-weight: 700; }
-  .spec .ref { width: 2.25rem; font-weight: 800; }
-  @media (max-width: 860px) { .part-grid { grid-template-columns: 1fr; gap: var(--s6); } .spec tbody th { white-space: normal; width: 40%; } }
-  /* a lettered row lights its dimension on the plates */
-  .particulars:has(tr[data-ref]:hover) :global(.dim) { opacity: .25; }
+  .part-grid :global(figcaption) { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line); font-size: .75rem; color: var(--text-2); }
+  .part-grid :global(figcaption span) { font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--text); margin-right: .6em; }
+  .specs { margin-top: var(--s8); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s7); align-items: start; }
+  .spec { width: 100%; border-collapse: collapse; }
+  .spec caption { text-align: left; padding-bottom: var(--s3); }
+  .spec th, .spec td { text-align: left; vertical-align: top; padding: 14px var(--s3) 14px 0; border-top: 1px solid var(--line); font-weight: 400; }
+  .spec th { color: var(--text-2); width: 46%; font-size: .9375rem; }
+  .spec td { font-size: 1.0625rem; letter-spacing: -0.01em; }
+  .spec .ref { display: inline-block; width: 1.6em; font-family: var(--mono); font-size: .75rem; color: var(--signal); }
+  .spec tr[data-ref]:hover { background: var(--deck); }
+  .particulars:has(tr[data-ref]:hover) :global(.dim) { opacity: .2; }
   .particulars:has(tr[data-ref='A']:hover) :global([data-dim='A']),
   .particulars:has(tr[data-ref='B']:hover) :global([data-dim='B']),
   .particulars:has(tr[data-ref='C']:hover) :global([data-dim='C']),
   .particulars:has(tr[data-ref='D']:hover) :global([data-dim='D']),
   .particulars:has(tr[data-ref='E']:hover) :global([data-dim='E']) { opacity: 1; }
-  .spec tbody tr:hover { background: color-mix(in oklab, var(--cloth) 9%, var(--page)); }
-  .ops { margin-top: var(--s5); max-width: 70ch; color: var(--ink-2); }
-
-  /* service record */
-  .record { padding-block: var(--s9) var(--s8); border-top: 2px solid var(--rule); }
-  .log { list-style: none; margin: 0; padding: 0; counter-reset: none; }
-  .log li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--s3) var(--s6); padding: var(--s6) 0; border-bottom: 1px solid var(--rule); }
-  .log li:first-child { padding-top: 0; }
-  h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1; font-variation-settings: 'wdth' 75; }
-  .log .lead { grid-column: 1; color: var(--ink-2); max-width: 36ch; }
-  .log dl { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
-  .log dl div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: var(--s4); padding: 10px 0; border-top: 1px solid var(--rule); }
-  .log dl div:first-child { border-top: 0; padding-top: 0; }
-  .log dt { font-weight: 700; }
-  .log dd { margin: 0; }
   @media (max-width: 860px) {
-    .log li { grid-template-columns: 1fr; }
-    .log dl { grid-column: 1; grid-row: auto; margin-top: var(--s3); }
-    .log dl div { grid-template-columns: 1fr; gap: 2px; }
-    .log dl div:first-child { border-top: 1px solid var(--rule); padding-top: 10px; }
+    .part-grid, .specs { grid-template-columns: 1fr; gap: var(--s6); }
   }
+
+  /* lifecycle */
+  .lifecycle { padding-block: var(--s9); border-top: 1px solid var(--line); }
+  .phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s6); }
+  .phases li { display: flex; flex-direction: column; gap: var(--s4); padding-top: var(--s5); border-top: 1px solid var(--line-2); }
+  .idx { font: 400 .75rem/1 var(--mono); letter-spacing: .06em; color: var(--signal); }
+  h3 { font-size: 1.75rem; line-height: 1.05; letter-spacing: -0.025em; }
+  .phases .lead { color: var(--text-2); }
+  .phases dl { margin: var(--s3) 0 0; }
+  .phases dl div { padding: var(--s3) 0; border-top: 1px solid var(--line); }
+  .phases dt { font-size: .9375rem; }
+  .phases dd { margin: 2px 0 0; color: var(--text-2); font-size: .875rem; }
+  @media (max-width: 960px) { .phases { grid-template-columns: 1fr; gap: var(--s7); } }
 
   /* standards */
-  .standards { padding-block: var(--s8); border-top: 2px solid var(--rule); }
-  .std-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s6); }
-  .standards h2 { font-size: clamp(1.75rem, 3.6vw, 2.75rem); }
-  .standards p { max-width: 60ch; margin-bottom: var(--s4); }
-  .standards dl { margin: 0; }
-  .standards dl div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: var(--s4); padding: 10px 0; border-top: 1px solid var(--rule); }
-  .standards dt { font-weight: 700; }
-  .standards dd { margin: 0; }
-  @media (max-width: 860px) { .std-in, .standards dl div { grid-template-columns: 1fr; gap: var(--s2); } }
+  .standards { padding-block: var(--s9); border-top: 1px solid var(--line); }
+  .std-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--s6); align-items: stretch; }
+  .panel { background: var(--deck); padding: var(--s6); display: flex; flex-direction: column; gap: var(--s4); min-height: 320px; }
+  .panel h2 { font-size: clamp(1.75rem, 2.8vw, 2.5rem); }
+  .panel p:last-child { margin-top: auto; color: var(--text-2); max-width: 46ch; }
+  .std-list { margin: 0; align-self: end; }
+  .std-list div { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: var(--s4); padding: var(--s5) 0; border-top: 1px solid var(--line); }
+  .std-list dt { font: 400 .75rem/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+  .std-list dd { margin: 0; font-size: 1.125rem; letter-spacing: -0.01em; }
+  @media (max-width: 860px) { .std-in, .std-list div { grid-template-columns: 1fr; gap: var(--s2); } .panel { min-height: 0; } }
 
-  /* enquiries: bookcloth field */
-  .enquiries { background: var(--cloth); color: var(--cloth-ink); padding-block: var(--s9); }
-  .enq-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s7); }
-  .enquiries p { color: var(--cloth-ink-2); max-width: 44ch; margin-top: var(--s4); }
-  .form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s5); }
-  .form label { display: flex; flex-direction: column; gap: 6px; }
-  .form label span { font-weight: 700; font-variation-settings: 'wdth' 85; font-size: .9375rem; }
+  /* enquiries */
+  .enquiries { padding-block: var(--s9); border-top: 1px solid var(--line); background: radial-gradient(50% 60% at 15% 30%, #16191c 0%, var(--void) 70%); }
+  .enq-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--s8); }
+  .enq-in h2 { margin-top: var(--s4); }
+  .enq-in .sec-copy { margin-top: var(--s5); }
+  .form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+  .form label { display: flex; flex-direction: column; gap: 8px; }
+  .form label span { font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
   .form .full { grid-column: 1 / -1; }
   .form input, .form select, .form textarea {
-    font: 500 1rem/1.4 var(--font); color: var(--ink); background: #071f3a;
-    border: 1px solid var(--cloth-ink-2); border-radius: 0; padding: 12px; min-height: 48px; width: 100%;
-    caret-color: var(--signal); accent-color: var(--signal);
+    font: 400 1rem/1.4 var(--font); color: var(--text); background: var(--hull);
+    border: 1px solid var(--line); border-radius: 0; padding: 13px 16px; min-height: 50px; width: 100%;
+    caret-color: var(--signal); accent-color: var(--signal); transition: border-color .2s;
   }
-  .form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(-45deg, transparent 50%, var(--ink) 50%); background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 36px; }
+  .form :is(input, select, textarea):hover { border-color: var(--line-2); }
+  .form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--text-2) 50%), linear-gradient(-45deg, transparent 50%, var(--text-2) 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
   .form textarea { resize: vertical; }
-  .form :is(input, select, textarea):focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
-  .form [aria-invalid='true'] { border-bottom-color: var(--signal); box-shadow: inset 0 -4px 0 var(--signal); }
-  .form ::placeholder { color: var(--ink-2); }
+  .form :is(input, select, textarea):focus-visible { outline: 2px solid var(--signal); outline-offset: 0; border-color: transparent; }
+  .form [aria-invalid='true'] { border-color: var(--signal); }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4); }
-  .status { margin: 0 !important; min-height: 1.5em; color: var(--cloth-ink) !important; }
-  .status[data-state='error'] { font-weight: 700; }
+  .status { min-height: 1.5em; color: var(--text-2); }
+  .status[data-state='error'] { color: var(--signal); }
   .hp { position: absolute; left: -9999px; }
   @media (max-width: 860px) {
-    .enquiries { padding-block: var(--s8); }
-    .enq-in, .form { grid-template-columns: 1fr; }
-    .actions .btn { width: 100%; justify-content: center; }
+    .enq-in, .form { grid-template-columns: 1fr; gap: var(--s6); }
+    .actions .btn { width: 100%; }
   }
 
-  .foot { background: var(--cloth); color: var(--cloth-ink-2); border-top: 1px solid var(--rule); }
-  .foot-in { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); justify-content: space-between; padding-block: var(--s5); font-variation-settings: 'wdth' 85; }
-  .foot-in span:first-child { color: var(--ink); font-weight: 800; }
+  .foot { border-top: 1px solid var(--line); color: var(--text-3); }
+  .foot-in { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); justify-content: space-between; align-items: center; padding-block: var(--s6); font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+  .foot .brand { font: 500 1rem/1 var(--font); text-transform: none; letter-spacing: -0.02em; }
 </style>

@@ -1,0 +1,10 @@
+---
+// OmniHopper mark: a rounded block cut into an H. Colour follows currentColor.
+interface Props { size?: number; class?: string }
+const { size = 28, class: cls } = Astro.props;
+const uid = `lg${Math.random().toString(36).slice(2, 7)}`;
+---
+<svg class={cls} width={size * 215 / 256} height={size} viewBox="0 0 215 256" aria-hidden="true">
+  <clipPath id={uid}><rect width="215" height="256" rx="80" /></clipPath>
+  <path clip-path={`url(#${uid})`} fill="currentColor" d="M141.4 406V181.2H75.8V406H-33.8V-144.4H75.8V76.4H141.4V-144.4H251.8V406H141.4Z" />
+</svg>
