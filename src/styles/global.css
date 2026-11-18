@@ -60,6 +60,9 @@ p { margin: 0; }
 .kick { font: 400 .75rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
 .kick::before { content: '[ '; color: var(--text-3); }
 .kick::after { content: ' ]'; color: var(--text-3); }
+/* eyebrows above headings read in lime; group labels and table captions stay grey */
+p.kick { color: var(--signal); }
+p.kick::before, p.kick::after { color: var(--signal); opacity: .5; }
 
 /* the backdrop word behind the model */
 .backdrop {
