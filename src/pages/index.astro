@@ -2,27 +2,26 @@
 import '../styles/global.css';
 import Wire from '../components/Wire.astro';
 import Logo from '../components/Logo.astro';
-import Lines from '../components/Lines.astro';
 import { sectors, allMissions } from '../lib/missions';
 
 const first = allMissions.find((m) => m.id === 'isr')!;
 
-const particulars: [string, string, string][] = [
-  ['A', 'Length overall', '8,323 mm'],
-  ['B', 'Beam', '2,250 mm'],
-  ['C', 'Freeboard', '441 mm'],
-  ['D', 'Draft', '0.33 m'],
-  ['E', 'Moulded depth', '771 mm'],
-  ['', 'Empty weight', '700 kg'],
-  ['', 'Maximum weight', '1,300 kg'],
-  ['', 'Payload', '600 kg'],
-  ['', 'Cruise speed', '35 kn (Beaufort 0)'],
-  ['', 'Maximum speed', '60 kn'],
-  ['', 'Range', '500 nm'],
-  ['', 'Fuel', '1,200 l'],
-  ['', 'Propulsion', 'Mercury Marine V6 outboard, 200 bhp / 149 kW, 5,800 rpm max'],
-  ['', 'Propeller', 'Mercury Enertia 14¾ × 19 in'],
-  ['', 'Towed payload', '6.8 kg, 254 × 366 mm, anchored at the bow'],
+const particulars: [string, string][] = [
+  ['Length overall', '8,323 mm'],
+  ['Beam', '2,250 mm'],
+  ['Freeboard', '441 mm'],
+  ['Draft', '0.33 m'],
+  ['Moulded depth', '771 mm'],
+  ['Empty weight', '700 kg'],
+  ['Maximum weight', '1,300 kg'],
+  ['Payload', '600 kg'],
+  ['Cruise speed', '35 kn (Beaufort 0)'],
+  ['Maximum speed', '60 kn'],
+  ['Range', '500 nm'],
+  ['Fuel', '1,200 l'],
+  ['Propulsion', 'Mercury Marine V6 outboard, 200 bhp / 149 kW, 5,800 rpm max'],
+  ['Propeller', 'Mercury Enertia 14¾ × 19 in'],
+  ['Towed payload', '6.8 kg, 254 × 366 mm, anchored at the bow'],
 ];
 
 const record = [
@@ -174,18 +173,15 @@ const figures: [string, string, string][] = [
       <div class="wrap">
         <div class="sec-head">
           <p class="kick">02 Particulars</p>
-          <h2 id="part-h">Lines and principal figures</h2>
-        </div>
-        <div class="part-grid">
-          <Lines />
+          <h2 id="part-h">Specification</h2>
         </div>
         <div class="specs">
           {[particulars.slice(0, 8), particulars.slice(8)].map((rows, i) => (
             <table class="spec">
               <caption class="kick">{i === 0 ? 'Dimensions and weights' : 'Performance and propulsion'}</caption>
               <tbody>
-                {rows.map(([r, k, v]) => (
-                  <tr data-ref={r || undefined}><th scope="row"><span class="ref">{r}</span>{k}</th><td>{v}</td></tr>
+                {rows.map(([k, v]) => (
+                  <tr><th scope="row">{k}</th><td>{v}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -487,26 +483,14 @@ const figures: [string, string, string][] = [
 
   /* particulars */
   .particulars { padding-block: var(--s9); border-top: 1px solid var(--line); background: var(--hull); }
-  .part-grid { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); gap: var(--s7); align-items: end; }
-  .part-grid :global(figure) { margin: 0; }
-  .part-grid :global(figcaption) { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--line); font-size: .75rem; color: var(--text-2); }
-  .part-grid :global(figcaption span) { font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--text); margin-right: .6em; }
-  .specs { margin-top: var(--s8); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s7); align-items: start; }
+  .specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s7); align-items: start; }
   .spec { width: 100%; border-collapse: collapse; }
   .spec caption { text-align: left; padding-bottom: var(--s3); }
   .spec th, .spec td { text-align: left; vertical-align: top; padding: 14px var(--s3) 14px 0; border-top: 1px solid var(--line); font-weight: 400; }
   .spec th { color: var(--text-2); width: 46%; font-size: .9375rem; }
   .spec td { font-size: 1.0625rem; letter-spacing: -0.01em; }
-  .spec .ref { display: inline-block; width: 1.6em; font-family: var(--mono); font-size: .75rem; color: var(--signal); }
-  .spec tr[data-ref]:hover { background: var(--deck); }
-  .particulars:has(tr[data-ref]:hover) :global(.dim) { opacity: .2; }
-  .particulars:has(tr[data-ref='A']:hover) :global([data-dim='A']),
-  .particulars:has(tr[data-ref='B']:hover) :global([data-dim='B']),
-  .particulars:has(tr[data-ref='C']:hover) :global([data-dim='C']),
-  .particulars:has(tr[data-ref='D']:hover) :global([data-dim='D']),
-  .particulars:has(tr[data-ref='E']:hover) :global([data-dim='E']) { opacity: 1; }
   @media (max-width: 860px) {
-    .part-grid, .specs { grid-template-columns: 1fr; gap: var(--s6); }
+    .specs { grid-template-columns: 1fr; gap: var(--s6); }
   }
 
   /* lifecycle */
