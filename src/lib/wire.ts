@@ -223,31 +223,56 @@ export function hull(): Hull {
 
 /* ---------- topside: housing, gimbal, outboard ---------- */
 
-export const HOUSE = { x0: 34, x1: 168, fwdTop: 136, h: 46, y: 80 };
+export const HOUSE = { x0: 34, x1: 192, h: 84, y: 80, knee: 40 };
 
-/** Electronics housing aft: a closed box with a raked front, no glazing, vents and antennas. */
+/** One plan ring of the housing: a rectangle with its four corners cut at 45°. */
+function ring(xa: number, xf: number, yw: number, z: number, c: number): V3[] {
+  return [[xa, -yw + c], [xa + c, -yw], [xf - c, -yw], [xf, -yw + c], [xf, yw - c], [xf - c, yw], [xa + c, yw], [xa, yw - c]].map(([x, y]) => [x, y, z] as V3);
+}
+
 export function housing(): Line3[] {
+  // a faceted, low-observable deckhouse: near-vertical lower walls, then every face
+  // leans in to a smaller roof; the front is raked hard and all corners are chamfered
   const z0 = deckZ(100);
-  const { x0, x1, fwdTop, h, y } = HOUSE;
+  const { x0, x1, h, y, knee } = HOUSE;
   const roof = z0 + h;
-  const out = extrude([[x0, z0], [x1, z0], [fwdTop, roof], [x0 + 4, roof]], -y, y);
-  // access panel and vent louvres on the starboard side
-  out.push([[48, -y, z0 + 6], [48, -y, z0 + 36], [96, -y, z0 + 36], [96, -y, z0 + 6], [48, -y, z0 + 6]]);
-  range(4).forEach((i) => out.push(seg([108 + i * 7, -y, z0 + 12], [108 + i * 7, -y, z0 + 30])));
-  // whip antennas and nav light
-  out.push(seg([44, -50, roof], [40, -50, roof + 100]), seg([58, 50, roof], [54, 50, roof + 84]));
-  out.push(...cylinder([72, 0, roof], [72, 0, roof + 12], 8, 2, 6, 14));
+  const rings = [
+    ring(x0, x1, y, z0, 16),
+    ring(x0 + 3, x1 - 12, y - 2, z0 + knee, 16),
+    ring(x0 + 16, 140, 48, roof, 12),
+  ];
+  const out: Line3[] = rings.map((r) => [...r, r[0]]);
+  for (let k = 0; k < rings.length - 1; k++) rings[k].forEach((p, i) => out.push(seg(p, rings[k + 1][i])));
+  // a seam round the upper faces, and an access panel low on the starboard wall
+  const mid = rings[1].map((p, i) => [lerp(p[0], rings[2][i][0], 0.5), lerp(p[1], rings[2][i][1], 0.5), lerp(p[2], rings[2][i][2], 0.5)] as V3);
+  out.push([...mid, mid[0]]);
+  out.push([[56, -y + 0.5, z0 + 6], [56, -y + 1, z0 + 32], [104, -y + 1, z0 + 32], [104, -y + 0.5, z0 + 6], [56, -y + 0.5, z0 + 6]]);
+  range(4).forEach((i) => out.push(seg([118 + i * 7, -y + 1, z0 + 12], [118 + i * 7, -y + 1, z0 + 30])));
+  // whip antennas and nav light on the roof
+  out.push(seg([58, -36, roof], [54, -36, roof + 96]), seg([70, 36, roof], [66, 36, roof + 80]));
+  out.push(...cylinder([84, 0, roof], [84, 0, roof + 10], 7, 2, 6, 14));
   return out;
 }
 
-export function gimbal(x = 108, z = deckZ(100) + HOUSE.h): Line3[] {
-  // pedestal, yoke and ball with a sensor window facing forward
-  return [
-    ...cylinder([x, 0, z], [x, 0, z + 14], 7, 2, 6, 14),
-    ...box(x - 14, x + 14, -16, 16, z + 14, z + 18),
-    ...sphere([x, 0, z + 36], 17, 3, 6),
-    circle([x + 16, -2, z + 38], [0, 1, 0], [0, 0, 1], 6, 14),
-  ];
+/** EO/IR turret: a ball carried between the arms of a fork that turns on a low base ring. */
+export function turret(x: number, y: number, z: number, r = 16): Line3[] {
+  const arm = r + 4, top = z + 6 + r * 2.1, cz = z + 6 + r * 1.15;
+  const out: Line3[] = [...cylinder([x, y, z], [x, y, z + 6], r * 0.85, 2, 8, 18)];
+  // fork: a cross-member on the base and two upright arms with rounded heads
+  out.push(...box(x - 8, x + 8, y - arm - 3, y + arm + 3, z + 6, z + 10));
+  for (const s of [-1, 1]) {
+    const ya = y + s * arm;
+    out.push(...extrude([[x - 8, z + 10], [x + 8, z + 10], [x + 8, cz], [x + 4, top], [x - 4, top], [x - 8, cz]], ya, ya + s * 3));
+    out.push(circle([x, ya, cz], [1, 0, 0], [0, 0, 1], 5, 12));
+  }
+  // the ball, its elevation axis and a sensor window looking forward
+  out.push(...sphere([x, y, cz], r, 3, 6));
+  out.push(circle([x + r * 0.92, y, cz + 1], [0, 1, 0], [0, 0, 1], r * 0.42, 14));
+  return out;
+}
+
+export function gimbal(x = 104, z = deckZ(100) + HOUSE.h): Line3[] {
+  return turret(x, 0, z, 20);
 }
 
 export function outboard(): Line3[] {
@@ -310,7 +335,7 @@ export const packages: Record<string, Line3[]> = {
   })(),
   isr: (() => {
     const z = dz(310);
-    return [...cylinder([310, 0, z], [310, 0, z + 150], 6, 3, 4, 10), ...box(296, 324, -22, 22, z + 150, z + 154), ...sphere([310, 0, z + 172], 18, 3, 6), ...box(420, 500, -60, -10, dz(460), dz(460) + 40, 1), ...box(420, 500, 10, 60, dz(460), dz(460) + 40, 1)];
+    return [...cylinder([310, 0, z], [310, 0, z + 150], 6, 3, 4, 10), ...turret(310, 0, z + 150, 17), ...box(420, 500, -60, -10, dz(460), dz(460) + 40, 1), ...box(420, 500, 10, 60, dz(460), dz(460) + 40, 1)];
   })(),
   patrol: (() => {
     const z = dz(100) + HOUSE.h;
@@ -341,11 +366,28 @@ export const packages: Record<string, Line3[]> = {
   survey: [...cylinder([380, 0, -24], [540, 0, -24], 14, 4, 8), ...cylinder([540, 0, -24], [560, 0, -24], 7, 2, 6), seg([440, 0, -10], [440, 0, dz(440) - CAT.wet]), seg([480, 0, -10], [480, 0, dz(480) - CAT.wet]), ...box(400, 470, -30, 30, dz(430), dz(430) + 26)],
   cargo: [...box(300, 460, -72, 72, dz(380), dz(380) + 82, 7, 0), ...box(476, 636, -66, 66, dz(556), dz(556) + 76, 7, 0)],
   ferry: (() => {
+    // a cockpit just forward of the deckhouse: coaming, two rows of shock-mitigating
+    // jockey seats facing forward, and a raked windscreen across the front
+    const xa = 210, xf = 400, w = 76;
+    const z = (x: number) => dz(x);
     const out: Line3[] = [];
-    [330, 410, 490].forEach((x) => [-46, 46].forEach((y) => {
-      const z = dz(x);
-      out.push(...box(x, x + 44, y - 22, y + 22, z + 22, z + 30), ...box(x - 6, x, y - 22, y + 22, z + 22, z + 66), seg([x + 22, y, z], [x + 22, y, z + 22]));
-    }));
+    const rim = [[xa, -w], [xf, -w], [xf, w], [xa, w]].map(([x, y]) => [x, y, z(x) + 8] as V3);
+    out.push([...rim, rim[0]]);
+    rim.forEach((p) => out.push(seg([p[0], p[1], z(p[0])], p)));
+    for (const x of [236, 306]) for (const y of [-40, 40]) {
+      const zs = z(x);
+      out.push(...box(x, x + 40, y - 18, y + 18, zs + 26, zs + 34));                 // seat pan
+      out.push(...extrude([[x - 4, zs + 30], [x + 2, zs + 30], [x - 6, zs + 74], [x - 12, zs + 74]], y - 18, y + 18)); // backrest
+      out.push(...cylinder([x + 20, y, zs], [x + 20, y, zs + 26], 5, 2, 4, 10));   // shock post
+      out.push(seg([x + 34, y - 18, zs + 34], [x + 46, y - 18, zs + 50]), seg([x + 46, y - 18, zs + 50], [x + 46, y + 18, zs + 50]), seg([x + 46, y + 18, zs + 50], [x + 34, y + 18, zs + 34])); // grab bar
+    }
+    // windscreen: a raked, three-panel screen with a frame
+    const zw = z(xf) + 8, top = zw + 46, back = -22;
+    const P = (x: number, y: number, zz: number): V3 => [x, y, zz];
+    const lo = [P(xf - 10, -w + 6, zw), P(xf, -40, zw), P(xf, 40, zw), P(xf - 10, w - 6, zw)];
+    const hi = lo.map(([x, y]) => P(x + back, y * 0.92, top));
+    out.push(lo, hi);
+    lo.forEach((p, i) => out.push(seg(p, hi[i])));
     return out;
   })(),
 };
@@ -356,8 +398,8 @@ export const noHousing = new Set<string>();
 /* ---------- labelled points for hotspots ---------- */
 
 export const points: Record<string, V3> = {
-  gimbal: [108, 0, deckZ(100) + HOUSE.h + 36],
-  housing: [72, -HOUSE.y, deckZ(100) + 22],
+  gimbal: [104, 0, deckZ(100) + HOUSE.h + 29],
+  housing: [80, -HOUSE.y, deckZ(100) + 22],
   outboard: [-60, -26, deckZ(0) + 30],
   deck: [470, -40, deckZ(470) + 4],
   bow: [L - 20, 0, sheerZ(L - 20)],
