@@ -76,7 +76,7 @@ const f = (n: number) => n.toFixed(1);
 
   /* callouts slide out one after another, 01 first: dot, then leader, then label */
   @media (prefers-reduced-motion: no-preference) {
-    .spot { --t: calc(.5s + var(--i) * .45s); }
+    .spot { --t: calc(1.1s + var(--i) * .4s); }
     .spot circle { transform-box: fill-box; transform-origin: center; animation: spot-pop .35s var(--ease) var(--t) both; }
     .spot path { stroke-dasharray: 1; animation: spot-draw .45s var(--ease) calc(var(--t) + .15s) both; }
     .spot text { animation: spot-label .4s var(--ease) calc(var(--t) + .45s) both; }

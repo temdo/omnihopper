@@ -78,6 +78,14 @@ const figures: [string, string, string][] = [
   <meta name="description" content="OmniHopper is a high-endurance autonomous surface vessel for defence, security and offshore missions: 500 nautical miles range, 600 kg payload, 60 knots, with adaptation, sea trials and sustainment from one supplier." />
   <meta name="theme-color" content="#0a0b0c" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script is:inline>
+    // reveal-on-scroll is armed only when scripts run and motion is welcome; if the page script never starts, show everything
+    (function () {
+      var h = document.documentElement;
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('rv');
+      setTimeout(function () { if (!h.classList.contains('rv-ready')) h.classList.remove('rv'); }, 2500);
+    })();
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -262,6 +270,31 @@ const figures: [string, string, string][] = [
   </footer>
 
   <script>
+    // sections rise into place as they enter the viewport; siblings in a group follow one another
+    {
+      const html = document.documentElement;
+      const groups = [
+        '.sec-head', '.stage', '.band-in', '.figs', '.specs', '.phases', '.std-list', '.std-in', '.enq-in',
+      ];
+      const items: HTMLElement[] = [];
+      for (const g of groups) document.querySelectorAll<HTMLElement>(g).forEach((box) => {
+        [...box.children].forEach((el, i) => {
+          const e = el as HTMLElement;
+          if (e.matches('.figs, .std-list, .specs') || e.dataset.rvItem) return;
+          e.dataset.rvItem = '';
+          e.style.setProperty('--rv-i', String(i));
+          items.push(e);
+        });
+      });
+      if (html.classList.contains('rv') && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        }, { rootMargin: '0px 0px -12% 0px' });
+        items.forEach((e) => io.observe(e));
+      } else html.classList.remove('rv');
+      html.classList.add('rv-ready');
+    }
+
     const data = JSON.parse(document.getElementById('missions-data')!.textContent!);
     const wire = document.getElementById('mission-wire')!;
     const word = document.querySelector<HTMLElement>('.stage-word')!;
@@ -550,4 +583,28 @@ const figures: [string, string, string][] = [
   .foot { border-top: 1px solid var(--line); color: var(--text-3); }
   .foot-in { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); justify-content: space-between; align-items: center; padding-block: var(--s6); font: 400 .75rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
   .foot .brand { font: 500 .875rem/1 var(--font); }
+
+  /* ---------- motion ---------- */
+  /* hero: the vessel surfaces first, then the copy rises line by line, then the figures */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-model { animation: hero-model 1.2s var(--ease) .1s both; }
+    .hero-copy > *, .stats > div { animation: rise .8s var(--ease) both; }
+    .hero-copy > :nth-child(1) { animation-delay: .25s; }
+    .hero-copy > :nth-child(2) { animation-delay: .35s; }
+    .hero-copy > :nth-child(3) { animation-delay: .5s; }
+    .hero-copy > :nth-child(4) { animation-delay: .6s; }
+    .stats > div:nth-child(1) { animation-delay: .75s; }
+    .stats > div:nth-child(2) { animation-delay: .83s; }
+    .stats > div:nth-child(3) { animation-delay: .91s; }
+  }
+  @keyframes hero-model { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* sections: armed by the head script (html.rv) only when JS runs and motion is allowed */
+  :global(html.rv) [data-rv-item] { opacity: 0; transform: translateY(24px); }
+  :global(html.rv) [data-rv-item]:global(.in) {
+    opacity: 1; transform: none;
+    transition: opacity .7s var(--ease), transform .9s var(--ease);
+    transition-delay: calc(var(--rv-i, 0) * 90ms);
+  }
 </style>
