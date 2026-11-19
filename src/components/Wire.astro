@@ -1,0 +1,87 @@
+---
+// The vessel as a lit wireframe, seen from off the starboard bow.
+// `fit` draws one mission package permanently; `fit="all"` draws every package
+// and lets the page show one through data-active; no fit draws the bare vessel.
+import { camera, project, toPath, hull, housing, gimbal, outboard, packages, noHousing, points, type V3 } from '../lib/wire';
+
+interface Props { id: string; fit?: string; hotspots?: boolean; label: string }
+const { id, fit, hotspots = false, label } = Astro.props;
+
+const cam = camera();
+const H = hull();
+const all = fit === 'all';
+const ids = all ? Object.keys(packages) : fit ? [fit] : [];
+const showHouse = all || !fit || !noHousing.has(fit);
+
+// frame every drawable so all variants share one viewBox
+const every = [...H.near, ...H.far, ...housing(), ...outboard(), ...Object.values(packages).flat()];
+let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+for (const ln of every) for (const p of ln) {
+  const [u, v] = project(cam, p);
+  x0 = Math.min(x0, u); x1 = Math.max(x1, u); y0 = Math.min(y0, v); y1 = Math.max(y1, v);
+}
+const pad = 24;
+const vb = [x0 - pad, y0 - pad, x1 - x0 + pad * 2, y1 - y0 + pad * 2].map((n) => n.toFixed(0)).join(' ');
+
+const P = (p: V3) => project(cam, p);
+const spots = [
+  { n: '01', k: 'gimbal', t: 'EO/IR gimbal', dx: 50, dy: -110 },
+  { n: '02', k: 'housing', t: 'Electronics & comms', dx: 70, dy: 170 },
+  { n: '03', k: 'outboard', t: 'Outboard V6 · 200 bhp', dx: 10, dy: -190 },
+  { n: '04', k: 'deck', t: 'Mission deck · 600 kg', dx: 70, dy: -150 },
+].map((s) => {
+  const [u, v] = P(points[s.k]);
+  return { ...s, u, v };
+});
+const f = (n: number) => n.toFixed(1);
+---
+<svg class:list={['wire', { fixed: !!fit && !all }]} id={id} viewBox={vb} role="img" aria-labelledby={`${id}-t`} data-active={all ? 'isr' : undefined}>
+  <title id={`${id}-t`}>{label}</title>
+  <path class="w-water" d={toPath(cam, H.water)} />
+  <path class="w-far" d={toPath(cam, H.far)} />
+  <path class="w-deck" d={toPath(cam, H.deck)} />
+  <path class="w-near" d={toPath(cam, H.near)} />
+  <path class="w-near" d={toPath(cam, outboard())} />
+  {showHouse && <g class="house"><path class="w-near" d={toPath(cam, [...housing(), ...gimbal()])} /></g>}
+  {ids.map((m) => <path class="w-pay" data-m={m} d={toPath(cam, packages[m])} />)}
+  {hotspots && (
+    <g class="spots">
+      {spots.map((s, i) => (
+        <g class="spot" style={`--i:${i}`}>
+          <path pathLength="1" d={`M${f(s.u)},${f(s.v)}l${s.dx * 0.35},${s.dy * 0.35}L${f(s.u + s.dx)},${f(s.v + s.dy)}h18`} />
+          <circle class="ring" cx={f(s.u)} cy={f(s.v)} r="13" />
+          <circle class="dot" cx={f(s.u)} cy={f(s.v)} r="4.5" />
+          <text x={f(s.u + s.dx + 24)} y={f(s.v + s.dy + 4)}><tspan class="n">{s.n}</tspan> {s.t}</text>
+        </g>
+      ))}
+    </g>
+  )}
+</svg>
+
+<style>
+  .wire { display: block; width: 100%; height: auto; overflow: visible; }
+  .wire path { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
+  .w-water { stroke: var(--line); stroke-width: 1; opacity: .55; }
+  .w-far { stroke: var(--wire); stroke-width: .7; opacity: .22; }
+  .w-deck { stroke: var(--wire); stroke-width: .7; opacity: .38; }
+  .w-near { stroke: var(--wire); stroke-width: .9; opacity: .78; }
+  .w-pay { stroke: var(--signal); stroke-width: 1.1; opacity: 0; transition: opacity .5s var(--ease); }
+  .fixed .w-pay { opacity: 1; }
+  .house { transition: opacity .5s var(--ease); }
+  .spot path { stroke: var(--line-2); stroke-width: 1; }
+  .spot .ring { fill: var(--void); fill-opacity: .6; stroke: var(--text-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .spot .dot { fill: var(--signal); }
+  .spot text { font: 400 13px var(--mono); letter-spacing: .06em; text-transform: uppercase; fill: var(--text); paint-order: stroke; stroke: var(--void); stroke-width: 5px; }
+  .spot .n { fill: var(--signal); }
+
+  /* callouts slide out one after another, 01 first: dot, then leader, then label */
+  @media (prefers-reduced-motion: no-preference) {
+    .spot { --t: calc(1.1s + var(--i) * .4s); }
+    .spot circle { transform-box: fill-box; transform-origin: center; animation: spot-pop .35s var(--ease) var(--t) both; }
+    .spot path { stroke-dasharray: 1; animation: spot-draw .45s var(--ease) calc(var(--t) + .15s) both; }
+    .spot text { animation: spot-label .4s var(--ease) calc(var(--t) + .45s) both; }
+  }
+  @keyframes spot-pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes spot-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes spot-label { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+</style>

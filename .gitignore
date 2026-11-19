@@ -23,3 +23,5 @@
 # impeccable-ignore-end
 .DS_Store
 node_modules/
+dist/
+.astro/
