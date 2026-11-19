@@ -366,34 +366,45 @@ export const packages: Record<string, Line3[]> = {
   survey: [...cylinder([380, 0, -24], [540, 0, -24], 14, 4, 8), ...cylinder([540, 0, -24], [560, 0, -24], 7, 2, 6), seg([440, 0, -10], [440, 0, dz(440) - CAT.wet]), seg([480, 0, -10], [480, 0, dz(480) - CAT.wet]), ...box(400, 470, -30, 30, dz(430), dz(430) + 26)],
   cargo: [...box(300, 460, -72, 72, dz(380), dz(380) + 82, 7, 0), ...box(476, 636, -66, 66, dz(556), dz(556) + 76, 7, 0)],
   ferry: (() => {
-    // a cockpit just forward of the deckhouse: coaming, two rows of shock-mitigating
-    // jockey seats facing forward, and a raked windscreen across the front
-    const xa = 210, xf = 400, w = 76;
+    // the deckhouse comes off; a cockpit is sunk into the aft deck with its floor below
+    // deck level: three rows of shock-mitigating jockey seats, a raked windscreen ahead,
+    // and a tubular safety arch aft carrying the EO/IR turret
+    const xa = 34, xf = 380, w = 78, sink = 34;
     const z = (x: number) => dz(x);
     const out: Line3[] = [];
-    const rim = [[xa, -w], [xf, -w], [xf, w], [xa, w]].map(([x, y]) => [x, y, z(x) + 8] as V3);
-    out.push([...rim, rim[0]]);
-    rim.forEach((p) => out.push(seg([p[0], p[1], z(p[0])], p)));
-    for (const x of [236, 306]) for (const y of [-40, 40]) {
-      const zs = z(x);
-      out.push(...box(x, x + 40, y - 18, y + 18, zs + 26, zs + 34));                 // seat pan
-      out.push(...extrude([[x - 4, zs + 30], [x + 2, zs + 30], [x - 6, zs + 74], [x - 12, zs + 74]], y - 18, y + 18)); // backrest
-      out.push(...cylinder([x + 20, y, zs], [x + 20, y, zs + 26], 5, 2, 4, 10));   // shock post
-      out.push(seg([x + 34, y - 18, zs + 34], [x + 46, y - 18, zs + 50]), seg([x + 46, y - 18, zs + 50], [x + 46, y + 18, zs + 50]), seg([x + 46, y + 18, zs + 50], [x + 34, y + 18, zs + 34])); // grab bar
+    const corners: [number, number][] = [[xa, -w], [xf, -w], [xf, w], [xa, w]];
+    const rim = corners.map(([x, y]) => [x, y, z(x) + 6] as V3);
+    const floor = corners.map(([x, y]) => [x, y, z(x) - sink] as V3);
+    const lip = corners.map(([x, y]) => [x, y, z(x)] as V3);
+    out.push([...rim, rim[0]], [...lip, lip[0]], [...floor, floor[0]]);
+    corners.forEach((_, i) => out.push(seg(floor[i], rim[i])));
+    for (const x of [120, 210, 300]) out.push(seg([x, -w, z(x) - sink], [x, -w, z(x)]), seg([x, w, z(x) - sink], [x, w, z(x)])); // wall frames
+    // six seats in three rows, on posts standing on the cockpit floor
+    for (const x of [96, 186, 276]) for (const y of [-38, 38]) {
+      const zf = z(x) - sink, zs = zf + 40;
+      out.push(...box(x, x + 40, y - 18, y + 18, zs, zs + 8));
+      out.push(...extrude([[x - 4, zs + 4], [x + 2, zs + 4], [x - 6, zs + 50], [x - 12, zs + 50]], y - 18, y + 18));
+      out.push(...cylinder([x + 20, y, zf], [x + 20, y, zs], 5, 2, 4, 10));
+      out.push(seg([x + 34, y - 18, zs + 8], [x + 46, y - 18, zs + 24]), seg([x + 46, y - 18, zs + 24], [x + 46, y + 18, zs + 24]), seg([x + 46, y + 18, zs + 24], [x + 34, y + 18, zs + 8]));
     }
-    // windscreen: a raked, three-panel screen with a frame
-    const zw = z(xf) + 8, top = zw + 46, back = -22;
-    const P = (x: number, y: number, zz: number): V3 => [x, y, zz];
-    const lo = [P(xf - 10, -w + 6, zw), P(xf, -40, zw), P(xf, 40, zw), P(xf - 10, w - 6, zw)];
-    const hi = lo.map(([x, y]) => P(x + back, y * 0.92, top));
+    // windscreen: raked, three panels, on the forward coaming
+    const zw = z(xf) + 6, top = zw + 46, back = -22;
+    const lo: V3[] = [[xf - 10, -w + 6, zw], [xf, -40, zw], [xf, 40, zw], [xf - 10, w - 6, zw]];
+    const hi = lo.map(([x, y]) => [x + back, y * 0.92, top] as V3);
     out.push(lo, hi);
     lo.forEach((p, i) => out.push(seg(p, hi[i])));
+    // safety arch at the aft end of the cockpit: two raked legs, a top bar, a camera on top
+    const xs = 16, h = 128, rake = 18, ya = w + 6;
+    for (const y of [-ya, ya]) out.push(...cylinder([xs, y, z(xs)], [xs + rake, y * 0.82, z(xs) + h], 4, 2, 4, 10));
+    out.push(...cylinder([xs + rake, -ya * 0.82, z(xs) + h], [xs + rake, ya * 0.82, z(xs) + h], 4, 2, 4, 10));
+    out.push(...box(xs + rake - 14, xs + rake + 14, -18, 18, z(xs) + h + 4, z(xs) + h + 8));
+    out.push(...turret(xs + rake, 0, z(xs) + h + 8, 18));
     return out;
   })(),
 };
 
-/** Missions that hide the housing (none at present). */
-export const noHousing = new Set<string>();
+/** Missions that take the deckhouse off. */
+export const noHousing = new Set<string>(['ferry']);
 
 /* ---------- labelled points for hotspots ---------- */
 

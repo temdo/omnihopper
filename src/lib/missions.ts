@@ -117,7 +117,7 @@ export const sectors: Sector[] = [
         id: 'ferry',
         word: 'Ferry.',
         name: 'Autonomous ferry',
-        package: 'Cockpit with four shock-mitigating seats and windscreen',
+        package: 'Sunken cockpit, six shock-mitigating seats, windscreen; camera on a safety arch',
         sensors: 'Navigation suite, collision avoidance',
         effectors: 'Personnel transport in remote or shallow coastal waters',
         note: 'A scheduled crossing with no one at the helm.',
