@@ -289,7 +289,7 @@ const figures: [string, string, string][] = [
       if (html.classList.contains('rv') && 'IntersectionObserver' in window) {
         const io = new IntersectionObserver((entries) => {
           for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-        }, { rootMargin: '0px 0px -12% 0px' });
+        }, { rootMargin: '0px 0px -18% 0px' });
         items.forEach((e) => io.observe(e));
       } else html.classList.remove('rv');
       html.classList.add('rv-ready');
@@ -601,10 +601,10 @@ const figures: [string, string, string][] = [
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
   /* sections: armed by the head script (html.rv) only when JS runs and motion is allowed */
-  :global(html.rv) [data-rv-item] { opacity: 0; transform: translateY(24px); }
+  :global(html.rv) [data-rv-item] { opacity: 0; transform: translateY(40px); }
   :global(html.rv) [data-rv-item]:global(.in) {
     opacity: 1; transform: none;
-    transition: opacity .7s var(--ease), transform .9s var(--ease);
-    transition-delay: calc(var(--rv-i, 0) * 90ms);
+    transition: opacity 1.3s cubic-bezier(.25, .1, .25, 1), transform 1.5s var(--ease);
+    transition-delay: calc(var(--rv-i, 0) * 160ms);
   }
 </style>
